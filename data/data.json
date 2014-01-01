@@ -1,0 +1,59 @@
+/* 0 */
+{
+  "_class" : "com.mxk.crawler.base.Links",
+  "createTime" : ISODate("2013-12-26T07:24:28.592Z"),
+  "url" : "http://bbs.modelfleetcn.com/forum.php?mod=forumdisplay&fid=2&page=1",
+  "state" : 1,
+  "matchUrl" : "http://bbs.modelfleetcn.com/forum.php?mod=forumdisplay&fid=2&page="
+}
+
+/* 1 */
+{
+  "_class" : "com.mxk.crawler.base.Links",
+  "createTime" : ISODate("2013-12-26T07:24:28.593Z"),
+  "url" : "http://www.imx365.net/bbs/forum-2-1.html",
+  "state" : 1,
+  "matchUrl" : "http://www.imx365.net/bbs/forum"
+}
+
+{
+  "_class" : "com.mxk.crawler.base.Links",
+  "createTime" : ISODate("2013-12-26T07:24:28.593Z"),
+  "url" : "http://www.imx365.net/bbs/forum-4-1.html",
+  "state" : 1,
+  "matchUrl" : "http://www.imx365.net/bbs/forum"
+}
+,
+{
+  "_class" : "com.mxk.crawler.base.Links",
+  "createTime" : ISODate("2013-12-26T07:24:28.593Z"),
+  "url" : "http://www.imx365.net/bbs/forum-8-1.html",
+  "state" : 1,
+  "matchUrl" : "http://www.imx365.net/bbs/forum"
+}
+
+/* 4 */
+{
+  "_class" : "com.mxk.crawler.base.Links",
+  "createTime" : ISODate("2013-12-26T07:24:28.593Z"),
+  "url" : "http://www.imx365.net/bbs/forum-7-1.html",
+  "state" : 1,
+  "matchUrl" : "http://www.imx365.net/bbs/forum"
+}
+
+/* 5 */
+{
+  "_class" : "com.mxk.crawler.base.Links",
+  "createTime" : ISODate("2013-12-26T07:24:28.593Z"),
+  "url" : "http://www.imx365.net/bbs/forum-5-1.html",
+  "state" : 1,
+  "matchUrl" : "http://www.imx365.net/bbs/forum"
+}
+
+{
+  "_class" : "com.mxk.crawler.base.Links",
+  "createTime" : ISODate("2013-12-26T07:24:28.593Z"),
+  "url" : "http://www.imx365.net/bbs/forum-6-1.html",
+  "state" : 1,
+  "matchUrl" : "http://www.imx365.net/bbs/forum"
+}
