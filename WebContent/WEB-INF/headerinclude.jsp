@@ -4,7 +4,7 @@
 <%
 	String rootPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
 	//javascript:;
-    String image = "http://192.168.1.13/mxk/image/";
+    String image = "http://192.168.1.9/mxk/image/";
 %>
 <script type="text/javascript">
 var path = '<%=rootPath%>';

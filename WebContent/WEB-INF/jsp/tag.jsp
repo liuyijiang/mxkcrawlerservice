@@ -29,7 +29,22 @@
 <textarea name="subtags" rows="3" cols="30"></textarea>
  <input type="submit" value="提交">
 </form>
-</td></tr>
+</td>
+<td>
+<p>
+国籍<br />
+中国#1,美国#2,德国#3,英国#3,日本#4,法国#4,意大利#5,俄国#6,其他#9
+</p>
+<p>
+年代<br />
+古代#1,一战#1,二战#1,现在#1,其他#9
+</p>
+<p>
+类型<br />
+战列舰#1,巡洋舰#1,驱逐舰#1,护卫舰#1,扫雷舰#1,航母#1,潜艇#1,补给船#2,商船#2,两栖攻击舰#3,其他#9
+</p>
+</td>
+</tr>
 </table>
 <hr />
 <p>
@@ -54,7 +69,6 @@
  <input type="submit" value="提交">
    </form>
 <table id="tags" style="width:100%" border="1">
-   
 </table>
 </body>
 <script type="text/javascript">

@@ -12,6 +12,11 @@
 </font>
 <font id="webresourceid" color="red"></font>
 </strong>
+<form style="display:none" id="fromd" action="${pageContext.request.contextPath}/catalog/context" method="post">
+   <input id="cid" name="id" />
+   <input id="resid" name="resid" />
+</form>
+
 <table style="width:100%" border="1">
   <tr>
    <td>
@@ -37,17 +42,27 @@
     <td>${list.sitename }</td>
     <td>
     <c:forEach items="${list.images}" var="img">
-       <img src="<%=image %>${img }" style="width:200;height:200"/>
+       <img src="<%=image %>${img }" style="width:80;height:80"/>
     </c:forEach>
     </td>
     <td>
-      <a href="#">编辑</a>
+      <a href="#" onclick="catalog('${list.id}')">编辑</a>
     </td>
   </tr>
   </c:forEach>
 </table>
 <script type="text/javascript">
-
+  
+   function catalog(id){
+      if(confirm('编目')){
+	      $("#resid").val($("#webresourceid").html());
+	      $("#cid").val(id);
+	      $("#fromd").submit();
+       }else{
+          alert("取消");
+      }
+   }
+  
    function find(){
 	 var key = $("#keys").val();
 	 $.ajax({
