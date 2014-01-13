@@ -1,4 +1,4 @@
-package com.mxk.crawler.imx365.crawler;
+package com.mxk.crawler.crawlers.imx365;
 
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class Imx365NetContentResourceCrawler extends Crawler {
 	
 	public static void main(String[] args) {
 		Imx365NetContentResourceCrawler c = new Imx365NetContentResourceCrawler();
-		c.crawler("http://www.imx365.net/bbs/thread-7-203858-1-1.html");
+		c.crawler("http://www.imx365.net/bbs/thread-7-165084-1-18.html");
 	}
 	
 	@Override
@@ -55,34 +55,52 @@ public class Imx365NetContentResourceCrawler extends Crawler {
 			conn.timeout(TIME_OUT);
 			conn.userAgent("Mozilla/4.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
 			Document doc = conn.get(); 
-			//System.out.println(doc);
 			Elements imgs =  doc.select("div[id=firstpost]").select("img");
-			System.out.println(imgs);
-			if(!imgs.isEmpty()){
+//			System.out.println(imgs);
+			if(!imgs.isEmpty() && imgs.size() > 3){ //爬取至少有3张图片的帖子
 				Content content = new Content();
 				content.setLikurl(url);
 				content.setSitename(SITE_NAME);
 				content.setSiteurl(SITE_URL);
-				int index = 1;
-				List<String> images = new ArrayList<String>();
-				for(Element img : imgs){
-					if(index <= CRAWLER_IMAGE_COUNT){
-						String url1 = img.attr("rel");
-						String url2 = img.attr("src");
-						if(url1 != null && url1.startsWith(SITE_IMAGE)){
-							images.add(url1);
-							 index ++ ;
-						}else if(url2 != null){
-							images.add(url2);
-							 index ++ ;
-						}
-					}else{
+				for (Element img : imgs) {
+					String url1 = img.attr("rel");
+					String url2 = img.attr("src");
+					if(url1 != null && url1.startsWith(SITE_IMAGE)){
+						content.setSimpleImage(url1);
+						break;
+					}else if(url2 != null && url2.startsWith(SITE_IMAGE)){
+						content.setSimpleImage(url2);
 						break;
 					}
 				}
-				content.setImages(images);
-				Element e3 =  doc.select("span[class=numeric]").get(1);
-				content.setPost(e3.html());//评论数量
+//				int index = 1;
+//				List<String> images = new ArrayList<String>();
+//				for(Element img : imgs){
+//					if(index <= CRAWLER_IMAGE_COUNT){
+//						String url1 = img.attr("rel");
+//						String url2 = img.attr("src");
+//						if(url1 != null && url1.startsWith(SITE_IMAGE)){
+//							images.add(url1);
+//							 index ++ ;
+//						}else if(url2 != null){
+//							images.add(url2);
+//							 index ++ ;
+//						}
+//					}else{
+//						break;
+//					}
+//				}
+//				content.setImages(images);
+				Elements e3 =  doc.select("span[class=numeric]");
+				content.setPost(e3.get(1).html());//评论数量
+				content.setHit(e3.get(0).html());
+				String info = StringUtil.regxpForHtml(doc.select("div[id=firstpost]").first().html(),"").trim();
+				String remove = info.substring(info.indexOf("\n"),info.lastIndexOf("\n"));
+				info = info.replace(remove, "");//替换\n  2013-12-29 05:35:00
+				//System.out.println(info);
+				//String remove2 = info.substring(info.indexOf("KBytes"),info.lastIndexOf("\n"));
+				
+				content.setInfo(info);
 				Elements e1 =  doc.select("div[class=post-heading]");
 				Elements e2 =  doc.select("div[class=div_author_title]");
 				content.setOwner(e2.first().select("a").html());

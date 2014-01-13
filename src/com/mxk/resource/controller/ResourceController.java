@@ -94,7 +94,7 @@ public class ResourceController {
 	}
 	
 	/**
-	 * 编目帖子信息
+	 * 需要编目帖子信息
 	 * @return
 	 */
 	@RequestMapping(value = "/contexts", method = RequestMethod.GET)
@@ -110,6 +110,11 @@ public class ResourceController {
 		return mv;
 	}
 	
+	/**
+	 * 模糊查询需要编目的信息
+	 * @param keyword
+	 * @return
+	 */
 	@RequestMapping(value = "/regex/contexts", method = RequestMethod.POST)
 	public ModelAndView showContextRegex(@RequestParam("keyword") String keyword){
 		List<String> type = new ArrayList<String>();
@@ -122,4 +127,15 @@ public class ResourceController {
 		mv.getModelMap().put("list", list);
 		return mv;
 	}
+	
+	/**
+	 * 编目帖子
+	 * @return
+	 */
+	@RequestMapping(value = "/catalog/context", method = RequestMethod.POST)
+	public ModelAndView catalogContext(@RequestParam("id") String id, @RequestParam("resid") String resid){
+		resourceService.catalogContext(id,resid);
+		return new ModelAndView("redirect:/contexts");
+	} 
+	
 }

@@ -42,11 +42,12 @@ public class StringUtil {
     }
     
     /**
-     * 用+号分隔
+     * 自定义替换值
      * @param html
+     * @param replace
      * @return
      */
-    public static String regxpForHtml(String html){
+    public static String regxpForHtml(String html,String replace){
     	String regxpForJS = "<script ([^>]*)>([^>]*)</script>"; //[\s\S]*
     	String regxpForHtml = "<([^>]*)>";
     	Pattern pattern = Pattern.compile(regxpForJS);
@@ -63,11 +64,22 @@ public class StringUtil {
     	StringBuffer sbHtml = new StringBuffer();
     	result1 = matcherHtml.find();
     	while (result1) { //去除html
-    	   matcherHtml.appendReplacement(sbHtml, " + ");
+    	   matcherHtml.appendReplacement(sbHtml, replace);
     	   result1 = matcherHtml.find();
     	}
     	matcherHtml.appendTail(sbHtml);
     	return sbHtml.toString();
+    }
+    
+    
+    
+    /**
+     * 用+号分隔
+     * @param html
+     * @return
+     */
+    public static String regxpForHtml(String html){
+    	return regxpForHtml(html," + ");
     }
     
     public static String regxpForSymbol(String str){

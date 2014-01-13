@@ -65,7 +65,7 @@ public class DishModelsContentResourceCrawler extends Crawler {
 			content.setMultiData(str[1]);
 			String owner = translator.simpleTranslator(TranslatorType.RUSSIA, str[2]);
 			content.setOwner(owner+ "("  + str[2] + ")");
-			String info = translator.simpleTranslator(TranslatorType.RUSSIA,stringFormat(doc.select("p[align=justify]").html()));
+			String info = translator.simpleTranslator(TranslatorType.RUSSIA,stringFormat(doc.select("p[align=justify]").first().html()));
 			System.out.println(info);
 			content.setInfo(info);
 			content.setLikurl(url);
@@ -119,11 +119,11 @@ public class DishModelsContentResourceCrawler extends Crawler {
 		StringBuffer sb = new StringBuffer();
 	    for(String st : strs){
 	    	if(!StringUtil.stringIsEmpty(st) && !"\n".equals(st) && !"<br /> ".equals(st)){
-	    		System.out.print(st);
+	    		sb.append(st);
 	    	}
 	    }
-//	    System.out.println(sb.toString().replaceAll("[\\n]", ""));
-	    return sb.toString();
+	    System.out.println(sb.toString());
+	    return sb.toString().substring(0,350);//截取一部分 ;
 	}
 	
 	

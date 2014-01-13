@@ -52,7 +52,14 @@ public class TranslatorService {
 		try{
 		    String translatorStr = URLEncoder.encode(txt,ENCODER);
 		    HttpGet httpget = new HttpGet(URL + targetLan.getCode() + "&q=" + translatorStr);
-			HttpResponse response = httpclient.execute(httpget);
+//		    httpget.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
+//		    httpget.setHeader("Cookie","PREF=ID=9fc3c400c067c38c:U=96892e2b795b4eed:FF=0:NW=1:TM=1379168416:LM=1379168418:S=JkWheIuZQXbH4RIb; NID=67=o80SwOmx6y1ABmA2uPUWMEU4Q0-eXUBkubVeQKw3JHLXzDQ4OM4fJXk51qmqqn7h1TBbPsmNxmYz-YKjzaRQssyXCvNVU_JXogFmQLa8l-1rp1fwoqLINAtYtvln9lcK; _ga=GA1.4.2088469847.1389615985");
+//		    httpget.setHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+//		    httpget.setHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
+//		    httpget.setHeader("Referer","http://translate.google.com.tw/?hl=zh-CN&tab=wT");
+//		    httpget.setHeader("Host","translate.google.com.tw");
+//		    httpget.setHeader("Content-Length","3554");
+		    HttpResponse response = httpclient.execute(httpget);
 			HttpEntity entity = response.getEntity();
 			if (entity != null) {
 				String str = EntityUtils.toString(entity);

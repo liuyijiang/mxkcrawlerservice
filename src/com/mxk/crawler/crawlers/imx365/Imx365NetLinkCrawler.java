@@ -1,4 +1,4 @@
-package com.mxk.crawler.imx365.crawler;
+package com.mxk.crawler.crawlers.imx365;
 
 import java.util.ArrayList;
 import java.util.Date;

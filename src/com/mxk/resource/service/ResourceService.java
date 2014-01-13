@@ -49,6 +49,10 @@ public class ResourceService {
 		return dao.findContextResourceNotCatalogRegex(key);
 	}
 	
+	public void catalogContext(String id,String resid){
+		dao.catalogContext(id, resid);
+	}
+	
 //	public List<Resource> findResourceByTags(ResourceType type,String[] tags){
 //		return dao.findResourceByTags(type, tags);
 //	}

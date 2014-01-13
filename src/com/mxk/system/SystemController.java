@@ -169,6 +169,19 @@ public class SystemController {
 		return list;
 	}
 	
-	//public String add
+	/**
+	 * 初始化数据
+	 * @return
+	 */
+	@RequestMapping(value = "/init", method = RequestMethod.GET)
+	public ModelAndView iniData(){
+		List<String> type = new ArrayList<String>();
+		for(ResourceType r :ResourceType.values()){
+			type.add(r.getCode());
+		}
+		ModelAndView mv = new ModelAndView("index.jsp");
+		mv.getModelMap().put("type", type);
+		return mv;
+	}
 	
 }
