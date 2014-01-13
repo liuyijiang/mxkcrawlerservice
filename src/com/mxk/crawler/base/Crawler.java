@@ -3,10 +3,13 @@ package com.mxk.crawler.base;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.mxk.crawler.BaseFileUploadService;
 import com.mxk.crawler.CrawlerService;
 import com.mxk.crawler.GridFSFileUploadService;
 import com.mxk.crawler.annotation.CrawleType;
@@ -16,6 +19,7 @@ import com.mxk.crawler.model.Content;
 import com.mxk.crawler.model.ContentResource;
 import com.mxk.crawler.model.Links;
 import com.mxk.crawler.model.ResourceState;
+import com.mxk.translator.TranslatorService;
 import com.mxk.util.HttpUtil;
 import com.mxk.util.StringUtil;
 import com.mxk.util.ThreadGroupUtil;
@@ -32,6 +36,12 @@ public abstract class Crawler {
 	
 	@Autowired
 	private GridFSFileUploadService gridFSFileUploadService;
+	
+	@Resource
+	private BaseFileUploadService baseFileUploadService;
+	
+	@Resource
+	public TranslatorService translator;
 	
 	private CrawlerState state;
 	
@@ -51,6 +61,9 @@ public abstract class Crawler {
 	public static final int TIME_OUT = 5000;
 	
 	public static final int CRAWLER_IMAGE_COUNT = 3;
+	
+	/** 模拟浏览器 */
+	public static final String USERAGENT = "Mozilla/4.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)";
 	
 	/** 使用线程组开控制线程状态 */
 	public final ThreadGroupUtil threadGroup = new ThreadGroupUtil(this.getClass().getName(),true);//每个子类的 是否是守护线程
@@ -90,17 +103,26 @@ public abstract class Crawler {
 					resource.setSitename(content.getSitename());
 					resource.setSiteurl(content.getSiteurl());
 					resource.setPost(content.getPost());
+					resource.setMultiData(content.getMultiData());
+					resource.setHit(content.getHit());
+					resource.setInfo(content.getInfo());
 					resource.setState(ResourceState.NO_CATALOGO.getCode());//未编目
-					List<String> urls = new ArrayList<String>();
-					resource.setImages(urls);
-					for(String image : content.getImages()){
-						byte[] byteFile = HttpUtil.getImageByte(image);
-						String fileName = StringUtil.cutOutUrlFileName(image);
-						if(gridFSFileUploadService.uploadImageByte(byteFile, fileName)){//保存文件到gridfs
-							urls.add(fileName);
-						}
+//					List<String> urls = new ArrayList<String>();
+//					resource.setImages(urls);
+//					for(String image : content.getImages()){
+//						byte[] byteFile = HttpUtil.getImageByte(image);
+//						String fileName = StringUtil.cutOutUrlFileName(image);
+//						if(gridFSFileUploadService.uploadImageByte(byteFile, fileName)){//保存文件到gridfs
+//							urls.add(fileName);
+//						}
+//					}
+					if(content.getSimpleImage() != null){
+						byte[] byteFile = HttpUtil.getImageByte(content.getSimpleImage());
+						String fileName = StringUtil.cutOutUrlFileName(content.getSimpleImage());
+						String simpleImage = baseFileUploadService.saveFile(byteFile, fileName);
+						resource.setSimpleImage(simpleImage);
+						rlist.add(resource);
 					}
-					rlist.add(resource);
 				}
 		    	return crawlerService.saveForCheck(rlist);
 		    default:
@@ -109,6 +131,7 @@ public abstract class Crawler {
 		
 	}
 	
+	/**爬取器休息 */
 	public void crawlerSheep(int time){
 		try{
 			Thread.sleep(time);
@@ -122,23 +145,12 @@ public abstract class Crawler {
 	 * @param message
 	 */
 	public void execute(){
-		//logger.debug("启动执行爬取操作线程");
-		
-//		 Executors.newSingleThreadScheduledExecutor().schedule(
-//			 new Runnable() {
-//					@Override
-//					public void run() {
-//						startCrawle();
-//					}
-//				},
-//			 10, TimeUnit.SECONDS);
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				startCrawle();
 			}
 		}).start();
-		//logger.debug("启动执行爬取操作完成线程");
 	}
 	
 	/**
@@ -229,6 +241,12 @@ public abstract class Crawler {
 	    			List<? extends BaseResource> resource = crawler(link.getUrl());
 	    			if(resource != null){ //保存资源
 	    				logger.info("获得 匹配链接 ：{} 下资源数量 ：{}",matchUrl,resource.size());
+	    				//组装数据 对于那些在帖子页面拿不到评论数量和阅读数量的网站
+	    				if(CrawleType.CONTENT.getDescription().equals(crawlerType)){
+	    					for (BaseResource b : resource) {
+		    					packageData(link, (Content) b);
+		    				}
+	    				}
 	    				if(saveResource(resource)){ //被爬取的链接
 	    					count++;
 	    					if(count > 5){
@@ -255,5 +273,10 @@ public abstract class Crawler {
 		return "爬取网站："+crawlerSite+" - "+crawlerType + " 爬取器目前状态：" + state.getCode();
 	}
 		
+	/**
+	 * 组装数据 子类重写次方法 主要是用于将link中 multiData 数据组装到 resource中
+	 */
+	public void packageData(Links link,Content resource){
 		
+	}	
 }

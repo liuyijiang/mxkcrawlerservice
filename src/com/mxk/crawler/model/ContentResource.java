@@ -23,8 +23,12 @@ public class ContentResource extends BaseResource {
 	private String linkurl;
 	private int state;//是否被编目
 	private String comment;
-	private String post;//评论数量；
+	private String info;//内容
+	private String hit;//阅读次数
+	private String post;//评论数量
 	public List<String> images;
+	public String simpleImage;
+	public String multiData;//额外的一些有价值的数据;
 	
 	public String getId() {
 		return id;
@@ -91,6 +95,30 @@ public class ContentResource extends BaseResource {
 	}
 	public void setPost(String post) {
 		this.post = post;
+	}
+	public String getInfo() {
+		return info;
+	}
+	public void setInfo(String info) {
+		this.info = info;
+	}
+	public String getHit() {
+		return hit;
+	}
+	public void setHit(String hit) {
+		this.hit = hit;
+	}
+	public String getSimpleImage() {
+		return simpleImage;
+	}
+	public void setSimpleImage(String simpleImage) {
+		this.simpleImage = simpleImage;
+	}
+	public String getMultiData() {
+		return multiData;
+	}
+	public void setMultiData(String multiData) {
+		this.multiData = multiData;
 	}
 	
 }

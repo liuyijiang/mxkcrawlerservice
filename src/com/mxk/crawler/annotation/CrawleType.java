@@ -6,7 +6,12 @@ package com.mxk.crawler.annotation;
  */
 public enum CrawleType {
 
-	LINK("链接"), CONTENT("帖子");
+	LINK("链接"),
+	
+	CONTENT("帖子"), 
+	
+	/** 特殊*/
+	SPECIAL("特殊");
 	
 	private String description;
 	

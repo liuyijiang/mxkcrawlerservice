@@ -22,7 +22,13 @@ public enum ResourceState {
 	NO_CATALOGO(4),
 	
 	/** 已经编目 */
-	CATALOGOED(5);
+	CATALOGOED(5),
+	
+	/** 未上传到资源库 */
+	NO_UPLOAD(7),
+	
+	/** 已上传到资源库  */
+	UPLOADED(8);
 	
 	private int code;
 	
