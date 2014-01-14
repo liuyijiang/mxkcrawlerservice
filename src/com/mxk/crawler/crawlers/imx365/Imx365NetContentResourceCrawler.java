@@ -53,7 +53,7 @@ public class Imx365NetContentResourceCrawler extends Crawler {
 			logger.info("开始爬取 Imx365 论坛链接 来源链接地址：{}",url);
 			Connection conn = Jsoup.connect(url);
 			conn.timeout(TIME_OUT);
-			conn.userAgent("Mozilla/4.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)");
+			conn.userAgent(USERAGENT);
 			Document doc = conn.get(); 
 			Elements imgs =  doc.select("div[id=firstpost]").select("img");
 //			System.out.println(imgs);
@@ -117,7 +117,7 @@ public class Imx365NetContentResourceCrawler extends Crawler {
 			logger.error("Imx365 crawler error url: {} message :{}",url,e.getMessage());
 		}finally{
 			crawlerSheep(SHEEP_TIME);
-			logger.info("Imx365 完成链接爬取{},爬取link数量：{}",url, list.size());
+			logger.info("Imx365 完成帖子爬取{},爬取link数量：{}",url, list.size());
 		}
 		return list;
 	}

@@ -36,6 +36,10 @@ public class CrawlerService {
 		boolean allfail = true;//当所有被保存资源都失败返回失败false
 		for(BaseResource resource : t){
 			ContentResource res = (ContentResource)resource;
+			if(res.getSimpleImage() == null){ //没有图片就不保存
+				updateLinkState(res.getLinkurl(),ResourceState.LINK_NO_RESOURCE.getCode());//标记链接为没有资源的链接
+				continue;
+			}
 		    Query q = new Query(Criteria.where("linkurl").is(res.getLinkurl()));
 		    long count = mog.count(q, resource.getClass());
 		    if(count == 0){

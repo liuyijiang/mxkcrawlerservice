@@ -47,6 +47,7 @@ public class Imx365NetLinkCrawler extends Crawler {
 			logger.info("开始爬取 Imx365 论坛链接 来源链接地址：{}",url);
 			Connection conn = Jsoup.connect(url);
 			conn.timeout(TIME_OUT);
+			conn.userAgent(USERAGENT);
 			Document doc = conn.get();
 			Elements links = doc.select("a[class=title]");
 			if(!links.isEmpty()){
@@ -73,7 +74,7 @@ public class Imx365NetLinkCrawler extends Crawler {
 				}
 			}
 		}catch(Exception e){
-			logger.error("crawler error url: {} message :{}",url,e.getMessage());
+			logger.error("Imx365 crawler error url: {} message :{}",url,e.getMessage());
 		}finally{
 			crawlerSheep(SHEEP_TIME);
 			logger.info("Imx365 完成链接爬取{},爬取link数量：{}",url, list.size());

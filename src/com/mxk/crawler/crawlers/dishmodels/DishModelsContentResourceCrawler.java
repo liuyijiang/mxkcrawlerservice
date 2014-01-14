@@ -19,7 +19,6 @@ import com.mxk.crawler.base.Crawler;
 import com.mxk.crawler.model.BaseResource;
 import com.mxk.crawler.model.Content;
 import com.mxk.crawler.model.Links;
-import com.mxk.translator.TranslatorService;
 import com.mxk.translator.TranslatorType;
 import com.mxk.util.StringUtil;
 
@@ -58,8 +57,11 @@ public class DishModelsContentResourceCrawler extends Crawler {
 			//System.out.println(title);
 			String str[] = doc.select("div[class=dm_blockgshowT]").select("b").first().html().split("<br />");
 			Content content = new Content();
+			content.setLikurl(url);
+			content.setSitename(SITE_NAME);
+			content.setSiteurl(SITE_URL);
 			//content.set
-			translator = new TranslatorService();
+			//translator = new TranslatorService();
 			String title = translator.simpleTranslator(TranslatorType.ENGLISH, str[0]);
 			content.setHeadline(title + "(" + str[0] + ")");
 			content.setMultiData(str[1]);

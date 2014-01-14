@@ -116,13 +116,14 @@ public abstract class Crawler {
 //							urls.add(fileName);
 //						}
 //					}
+					//使用普通方式  ftp上传
 					if(content.getSimpleImage() != null){
 						byte[] byteFile = HttpUtil.getImageByte(content.getSimpleImage());
 						String fileName = StringUtil.cutOutUrlFileName(content.getSimpleImage());
 						String simpleImage = baseFileUploadService.saveFile(byteFile, fileName);
 						resource.setSimpleImage(simpleImage);
-						rlist.add(resource);
 					}
+					rlist.add(resource);
 				}
 		    	return crawlerService.saveForCheck(rlist);
 		    default:

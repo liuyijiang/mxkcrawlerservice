@@ -35,7 +35,8 @@ public class HttpUtil {
 		HttpClient client = new DefaultHttpClient();
 		client.getParams().setParameter(
 				CoreConnectionPNames.CONNECTION_TIMEOUT, TIME_OUT);
-		HttpGet get = new HttpGet(url);
+		HttpGet get = new HttpGet(urlTrim(url));
+		get.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
 		get.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
 				TIME_OUT);
 		try {
@@ -50,11 +51,23 @@ public class HttpUtil {
 			}
 			
 		} catch (Exception e) {
-			logger.error("下载图片异常", e);
+			logger.error("下载图片异常!{} 异常图片链接 {}", e,url);
 		} finally {
 			client.getConnectionManager().shutdown();
 		}
 		return null;
+	}
+	
+	/**
+	 * 去除图片链接中的参数
+	 * @return
+	 */
+	private static String urlTrim(String url){
+		if(url.indexOf("?") != -1){
+			return url.substring(0,url.indexOf("?"));
+		}else{
+			return url;
+		}
 	}
 	
 }

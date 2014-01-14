@@ -36,22 +36,25 @@ public class DishModelsLinkCrawler extends Crawler {
 	@Value("${system.dishmodels.crawler.link.execute}")
 	private boolean execute;
 	
+	@Value("${system.dishmodels.crawler.link.init}")
+	private boolean init;
+	
 	public static final Logger logger = LoggerFactory.getLogger(DishModelsLinkCrawler.class);
 	public static final String MATCH_LINK_URL = "http://www.dishmodels.ru/glr_main.htm";
 	public static final String MATCH_CONTENT_URL = "http://www.dishmodels.ru/gshow.htm?p=";
 	public static final String SITE_URL = "http://www.dishmodels.ru";
 	
-	public static void main(String[] args) {
-		DishModelsLinkCrawler d = new DishModelsLinkCrawler();
-		d.crawler("http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=806"); //494
-	}
+//	public static void main(String[] args) {
+//		DishModelsLinkCrawler d = new DishModelsLinkCrawler();
+//		d.crawler("http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=806"); //494
+//	}
 	
 	/**
 	 * 此网站比较特殊 在服务初始化的时候就将所有的分页link计算出来并保存保存
 	 */
 	@PostConstruct 
 	public void crawlerPagings(){
-		if(!execute){
+		if(init){
 			logger.info("初始化 DishModels 网站分页后link 初始页面 {}", MATCH_LINK_URL);
 			new Thread(new Runnable() {
 				
