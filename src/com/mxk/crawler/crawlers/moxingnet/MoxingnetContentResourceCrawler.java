@@ -20,7 +20,11 @@ import com.mxk.crawler.model.BaseResource;
 import com.mxk.crawler.model.Content;
 import com.mxk.crawler.model.Links;
 import com.mxk.util.StringUtil;
-
+/**
+ * http://www.moxing.net/bbs/thread-6372-1-90.html
+ * @author Administrator
+ *
+ */
 @Service
 @CrawlerDescription(crawlerSite= MoxingnetContentResourceCrawler.SITE_NAME , crawlerType = CrawleType.CONTENT, crawlerMatchUrl = MoxingnetContentResourceCrawler.MATCH_URL)
 public class MoxingnetContentResourceCrawler extends Crawler {

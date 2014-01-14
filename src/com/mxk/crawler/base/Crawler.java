@@ -122,6 +122,9 @@ public abstract class Crawler {
 						String fileName = StringUtil.cutOutUrlFileName(content.getSimpleImage());
 						String simpleImage = baseFileUploadService.saveFile(byteFile, fileName);
 						resource.setSimpleImage(simpleImage);
+						if(simpleImage != null){
+							resource.setSimpleImageName(simpleImage.substring(simpleImage.lastIndexOf("\\")+1,simpleImage.length()));
+						}
 					}
 					rlist.add(resource);
 				}

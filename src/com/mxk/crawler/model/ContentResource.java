@@ -28,6 +28,7 @@ public class ContentResource extends BaseResource {
 	private String post;//评论数量
 	public List<String> images;
 	public String simpleImage;
+	public String simpleImageName;
 	public String multiData;//额外的一些有价值的数据;
 	
 	public String getId() {
@@ -119,6 +120,12 @@ public class ContentResource extends BaseResource {
 	}
 	public void setMultiData(String multiData) {
 		this.multiData = multiData;
+	}
+	public String getSimpleImageName() {
+		return simpleImageName;
+	}
+	public void setSimpleImageName(String simpleImageName) {
+		this.simpleImageName = simpleImageName;
 	}
 	
 }

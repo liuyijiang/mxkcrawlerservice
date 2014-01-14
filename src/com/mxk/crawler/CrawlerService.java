@@ -84,7 +84,7 @@ public class CrawlerService {
 		    	allfail = false;
 		    	logger.info("保存 links：{}",link.getUrl());
 		    }else{
-		    	logger.info("链接重复无法保存：{}",link.getUrl());
+		    	//logger.info("链接重复无法保存：{}",link.getUrl());
 		    }
 		}
 		return allfail;
@@ -95,7 +95,7 @@ public class CrawlerService {
 		Update u = new Update();
 		u.set("state", state);
 		mog.updateMulti(q ,u, Links.class);
-		logger.info("链接状态被修改：{} 目前状态：{}",url,state);
+		logger.debug("链接状态被修改：{} 目前状态：{}",url,state);
 	}
 	
 	
