@@ -7,6 +7,9 @@ http://www.moxing.net/bbs/
 舰船类
 http://www.modelshipgallery.com/gallery/cv/cv-index.html
 http://davidbilek.sweb.cz/ducks.htm
+http://www.steelnavy.com/
+
+
 
 综合
 http://www.geocities.jp
