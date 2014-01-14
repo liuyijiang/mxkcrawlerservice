@@ -6,6 +6,8 @@ CREATE  TABLE `mxk`.`TB_WEB_RESOURCE` (
   `sitename` VARCHAR(45) NULL ,
   `siteurl` VARCHAR(250) NULL ,
   `url` VARCHAR(250) NULL ,
+  `info` VARCHAR(650) NULL ,
+  `multiinfo` VARCHAR(250) NULL ,
   `reads` INT NULL ,
   `posts` INT NULL ,
   `insignificance` INT NULL ,
