@@ -48,7 +48,7 @@ public class SystemController {
 	 * 系统主页
 	 * @return
 	 */
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/sindex", method = RequestMethod.GET)
 	public ModelAndView index(){
 		List<String> type = new ArrayList<String>();
 		for(ResourceType r :ResourceType.values()){
