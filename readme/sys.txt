@@ -1,0 +1,28 @@
+ftp mysql 数据库在 node1上
+
+系统全环境搭建步骤
+################################################################################
+1创建一个linux非root用户   用来安装各种软件配置环境
+adduser mxk 
+################################################################################
+
+2 mysql数据库
+ 安装:
+新建用户: create user mxk IDENTIFIED BY 'mxk123';
+授权：grant all privileges on *.* to mxk@"%" IDENTIFIED BY 'mxk123';
+
+################################################################################
+3 ftp 服务器
+ftp使用 stand alone模式
+安装
+$ sudo apt-get install vsftpd
+查看是否打开21端口
+$ sudo netstat -npltu | grep 21
+tcp    0    0 0.0.0.0:21        0.0.0.0:*    LISTEN      15601/vsftpd
+$修改 配置文件
+/etc/vsftpd.conf
+local_enable=YES
+write_enable=YES
+local_root=/home/mxk/images/
+service vsftpd restart//重启
+##################################################################################
