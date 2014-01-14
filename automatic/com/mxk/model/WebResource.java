@@ -15,6 +15,10 @@ public class WebResource {
 
     private String url;
 
+    private String info;
+
+    private String multiinfo;
+
     private Integer reads;
 
     private Integer posts;
@@ -77,6 +81,22 @@ public class WebResource {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info == null ? null : info.trim();
+    }
+
+    public String getMultiinfo() {
+        return multiinfo;
+    }
+
+    public void setMultiinfo(String multiinfo) {
+        this.multiinfo = multiinfo == null ? null : multiinfo.trim();
     }
 
     public Integer getReads() {

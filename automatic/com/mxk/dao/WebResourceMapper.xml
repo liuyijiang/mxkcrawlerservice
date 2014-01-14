@@ -9,6 +9,8 @@
     <result column="sitename" property="sitename" jdbcType="VARCHAR" />
     <result column="siteurl" property="siteurl" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="multiinfo" property="multiinfo" jdbcType="VARCHAR" />
     <result column="reads" property="reads" jdbcType="INTEGER" />
     <result column="posts" property="posts" jdbcType="INTEGER" />
     <result column="insignificance" property="insignificance" jdbcType="INTEGER" />
@@ -73,7 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, image, owner, sitename, siteurl, url, reads, posts, insignificance, significance
+    id, title, image, owner, sitename, siteurl, url, info, multiinfo, reads, posts, insignificance, 
+    significance
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mxk.model.WebResourceCriteria" >
     select
@@ -108,12 +111,14 @@
   <insert id="insert" parameterType="com.mxk.model.WebResource" >
     insert into tb_web_resource (id, title, image, 
       owner, sitename, siteurl, 
-      url, reads, posts, 
-      insignificance, significance)
+      url, info, multiinfo, 
+      reads, posts, insignificance, 
+      significance)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
       #{owner,jdbcType=VARCHAR}, #{sitename,jdbcType=VARCHAR}, #{siteurl,jdbcType=VARCHAR}, 
-      #{url,jdbcType=VARCHAR}, #{reads,jdbcType=INTEGER}, #{posts,jdbcType=INTEGER}, 
-      #{insignificance,jdbcType=INTEGER}, #{significance,jdbcType=INTEGER})
+      #{url,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, #{multiinfo,jdbcType=VARCHAR}, 
+      #{reads,jdbcType=INTEGER}, #{posts,jdbcType=INTEGER}, #{insignificance,jdbcType=INTEGER}, 
+      #{significance,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mxk.model.WebResource" >
     insert into tb_web_resource
@@ -138,6 +143,12 @@
       </if>
       <if test="url != null" >
         url,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="multiinfo != null" >
+        multiinfo,
       </if>
       <if test="reads != null" >
         reads,
@@ -173,6 +184,12 @@
       </if>
       <if test="url != null" >
         #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="multiinfo != null" >
+        #{multiinfo,jdbcType=VARCHAR},
       </if>
       <if test="reads != null" >
         #{reads,jdbcType=INTEGER},
@@ -218,6 +235,12 @@
       <if test="record.url != null" >
         url = #{record.url,jdbcType=VARCHAR},
       </if>
+      <if test="record.info != null" >
+        info = #{record.info,jdbcType=VARCHAR},
+      </if>
+      <if test="record.multiinfo != null" >
+        multiinfo = #{record.multiinfo,jdbcType=VARCHAR},
+      </if>
       <if test="record.reads != null" >
         reads = #{record.reads,jdbcType=INTEGER},
       </if>
@@ -244,6 +267,8 @@
       sitename = #{record.sitename,jdbcType=VARCHAR},
       siteurl = #{record.siteurl,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
+      info = #{record.info,jdbcType=VARCHAR},
+      multiinfo = #{record.multiinfo,jdbcType=VARCHAR},
       reads = #{record.reads,jdbcType=INTEGER},
       posts = #{record.posts,jdbcType=INTEGER},
       insignificance = #{record.insignificance,jdbcType=INTEGER},
@@ -273,6 +298,12 @@
       <if test="url != null" >
         url = #{url,jdbcType=VARCHAR},
       </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="multiinfo != null" >
+        multiinfo = #{multiinfo,jdbcType=VARCHAR},
+      </if>
       <if test="reads != null" >
         reads = #{reads,jdbcType=INTEGER},
       </if>
@@ -296,6 +327,8 @@
       sitename = #{sitename,jdbcType=VARCHAR},
       siteurl = #{siteurl,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      multiinfo = #{multiinfo,jdbcType=VARCHAR},
       reads = #{reads,jdbcType=INTEGER},
       posts = #{posts,jdbcType=INTEGER},
       insignificance = #{insignificance,jdbcType=INTEGER},

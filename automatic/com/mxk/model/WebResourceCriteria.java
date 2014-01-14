@@ -584,6 +584,146 @@ public class WebResourceCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andInfoIsNull() {
+            addCriterion("info is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoIsNotNull() {
+            addCriterion("info is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoEqualTo(String value) {
+            addCriterion("info =", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoNotEqualTo(String value) {
+            addCriterion("info <>", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoGreaterThan(String value) {
+            addCriterion("info >", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoGreaterThanOrEqualTo(String value) {
+            addCriterion("info >=", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoLessThan(String value) {
+            addCriterion("info <", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoLessThanOrEqualTo(String value) {
+            addCriterion("info <=", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoLike(String value) {
+            addCriterion("info like", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoNotLike(String value) {
+            addCriterion("info not like", value, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoIn(List<String> values) {
+            addCriterion("info in", values, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoNotIn(List<String> values) {
+            addCriterion("info not in", values, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoBetween(String value1, String value2) {
+            addCriterion("info between", value1, value2, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andInfoNotBetween(String value1, String value2) {
+            addCriterion("info not between", value1, value2, "info");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoIsNull() {
+            addCriterion("multiinfo is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoIsNotNull() {
+            addCriterion("multiinfo is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoEqualTo(String value) {
+            addCriterion("multiinfo =", value, "multiinfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoNotEqualTo(String value) {
+            addCriterion("multiinfo <>", value, "multiinfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoGreaterThan(String value) {
+            addCriterion("multiinfo >", value, "multiinfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoGreaterThanOrEqualTo(String value) {
+            addCriterion("multiinfo >=", value, "multiinfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoLessThan(String value) {
+            addCriterion("multiinfo <", value, "multiinfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoLessThanOrEqualTo(String value) {
+            addCriterion("multiinfo <=", value, "multiinfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoLike(String value) {
+            addCriterion("multiinfo like", value, "multiinfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoNotLike(String value) {
+            addCriterion("multiinfo not like", value, "multiinfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoIn(List<String> values) {
+            addCriterion("multiinfo in", values, "multiinfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoNotIn(List<String> values) {
+            addCriterion("multiinfo not in", values, "multiinfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoBetween(String value1, String value2) {
+            addCriterion("multiinfo between", value1, value2, "multiinfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiinfoNotBetween(String value1, String value2) {
+            addCriterion("multiinfo not between", value1, value2, "multiinfo");
+            return (Criteria) this;
+        }
+
         public Criteria andReadsIsNull() {
             addCriterion("reads is null");
             return (Criteria) this;
