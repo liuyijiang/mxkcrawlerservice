@@ -107,13 +107,13 @@ public class ResourceUploadService {
 			String fileinfo = cr.getSimpleImageName();
 			String folder = fileinfo.substring(0,fileinfo.indexOf("/"));
 			String filename = fileinfo.substring(fileinfo.indexOf("/") + 1 ,fileinfo.length());
-			if(ftpService.uploadFile(cr.getSimpleImage(), filename , folder)){
+			//if(ftpService.uploadFile(cr.getSimpleImage(), filename , folder)){
 				Map<String,Object> value = BeanUtil.transBeanToMap(cr);
 				if(callService(value)){
 					refreshResourceState(cr.getId(),ResourceState.UPLOADED.getCode());
 				}
 				logger.error("完成资源上传{}" ,JSON.toJSONString(value));
-			}
+			//}
 		}
 	}
 	

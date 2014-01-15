@@ -56,10 +56,10 @@ public class WebResourceService {
 		web.setInsignificance((int)(Math.random()*100));
 		String post = "";
 		String hits = "";
-		if(StringUtil.stringIsEmpty(contentResource.getPost())){
+		if(!StringUtil.stringIsEmpty(contentResource.getPost())){
 			post = " 评论：" + contentResource.getPost();
 		}
-		if(StringUtil.stringIsEmpty(contentResource.getHit())){
+		if(!StringUtil.stringIsEmpty(contentResource.getHit())){
 			hits = " 阅读：" + contentResource.getHit();
 		}
 		web.setMultiinfo(contentResource.getMultiData() + post + hits);
