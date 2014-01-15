@@ -4,7 +4,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Date;
 
 import javax.imageio.ImageIO;
 
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.mxk.util.StringUtil;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
@@ -36,19 +34,27 @@ public class BaseFileUploadService {
 	@Value("${file.max.size}")
 	private double max;
 	
-     public String saveFile(byte[] byteFile, String fileName){
+	/**
+	 * 保存文件 到一个文件夹
+	 * @param byteFile
+	 * @param fileName
+	 * @param foldler
+	 * @return
+	 */
+     public String saveFile(byte[] byteFile, String fileName , String foldler){
     	 String filepath = null;
     	if(byteFile == null){
  			return filepath;
  		}
-    	filepath = rootpath + createFilePath(fileName);
-    	logger.info("开始保存文件{}",fileName);
+    	filepath = rootpath + File.separator + foldler + File.separator + fileName;
+    	logger.debug("开始保存文件{}",fileName);
     	File file = new File(filepath);
 		try{
 			FileUtils.writeByteArrayToFile(file, byteFile);
 			weakZipImage(file,max);
 		} catch (Exception e) {
-			logger.error("上传文件失败",e);
+			filepath = null;
+			logger.error("保存文件失败{} 文件名路径：{}",e, filepath);
         }
 		return filepath;	
      }	
@@ -57,9 +63,9 @@ public class BaseFileUploadService {
       * 生成文件路径
       * @return
       */
-     private String createFilePath(String fileName){
-    	return File.separator + StringUtil.dateToString(new Date(), "yyyyMMdd") + File.separator + fileName;
-     }
+//     private String createFilePath(String fileName){
+//    	return File.separator + StringUtil.dateToString(new Date(), "yyyyMMdd") + File.separator + fileName;
+//     }
      
      /**
  	 * 根据比例来压缩byte
@@ -67,7 +73,7 @@ public class BaseFileUploadService {
  	 * @param max
  	 */
  	private void weakZipImage(File file,double max){
- 		logger.info("压缩文件");
+ 		logger.debug("压缩文件");
  		logger.info("压缩前文件大小：{}",file.length() /1024 + "KB");
  		try{
  			BufferedImage image = ImageIO.read(file);
@@ -96,7 +102,7 @@ public class BaseFileUploadService {
              os.close();
              logger.info("压缩后文件大小：{}",file.length() /1024 + "KB");
  		} catch (Exception e) {
- 			logger.error("压缩文件失败",e);
+ 			 logger.error("压缩文件失败",e);
          }
  	}
      

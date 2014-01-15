@@ -68,7 +68,6 @@ public class DishModelsContentResourceCrawler extends Crawler {
 			String owner = translator.simpleTranslator(TranslatorType.RUSSIA, str[2]);
 			content.setOwner(owner+ "("  + str[2] + ")");
 			String info = translator.simpleTranslator(TranslatorType.RUSSIA,stringFormat(doc.select("p[align=justify]").first().html()));
-			System.out.println(info);
 			content.setInfo(info);
 			content.setLikurl(url);
 			content.setSitename(SITE_NAME);

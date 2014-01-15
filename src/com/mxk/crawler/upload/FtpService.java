@@ -45,7 +45,7 @@ public class FtpService {
 	 * @param ftpfileName
 	 * @return
 	 */
-	public boolean uploadFile(String fileName,String ftpfileName){
+	public boolean uploadFile(String fileName,String ftpfileName,String ftpfolder){
 		boolean success = true;
 		try{
 			FileInputStream in = new FileInputStream(new File(fileName));
@@ -56,7 +56,8 @@ public class FtpService {
 			ftp.login(name, password);// 登录
 			ftp.setFileType(FTP.BINARY_FILE_TYPE);// 设置传输文件类型
 			ftp.setControlEncoding("utf-8");// 设置字符集，可能会帮助你解决远程服务器上中文文件名的问题
-			ftp.changeWorkingDirectory(path);// 切换文件夹
+			ftp.makeDirectory(path + ftpfolder);
+			ftp.changeWorkingDirectory(path + ftpfolder);// 切换文件夹
             ftp.enterLocalPassiveMode();// 不加上这句，碰到有些ftp服务器还真的不能列取服务器上的文件名.
             ftp.storeFile(ftpfileName, in);
             in.close();
@@ -65,6 +66,7 @@ public class FtpService {
                 ftp.disconnect();
             }
             showState();
+            logger.info("上传ftp服务器成功文件名:{}",fileName);
 		} catch (Exception e) {
 			logger.error("上传ftp服务器失败:{},文件名:{}",e,fileName);
 			success = false;

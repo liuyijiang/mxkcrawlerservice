@@ -1,6 +1,8 @@
 package com.mxk.crawler.base;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -120,10 +122,11 @@ public abstract class Crawler {
 					if(content.getSimpleImage() != null){
 						byte[] byteFile = HttpUtil.getImageByte(content.getSimpleImage());
 						String fileName = StringUtil.cutOutUrlFileName(content.getSimpleImage());
-						String simpleImage = baseFileUploadService.saveFile(byteFile, fileName);
+						String foldler = StringUtil.dateToString(new Date(), "yyyyMMdd");
+						String simpleImage = baseFileUploadService.saveFile(byteFile, fileName , foldler);
 						resource.setSimpleImage(simpleImage);
 						if(simpleImage != null){
-							resource.setSimpleImageName(simpleImage.substring(simpleImage.lastIndexOf("\\")+1,simpleImage.length()));
+							resource.setSimpleImageName( foldler + "/" + fileName);
 						}
 					}
 					rlist.add(resource);
