@@ -1,8 +1,8 @@
-需要爬取的网站
+﻿需要爬取的网站
 1中国大陆
 http://www.moxing.net/bbs/
 
-
+ 
 2国外
 舰船类
 http://www.modelshipgallery.com/gallery/cv/cv-index.html
