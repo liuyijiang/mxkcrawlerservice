@@ -18,9 +18,9 @@
 		</commentGenerator>
 
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/mxk"
-			userId="root"
-			password="root">
+			connectionURL="jdbc:mysql://192.168.2.89:3306/mxkdatabase"
+			userId="mxk"
+			password="mxk123">
 		</jdbcConnection>
 
 		<javaTypeResolver >
@@ -40,7 +40,7 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 		
-		<table domainObjectName="WebResource" tableName="tb_web_resource" />
+		<table domainObjectName="WebResource" tableName="TB_WEB_RESOURCE" />
 		
 	</context>
 
