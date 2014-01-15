@@ -1,3 +1,2 @@
-create database mxk;
-use mxk;
-create table
+create database mxkdatabase;
+use mxkdatabase;
