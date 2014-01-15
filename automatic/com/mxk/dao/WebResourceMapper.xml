@@ -5,13 +5,13 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="image" property="image" jdbcType="VARCHAR" />
-    <result column="owner" property="owner" jdbcType="VARCHAR" />
+    <result column="ownername" property="ownername" jdbcType="VARCHAR" />
     <result column="sitename" property="sitename" jdbcType="VARCHAR" />
     <result column="siteurl" property="siteurl" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="info" property="info" jdbcType="VARCHAR" />
     <result column="multiinfo" property="multiinfo" jdbcType="VARCHAR" />
-    <result column="reads" property="reads" jdbcType="INTEGER" />
+    <result column="hits" property="hits" jdbcType="INTEGER" />
     <result column="posts" property="posts" jdbcType="INTEGER" />
     <result column="insignificance" property="insignificance" jdbcType="INTEGER" />
     <result column="significance" property="significance" jdbcType="INTEGER" />
@@ -75,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, image, owner, sitename, siteurl, url, info, multiinfo, reads, posts, insignificance, 
-    significance
+    id, title, image, ownername, sitename, siteurl, url, info, multiinfo, hits, posts, 
+    insignificance, significance
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mxk.model.WebResourceCriteria" >
     select
@@ -84,7 +84,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tb_web_resource
+    from TB_WEB_RESOURCE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,33 +95,33 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from tb_web_resource
+    from TB_WEB_RESOURCE
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb_web_resource
+    delete from TB_WEB_RESOURCE
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.mxk.model.WebResourceCriteria" >
-    delete from tb_web_resource
+    delete from TB_WEB_RESOURCE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.mxk.model.WebResource" >
-    insert into tb_web_resource (id, title, image, 
-      owner, sitename, siteurl, 
+    insert into TB_WEB_RESOURCE (id, title, image, 
+      ownername, sitename, siteurl, 
       url, info, multiinfo, 
-      reads, posts, insignificance, 
+      hits, posts, insignificance, 
       significance)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
-      #{owner,jdbcType=VARCHAR}, #{sitename,jdbcType=VARCHAR}, #{siteurl,jdbcType=VARCHAR}, 
+      #{ownername,jdbcType=VARCHAR}, #{sitename,jdbcType=VARCHAR}, #{siteurl,jdbcType=VARCHAR}, 
       #{url,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, #{multiinfo,jdbcType=VARCHAR}, 
-      #{reads,jdbcType=INTEGER}, #{posts,jdbcType=INTEGER}, #{insignificance,jdbcType=INTEGER}, 
+      #{hits,jdbcType=INTEGER}, #{posts,jdbcType=INTEGER}, #{insignificance,jdbcType=INTEGER}, 
       #{significance,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mxk.model.WebResource" >
-    insert into tb_web_resource
+    insert into TB_WEB_RESOURCE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -132,8 +132,8 @@
       <if test="image != null" >
         image,
       </if>
-      <if test="owner != null" >
-        owner,
+      <if test="ownername != null" >
+        ownername,
       </if>
       <if test="sitename != null" >
         sitename,
@@ -150,8 +150,8 @@
       <if test="multiinfo != null" >
         multiinfo,
       </if>
-      <if test="reads != null" >
-        reads,
+      <if test="hits != null" >
+        hits,
       </if>
       <if test="posts != null" >
         posts,
@@ -173,8 +173,8 @@
       <if test="image != null" >
         #{image,jdbcType=VARCHAR},
       </if>
-      <if test="owner != null" >
-        #{owner,jdbcType=VARCHAR},
+      <if test="ownername != null" >
+        #{ownername,jdbcType=VARCHAR},
       </if>
       <if test="sitename != null" >
         #{sitename,jdbcType=VARCHAR},
@@ -191,8 +191,8 @@
       <if test="multiinfo != null" >
         #{multiinfo,jdbcType=VARCHAR},
       </if>
-      <if test="reads != null" >
-        #{reads,jdbcType=INTEGER},
+      <if test="hits != null" >
+        #{hits,jdbcType=INTEGER},
       </if>
       <if test="posts != null" >
         #{posts,jdbcType=INTEGER},
@@ -206,13 +206,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.mxk.model.WebResourceCriteria" resultType="java.lang.Integer" >
-    select count(*) from tb_web_resource
+    select count(*) from TB_WEB_RESOURCE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update tb_web_resource
+    update TB_WEB_RESOURCE
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
@@ -223,8 +223,8 @@
       <if test="record.image != null" >
         image = #{record.image,jdbcType=VARCHAR},
       </if>
-      <if test="record.owner != null" >
-        owner = #{record.owner,jdbcType=VARCHAR},
+      <if test="record.ownername != null" >
+        ownername = #{record.ownername,jdbcType=VARCHAR},
       </if>
       <if test="record.sitename != null" >
         sitename = #{record.sitename,jdbcType=VARCHAR},
@@ -241,8 +241,8 @@
       <if test="record.multiinfo != null" >
         multiinfo = #{record.multiinfo,jdbcType=VARCHAR},
       </if>
-      <if test="record.reads != null" >
-        reads = #{record.reads,jdbcType=INTEGER},
+      <if test="record.hits != null" >
+        hits = #{record.hits,jdbcType=INTEGER},
       </if>
       <if test="record.posts != null" >
         posts = #{record.posts,jdbcType=INTEGER},
@@ -259,17 +259,17 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update tb_web_resource
+    update TB_WEB_RESOURCE
     set id = #{record.id,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       image = #{record.image,jdbcType=VARCHAR},
-      owner = #{record.owner,jdbcType=VARCHAR},
+      ownername = #{record.ownername,jdbcType=VARCHAR},
       sitename = #{record.sitename,jdbcType=VARCHAR},
       siteurl = #{record.siteurl,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
       info = #{record.info,jdbcType=VARCHAR},
       multiinfo = #{record.multiinfo,jdbcType=VARCHAR},
-      reads = #{record.reads,jdbcType=INTEGER},
+      hits = #{record.hits,jdbcType=INTEGER},
       posts = #{record.posts,jdbcType=INTEGER},
       insignificance = #{record.insignificance,jdbcType=INTEGER},
       significance = #{record.significance,jdbcType=INTEGER}
@@ -278,7 +278,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.mxk.model.WebResource" >
-    update tb_web_resource
+    update TB_WEB_RESOURCE
     <set >
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
@@ -286,8 +286,8 @@
       <if test="image != null" >
         image = #{image,jdbcType=VARCHAR},
       </if>
-      <if test="owner != null" >
-        owner = #{owner,jdbcType=VARCHAR},
+      <if test="ownername != null" >
+        ownername = #{ownername,jdbcType=VARCHAR},
       </if>
       <if test="sitename != null" >
         sitename = #{sitename,jdbcType=VARCHAR},
@@ -304,8 +304,8 @@
       <if test="multiinfo != null" >
         multiinfo = #{multiinfo,jdbcType=VARCHAR},
       </if>
-      <if test="reads != null" >
-        reads = #{reads,jdbcType=INTEGER},
+      <if test="hits != null" >
+        hits = #{hits,jdbcType=INTEGER},
       </if>
       <if test="posts != null" >
         posts = #{posts,jdbcType=INTEGER},
@@ -320,16 +320,16 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mxk.model.WebResource" >
-    update tb_web_resource
+    update TB_WEB_RESOURCE
     set title = #{title,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},
-      owner = #{owner,jdbcType=VARCHAR},
+      ownername = #{ownername,jdbcType=VARCHAR},
       sitename = #{sitename,jdbcType=VARCHAR},
       siteurl = #{siteurl,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       info = #{info,jdbcType=VARCHAR},
       multiinfo = #{multiinfo,jdbcType=VARCHAR},
-      reads = #{reads,jdbcType=INTEGER},
+      hits = #{hits,jdbcType=INTEGER},
       posts = #{posts,jdbcType=INTEGER},
       insignificance = #{insignificance,jdbcType=INTEGER},
       significance = #{significance,jdbcType=INTEGER}

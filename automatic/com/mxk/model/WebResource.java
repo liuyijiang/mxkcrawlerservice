@@ -7,7 +7,7 @@ public class WebResource {
 
     private String image;
 
-    private String owner;
+    private String ownername;
 
     private String sitename;
 
@@ -19,7 +19,7 @@ public class WebResource {
 
     private String multiinfo;
 
-    private Integer reads;
+    private Integer hits;
 
     private Integer posts;
 
@@ -51,12 +51,12 @@ public class WebResource {
         this.image = image == null ? null : image.trim();
     }
 
-    public String getOwner() {
-        return owner;
+    public String getOwnername() {
+        return ownername;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner == null ? null : owner.trim();
+    public void setOwnername(String ownername) {
+        this.ownername = ownername == null ? null : ownername.trim();
     }
 
     public String getSitename() {
@@ -99,12 +99,12 @@ public class WebResource {
         this.multiinfo = multiinfo == null ? null : multiinfo.trim();
     }
 
-    public Integer getReads() {
-        return reads;
+    public Integer getHits() {
+        return hits;
     }
 
-    public void setReads(Integer reads) {
-        this.reads = reads;
+    public void setHits(Integer hits) {
+        this.hits = hits;
     }
 
     public Integer getPosts() {

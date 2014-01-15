@@ -304,73 +304,73 @@ public class WebResourceCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andOwnerIsNull() {
-            addCriterion("owner is null");
+        public Criteria andOwnernameIsNull() {
+            addCriterion("ownername is null");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerIsNotNull() {
-            addCriterion("owner is not null");
+        public Criteria andOwnernameIsNotNull() {
+            addCriterion("ownername is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerEqualTo(String value) {
-            addCriterion("owner =", value, "owner");
+        public Criteria andOwnernameEqualTo(String value) {
+            addCriterion("ownername =", value, "ownername");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerNotEqualTo(String value) {
-            addCriterion("owner <>", value, "owner");
+        public Criteria andOwnernameNotEqualTo(String value) {
+            addCriterion("ownername <>", value, "ownername");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerGreaterThan(String value) {
-            addCriterion("owner >", value, "owner");
+        public Criteria andOwnernameGreaterThan(String value) {
+            addCriterion("ownername >", value, "ownername");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerGreaterThanOrEqualTo(String value) {
-            addCriterion("owner >=", value, "owner");
+        public Criteria andOwnernameGreaterThanOrEqualTo(String value) {
+            addCriterion("ownername >=", value, "ownername");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerLessThan(String value) {
-            addCriterion("owner <", value, "owner");
+        public Criteria andOwnernameLessThan(String value) {
+            addCriterion("ownername <", value, "ownername");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerLessThanOrEqualTo(String value) {
-            addCriterion("owner <=", value, "owner");
+        public Criteria andOwnernameLessThanOrEqualTo(String value) {
+            addCriterion("ownername <=", value, "ownername");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerLike(String value) {
-            addCriterion("owner like", value, "owner");
+        public Criteria andOwnernameLike(String value) {
+            addCriterion("ownername like", value, "ownername");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerNotLike(String value) {
-            addCriterion("owner not like", value, "owner");
+        public Criteria andOwnernameNotLike(String value) {
+            addCriterion("ownername not like", value, "ownername");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerIn(List<String> values) {
-            addCriterion("owner in", values, "owner");
+        public Criteria andOwnernameIn(List<String> values) {
+            addCriterion("ownername in", values, "ownername");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerNotIn(List<String> values) {
-            addCriterion("owner not in", values, "owner");
+        public Criteria andOwnernameNotIn(List<String> values) {
+            addCriterion("ownername not in", values, "ownername");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerBetween(String value1, String value2) {
-            addCriterion("owner between", value1, value2, "owner");
+        public Criteria andOwnernameBetween(String value1, String value2) {
+            addCriterion("ownername between", value1, value2, "ownername");
             return (Criteria) this;
         }
 
-        public Criteria andOwnerNotBetween(String value1, String value2) {
-            addCriterion("owner not between", value1, value2, "owner");
+        public Criteria andOwnernameNotBetween(String value1, String value2) {
+            addCriterion("ownername not between", value1, value2, "ownername");
             return (Criteria) this;
         }
 
@@ -724,63 +724,63 @@ public class WebResourceCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andReadsIsNull() {
-            addCriterion("reads is null");
+        public Criteria andHitsIsNull() {
+            addCriterion("hits is null");
             return (Criteria) this;
         }
 
-        public Criteria andReadsIsNotNull() {
-            addCriterion("reads is not null");
+        public Criteria andHitsIsNotNull() {
+            addCriterion("hits is not null");
             return (Criteria) this;
         }
 
-        public Criteria andReadsEqualTo(Integer value) {
-            addCriterion("reads =", value, "reads");
+        public Criteria andHitsEqualTo(Integer value) {
+            addCriterion("hits =", value, "hits");
             return (Criteria) this;
         }
 
-        public Criteria andReadsNotEqualTo(Integer value) {
-            addCriterion("reads <>", value, "reads");
+        public Criteria andHitsNotEqualTo(Integer value) {
+            addCriterion("hits <>", value, "hits");
             return (Criteria) this;
         }
 
-        public Criteria andReadsGreaterThan(Integer value) {
-            addCriterion("reads >", value, "reads");
+        public Criteria andHitsGreaterThan(Integer value) {
+            addCriterion("hits >", value, "hits");
             return (Criteria) this;
         }
 
-        public Criteria andReadsGreaterThanOrEqualTo(Integer value) {
-            addCriterion("reads >=", value, "reads");
+        public Criteria andHitsGreaterThanOrEqualTo(Integer value) {
+            addCriterion("hits >=", value, "hits");
             return (Criteria) this;
         }
 
-        public Criteria andReadsLessThan(Integer value) {
-            addCriterion("reads <", value, "reads");
+        public Criteria andHitsLessThan(Integer value) {
+            addCriterion("hits <", value, "hits");
             return (Criteria) this;
         }
 
-        public Criteria andReadsLessThanOrEqualTo(Integer value) {
-            addCriterion("reads <=", value, "reads");
+        public Criteria andHitsLessThanOrEqualTo(Integer value) {
+            addCriterion("hits <=", value, "hits");
             return (Criteria) this;
         }
 
-        public Criteria andReadsIn(List<Integer> values) {
-            addCriterion("reads in", values, "reads");
+        public Criteria andHitsIn(List<Integer> values) {
+            addCriterion("hits in", values, "hits");
             return (Criteria) this;
         }
 
-        public Criteria andReadsNotIn(List<Integer> values) {
-            addCriterion("reads not in", values, "reads");
+        public Criteria andHitsNotIn(List<Integer> values) {
+            addCriterion("hits not in", values, "hits");
             return (Criteria) this;
         }
 
-        public Criteria andReadsBetween(Integer value1, Integer value2) {
-            addCriterion("reads between", value1, value2, "reads");
+        public Criteria andHitsBetween(Integer value1, Integer value2) {
+            addCriterion("hits between", value1, value2, "hits");
             return (Criteria) this;
         }
 
-        public Criteria andReadsNotBetween(Integer value1, Integer value2) {
-            addCriterion("reads not between", value1, value2, "reads");
+        public Criteria andHitsNotBetween(Integer value1, Integer value2) {
+            addCriterion("hits not between", value1, value2, "hits");
             return (Criteria) this;
         }
 
