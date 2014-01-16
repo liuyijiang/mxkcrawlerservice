@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,10 @@ import org.springframework.stereotype.Service;
 
 import com.mxk.crawler.base.Crawler;
 import com.mxk.crawler.base.CrawlerStateInfo;
+import com.mxk.dao.BaseLinkMapper;
+import com.mxk.model.BaseLink;
+import com.mxk.model.BaseLinkCriteria;
+import com.mxk.system.SystemService;
 /**
  * 
  * @author Administrator
@@ -26,6 +31,12 @@ public class CrawlerTask implements ApplicationContextAware {
 	
 	public static final int SHEEP_TIME = 5000;
 	
+	@Resource
+	private BaseLinkMapper baseLinkMapper;
+	
+	@Resource
+	private SystemService systemService;
+	
 	/** 所有爬取器 */
 	private List<Crawler> crawlers = new ArrayList<Crawler>();
 	
@@ -34,6 +45,7 @@ public class CrawlerTask implements ApplicationContextAware {
 	 */
 	@PostConstruct 
     public void startCrawlerTask(){
+		systemService.loadBaseUrl();
     	for ( Crawler crawler : crawlers ) {
     		synchronized(crawler){
     		   crawler.execute();
@@ -88,6 +100,5 @@ public class CrawlerTask implements ApplicationContextAware {
 			logger.error("thread sheep error {}" ,e);
 		}
 	}
-	
 	
 }

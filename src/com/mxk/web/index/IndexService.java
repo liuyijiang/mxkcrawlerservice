@@ -25,6 +25,11 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
+import org.apache.lucene.search.highlight.Highlighter;
+import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
+import org.apache.lucene.search.highlight.QueryScorer;
+import org.apache.lucene.search.highlight.SimpleFragmenter;
+import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
@@ -82,7 +87,7 @@ public class IndexService {
 		for (WebResource res : list) {
 			String url = res.getUrl();
 			String title = res.getTitle();
-			String content = res.getInfo();
+			String content = res.getTitle()+" | "+res.getInfo();
 			String img = res.getImage();
 			String txt = res.getOwnername() + " | " + res.getMultiinfo();
 			// 创建文档
@@ -130,7 +135,7 @@ public class IndexService {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-		searcher("坦克","title");
+		searcher("战舰","content");
 	}
 
 	private static void printAnalysisResult(Analyzer analyzer, String keyWord)
@@ -170,15 +175,31 @@ public class IndexService {
 					false);
 			searcher.search(query, collector);
 			
+			//高亮
+			SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<font color='red'>", "</font>");
+			Highlighter highlighter = new Highlighter(simpleHTMLFormatter,new QueryScorer(query));   
+	        highlighter.setTextFragmenter(new SimpleFragmenter(1024));       
 			// 获取结果
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 			for (int i = 0; i < hits.length; i++) {
 				Document doc = searcher.doc(hits[i].doc);
 				SearchRespone sr = new SearchRespone();
 				sr.setImg(doc.get("img"));
-				sr.setInfo(doc.get("content"));
+				String title = doc.get("title");
+				String info = doc.get("content");
+				TokenStream tokenStreamTitle = analyzer.tokenStream("title",new StringReader(title));  
+				String highLightTitle = highlighter.getBestFragment(tokenStreamTitle, title);
+				if(highLightTitle == null){
+					highLightTitle = title;
+				}
+				TokenStream tokenStreamInfo = analyzer.tokenStream("content",new StringReader(info));  
+				String highLightInfo = highlighter.getBestFragment(tokenStreamInfo, info);
+				if(highLightInfo == null){
+					highLightInfo = title;
+				}
+				sr.setInfo(highLightInfo);
 				sr.setSubtext(doc.get("subtext"));
-				sr.setTitle(highlight(words,doc.get("title")));
+				sr.setTitle(highLightTitle);
 				sr.setUrl(doc.get("url"));
 				list.add(sr);
 			}
@@ -190,7 +211,7 @@ public class IndexService {
 	
 	
 	private static void searcher(String words, String field)
-			throws CorruptIndexException, IOException, ParseException {
+			throws CorruptIndexException, IOException, ParseException, InvalidTokenOffsetsException {
 		File indexDir = new File("D:\\index");
 		// 索引目录
 		Directory dir = FSDirectory.open(indexDir);
@@ -219,25 +240,39 @@ public class IndexService {
 
 		System.out.println(numTotalHits + " total matching pages");
 		// 显示搜索结果
+		SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<font color='red'>", "</font>");
+		 Highlighter highlighter = new Highlighter(simpleHTMLFormatter,new QueryScorer(query));   
+         highlighter.setTextFragmenter(new SimpleFragmenter(1024));       
+         
 		for (int i = 0; i < hits.length; i++) {
 			Document doc = searcher.doc(hits[i].doc);
 			String url = doc.get("url");
-			String title = highlight(words,doc.get("title"));
-			String content = highlight(words,doc.get("content"));
+			
+			String title = doc.get("title");
+			TokenStream tokenStream = analyzer.tokenStream("title",new StringReader(title));  
+			String highLightText = highlighter.getBestFragment(tokenStream, title);
+			if(highLightText == null){
+				highLightText = title;
+			}
+	        //highlighter.getBestFragment(analyzer, "content", d.get("content"))
+			
+			String content = doc.get("content");
+			TokenStream tokenStream2 = analyzer.tokenStream("content",new StringReader(content));   
+			String highLightText2 = highlighter.getBestFragment(tokenStream2, content);  
+			
 			String img = doc.get("img");
 			String txt = doc.get("subtext");
-			System.out.println((i + 1) + "." + title);
+			System.out.println((i + 1) + "." + highLightText);
 			System.out.println("-----------------------------------");
-			System.out.println(content);
+			System.out.println(highLightText2);
 			System.out.println("-----------------------------------");
 			System.out.println(url);
 			System.out.println();
 		}
 	}
-
-	private static String highlight(String key,String str){
-		return str.replace(key, "<font color='red'>"+ key +"</font>");
-	}
+   
+	//public static  
+	
 	
 	
 }
