@@ -18,7 +18,7 @@
 		</commentGenerator>
 
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://192.168.2.89:3306/mxkdatabase"
+			connectionURL="jdbc:mysql://192.168.2.109:3306/mxkdatabase"
 			userId="mxk"
 			password="mxk123">
 		</jdbcConnection>
@@ -41,7 +41,7 @@
 		</javaClientGenerator>
 		
 		<table domainObjectName="WebResource" tableName="TB_WEB_RESOURCE" />
-		
+		<table domainObjectName="BaseLink" tableName="TB_BASE_LINK" />
 	</context>
 
 </generatorConfiguration>
