@@ -1,4 +1,8 @@
-﻿需要爬取的网站
+﻿http://blog.csdn.net/yahuvi/article/details/5826823
+http://www.open-open.com/lib/view/open1347432540553.html
+http://www.wizzer.cn/?p=2299
+
+需要爬取的网站
 1中国大陆
 http://www.moxing.net/bbs/
 
