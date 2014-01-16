@@ -24,6 +24,7 @@ import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.search.highlight.Highlighter;
 import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
@@ -62,7 +63,7 @@ public class IndexService {
 		WebResourceCriteria criteria = new WebResourceCriteria();
 		criteria.createCriteria().andIdGreaterThan(0);
 		List<WebResource> list = webResourceMapper.selectByExample(criteria);
-		System.out.println(list.size());
+		//System.out.println(list.size());
 
 		// Indexer indexer = new Indexe
 
@@ -94,7 +95,7 @@ public class IndexService {
 			Document doc = new Document();
 			// 加入url域
 			doc.add(new Field("url", url, Field.Store.YES,
-					Field.Index.NOT_ANALYZED));
+					Field.Index.NOT_ANALYZED));  //Field.Index.NOT_ANALYZED 要分词
 			// 加入标题域
 			doc.add(new Field("title", title, Field.Store.YES,
 					Field.Index.ANALYZED));
@@ -104,7 +105,7 @@ public class IndexService {
 			
 			// 加入内容域
 			doc.add(new Field("img", img, Field.Store.YES,
-					Field.Index.ANALYZED));
+					Field.Index.NOT_ANALYZED));
 			
 			doc.add(new Field("subtext", txt, Field.Store.YES,
 					Field.Index.ANALYZED));
@@ -124,18 +125,18 @@ public class IndexService {
 	}
 
 	public static void main(String[] args) throws Exception{
-//		String keyWord = "IKAnalyzer的分词效果到底怎么样呢，我们来看一下吧";
+//		String keyWord = "胡德号战舰";
 //		// 创建IKAnalyzer中文分词对象
 //		IKAnalyzer analyzer = new IKAnalyzer();
 //		// 使用智能分词
-//		analyzer.setUseSmart(true);
-//		// 打印分词结果
+//		//analyzer.setUseSmart(false);
+//		// 打印分词结果 
 //		try {
 //			printAnalysisResult(analyzer, keyWord);
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-		searcher("战舰","content");
+		searcher("胡德号","content");
 	}
 
 	private static void printAnalysisResult(Analyzer analyzer, String keyWord)
@@ -159,28 +160,34 @@ public class IndexService {
 			// 索引目录
 			Directory dir = FSDirectory.open(indexDir);
 			// 根据索引目录创建读索引对象
-			IndexReader reader = IndexReader.open(dir);
+			IndexReader reader = IndexReader.open(dir); //使用一个
 			// 搜索对象创建
 			IndexSearcher searcher = new IndexSearcher(reader);
 			// IKAnalyzer中文分词
 			Analyzer analyzer = new IKAnalyzer();
 			// 创建查询解析对象
 			QueryParser parser = new QueryParser(Version.LUCENE_36, field, analyzer);
-			parser.setDefaultOperator(QueryParser.AND_OPERATOR);
+			parser.setDefaultOperator(QueryParser.OR_OPERATOR);//设置表达式 与 或
 			// 根据域和目标搜索文本创建查询器
 			Query query = parser.parse(words);
 			System.out.println("Searching for: " + query.toString(field));
 			// 对结果进行相似度打分排序
-			TopScoreDocCollector collector = TopScoreDocCollector.create(10,
-					false);
-			searcher.search(query, collector);
+//			TopScoreDocCollector collector = TopScoreDocCollector.create(10,
+//					false);
+//			searcher.search(query, collector);
+			TopDocs topDocs = searcher.search(query, 10);
+			
+			
+			// Sort sort=new Sort(new SortField("birthdays", 
+           // new com.ljq.comparator.DateValComparatorSource("yyyy-MM-dd"), false));
 			
 			//高亮
 			SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<font color='red'>", "</font>");
 			Highlighter highlighter = new Highlighter(simpleHTMLFormatter,new QueryScorer(query));   
 	        highlighter.setTextFragmenter(new SimpleFragmenter(1024));       
 			// 获取结果
-			ScoreDoc[] hits = collector.topDocs().scoreDocs;
+	        ScoreDoc[] hits = topDocs.scoreDocs;
+//			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 			for (int i = 0; i < hits.length; i++) {
 				Document doc = searcher.doc(hits[i].doc);
 				SearchRespone sr = new SearchRespone();
@@ -223,16 +230,17 @@ public class IndexService {
 		Analyzer analyzer = new IKAnalyzer();
 		// 创建查询解析对象
 		QueryParser parser = new QueryParser(Version.LUCENE_36, field, analyzer);
-		parser.setDefaultOperator(QueryParser.AND_OPERATOR);
+		parser.setDefaultOperator(QueryParser.OR_OPERATOR);
 		// 根据域和目标搜索文本创建查询器
 		Query query = parser.parse(words);
 		
 		
 		System.out.println("Searching for: " + query.toString(field));
 		// 对结果进行相似度打分排序
-		TopScoreDocCollector collector = TopScoreDocCollector.create(10,
+		TopScoreDocCollector collector = TopScoreDocCollector.create(100,
 				false);
 		searcher.search(query, collector);
+		//searcher.se
 		// 获取结果
 		ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
@@ -244,7 +252,7 @@ public class IndexService {
 		 Highlighter highlighter = new Highlighter(simpleHTMLFormatter,new QueryScorer(query));   
          highlighter.setTextFragmenter(new SimpleFragmenter(1024));       
          
-		for (int i = 0; i < hits.length; i++) {
+		for (int i = 20; i < hits.length; i++) {
 			Document doc = searcher.doc(hits[i].doc);
 			String url = doc.get("url");
 			
@@ -273,6 +281,19 @@ public class IndexService {
    
 	//public static  
 	
-	
+//	private List processHits(Hits hits,int startIndex,int endIndex)throws Exception{
+//		   if(endIndex>=hits.length())
+//		    endIndex=hits.length()-1;
+//		   List docs=new ArrayList();
+//		   for(int i=startIndex;i<=endIndex;i++){
+//		    Document doc=hits.doc(i);
+//		    Map docMap=new HashMap();
+//		    docMap.put("id",doc.getField("id").stringValue());
+//		    docMap.put("name",doc.getField("name").stringValue());
+//		    docMap.put("price",doc.getField("price").stringValue());
+//		    docs.add(docMap);
+//		   }
+//		   return docs;
+//		}
 	
 }
