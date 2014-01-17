@@ -1,6 +1,8 @@
 ﻿http://blog.csdn.net/yahuvi/article/details/5826823
 http://www.open-open.com/lib/view/open1347432540553.html
 http://www.wizzer.cn/?p=2299
+http://blog.csdn.net/tanyouhao/article/details/8666170
+http://grepcode.com/snapshot/repo1.maven.org/maven2/org.apache.lucene/lucene-queries/3.6.1
 
 需要爬取的网站
 1中国大陆
