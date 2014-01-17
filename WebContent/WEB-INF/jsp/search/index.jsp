@@ -14,6 +14,7 @@
 	     <button type="button" class="btn btn-link">试试手气</button> 
       </div> <!--end 搜索 -->
 	     <hr />
+	  <small id="infototal"></small>   
      </div>
      <div class="container" >
           <div class="row">
@@ -59,9 +60,10 @@
 	       		type : "POST",
 	       		cache : false,
 	       		async : false,
-	       		data: {"keyword":keyword},
+	       		data: {"keyword":keyword,"currentPage":1},
 	       		success : function(item) {
-	       			createinfo(item);
+	       			$("#infototal").html("为你找到"+item.total+"相关记录");
+	       			createinfo(item.data);
 	       		}
        	});
      }
