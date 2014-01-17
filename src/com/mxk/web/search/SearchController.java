@@ -38,8 +38,8 @@ public class SearchController {
 	
 	@RequestMapping(value = "/search", method = {RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
-	public List<SearchRespone> search(@RequestParam("keyword") String keyword){
-		return indexService.searchIndex(keyword, "title");
+	public PageModel search(@RequestParam("keyword") String keyword, @RequestParam("currentPage") int currentPage){
+		return indexService.searchIndex(keyword, "content" ,currentPage);
 	}
 	
 }

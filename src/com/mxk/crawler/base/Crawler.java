@@ -1,6 +1,5 @@
 package com.mxk.crawler.base;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -239,6 +238,10 @@ public abstract class Crawler {
 	public void executeCrawler(String matchUrl){
 		try{
 			int allpage = crawlerService.findAllLinkPage(matchUrl);//获得总页数
+			if(allpage == 0){
+				logger.info("没有可以爬取的链接 爬取 {} 论坛 ---- {} 资源睡眠",crawlerSite,crawlerType);
+				crawlerSheep(1000 * 60);
+			}
 			/** 计数器 超过5次失败就睡眠 */
 			int count = 0;
 			for(int i=1; i<=allpage; i++){
@@ -261,6 +264,7 @@ public abstract class Crawler {
 	    						crawlerSheep(3000 * 10); //持续出现没有保存资源说明没有可以爬取的了 就睡眠一段时间
 	    					}
 	    				}
+	    				crawlerService.updateLinkState(link.getUrl(), ResourceState.CRAWLERD.getCode());
 	    			}else{ //练级没有资源
 	    				crawlerService.updateLinkState(link.getUrl(), ResourceState.LINK_NO_RESOURCE.getCode());
 	    			}

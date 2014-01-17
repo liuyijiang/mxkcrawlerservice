@@ -62,7 +62,7 @@ public class WebResourceService {
 		if(!StringUtil.stringIsEmpty(contentResource.getHit())){
 			hits = " 阅读：" + contentResource.getHit();
 		}
-		web.setMultiinfo(contentResource.getMultiData() + post + hits);
+		web.setMultiinfo(StringUtil.toEnpty(contentResource.getMultiData()) + post + hits);
 		web.setOwnername(contentResource.getOwner());
 		web.setPosts(Integer.parseInt(contentResource.getPost()));
 		web.setHits(Integer.parseInt(contentResource.getHit()));

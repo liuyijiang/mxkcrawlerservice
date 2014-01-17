@@ -123,7 +123,7 @@ public class DishModelsContentResourceCrawler extends Crawler {
 	    		sb.append(st);
 	    	}
 	    }
-	    System.out.println(sb.toString());
+	    //System.out.println(sb.toString());
 	    return sb.toString().substring(0,350);//截取一部分 ;
 	}
 	

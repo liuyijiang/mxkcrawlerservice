@@ -7,6 +7,10 @@ import java.util.regex.Pattern;
 
 public class StringUtil {
 
+	public static String toEnpty(String str){
+		return str == null ? "" :str;
+	}
+	
 	public static String cutOutUrlFileName(String url){
 		if(stringIsEmpty(url)){
 			return null;

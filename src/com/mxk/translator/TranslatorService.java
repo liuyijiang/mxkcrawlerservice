@@ -1,8 +1,9 @@
 package com.mxk.translator;
 
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,13 +13,13 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import com.mxk.util.StringUtil;
 /**
  * 简单翻译服务
  * @author Administrator
@@ -37,8 +38,39 @@ public class TranslatorService {
 	private static final String RESULT = "span[id=result_box]";
 	/** 去除html标签*/
 	private static final String HTML = "<([^>]*)>";
-	/** 匹配英文*/
-	private static final String ENGLISH = "[^a-zA-Z]";
+//	/** 匹配英文*/
+//	private static final String ENGLISH = "[^a-zA-Z]";
+	
+	private Map<String,String> professionalWord = new HashMap<String,String>();
+	
+	
+	public TranslatorService(){
+		initProfessionalWord();
+	}
+	
+//	public static void main(String[] args) {
+//		TranslatorService t = new TranslatorService();
+//		t.;
+//	}
+	
+	/**
+	 * 将配置文件中那些专业名称加载带map中
+	 */
+	@SuppressWarnings("rawtypes")
+	private void initProfessionalWord(){
+		SAXReader reader = new SAXReader();
+		try{
+	    org.dom4j.Document document = reader.read(TranslatorService.class.getClassLoader().getResourceAsStream("professional_translator.xml"));
+		Element root = document.getRootElement();
+		Iterator it = root.elementIterator();
+			while (it.hasNext()) {
+				Element element = (Element) it.next();
+				professionalWord.put(element.attributeValue("id"),element.getText());
+			}
+		}catch(Exception e){
+			logger.error("加载专业单词异常{}",e);
+		}
+	}
 	
 	/**
 	 * 简单的基本翻译
@@ -81,25 +113,7 @@ public class TranslatorService {
 	 * @return
 	 */
 	public String professionalTranslator(String txt){
-		System.out.println(regxp(txt,ENGLISH,","));
-		String str[] = regxp(txt,ENGLISH,",").split(",");
-		List<String> list = new ArrayList<String>();
-		for(String st : str){
-			if(!StringUtil.stringIsEmpty(st)){
-				list.add(st);
-			}
-		}
-		for(String s : list){
-			//redis获得专业数据
-			if(s.toLowerCase().equals("askold")){
-				txt = txt.replaceAll(s,"阿斯科尔德号");
-			}
-			if(s.toLowerCase().equals("cesarevic")){
-				txt = txt.replaceAll(s,"太子号");
-			}
-			//System.out.println(s);
-		}
-		return txt;
+		return professionalWord.get(txt);
 	}
 	
 	/**
