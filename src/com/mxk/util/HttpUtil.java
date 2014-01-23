@@ -35,11 +35,11 @@ public class HttpUtil {
 		HttpClient client = new DefaultHttpClient();
 		client.getParams().setParameter(
 				CoreConnectionPNames.CONNECTION_TIMEOUT, TIME_OUT);
-		HttpGet get = new HttpGet(urlTrim(url));
-		get.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
-		get.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-				TIME_OUT);
 		try {
+			HttpGet get = new HttpGet(urlTrim(url));//java.lang.IllegalArgumentException url前有空格
+			get.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
+			get.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+					TIME_OUT);
 			HttpResponse resonse = client.execute(get);
 			if (resonse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				HttpEntity entity = resonse.getEntity();
@@ -64,10 +64,13 @@ public class HttpUtil {
 	 */
 	private static String urlTrim(String url){
 		if(url.indexOf("?") != -1){
-			return url.substring(0,url.indexOf("?"));
+			return url.substring(0,url.indexOf("?")).trim();
 		}else{
-			return url;
+			return url.trim();
 		}
 	}
 	
+	public static void main(String[] args) {
+		getImageByte(" http://www.xiaot.com/data/attachment/forum/month_1111/11111702213b269b39bc69ba9b.jpg");
+	}
 }

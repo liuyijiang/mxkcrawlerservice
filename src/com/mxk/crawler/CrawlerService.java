@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.mxk.crawler.model.BaseResource;
 import com.mxk.crawler.model.ContentResource;
+import com.mxk.crawler.model.CrawlerState;
 import com.mxk.crawler.model.Links;
 import com.mxk.crawler.model.ResourceState;
 
@@ -37,7 +38,7 @@ public class CrawlerService {
 		for(BaseResource resource : t){
 			ContentResource res = (ContentResource)resource;
 			if(res.getSimpleImage() == null){ //没有图片就不保存
-				updateLinkState(res.getLinkurl(),ResourceState.LINK_NO_RESOURCE.getCode());//标记链接为没有资源的链接
+				updateLinkState(res.getLinkurl(),ResourceState.LINK_NO_IMAGE.getCode());//标记链接为没有资源的链接
 				continue;
 			}
 		    Query q = new Query(Criteria.where("linkurl").is(res.getLinkurl()));
@@ -53,6 +54,23 @@ public class CrawlerService {
 		}
 		return allfail;
 	}
+	
+	/**
+	 * 保存或更新爬取器状态
+	 * @param state
+	 */
+	public void saveOrUpdateCrawlerState(CrawlerState state){
+		Query q = new Query(Criteria.where("crawlerName").is(state.getCrawlerName()));
+		long count = mog.count(q, CrawlerState.class);
+		if(count == 0){
+			mog.save(state);
+		}else{
+			Update u = new Update();
+			u.set("lastExecuteTime", state.getLastExecuteTime());
+			mog.updateMulti(q, u, CrawlerState.class);
+		}
+	}
+	
 	
 	/**
 	 * 判断资源是否存在
@@ -116,4 +134,7 @@ public class CrawlerService {
 			return 0;
 		}
 	}
+	
+	
+	
 }

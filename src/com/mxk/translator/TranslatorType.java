@@ -1,5 +1,9 @@
 package com.mxk.translator;
-
+/**
+ * 
+ * @author Administrator
+ *
+ */
 public enum TranslatorType {
 
 	/**中文简体*/
@@ -12,7 +16,10 @@ public enum TranslatorType {
 	RUSSIA("ru"),
 	
 	/**日语*/
-	JAPAN("ja");
+	JAPAN("ja"),
+	
+	/**瑞典*/
+	SWEDEN("sv");
 	
 	private String code;
 	

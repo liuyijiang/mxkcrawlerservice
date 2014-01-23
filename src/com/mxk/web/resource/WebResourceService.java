@@ -52,7 +52,11 @@ public class WebResourceService {
 	private WebResource createWebResource(ContentResource contentResource){
 		WebResource web = new WebResource();
 		web.setImage(contentResource.getSimpleImageName());
-		web.setInfo(contentResource.getInfo());
+		if(contentResource.getInfo().length() > 4500){
+			web.setInfo(contentResource.getInfo().substring(0,4000));
+		}else{
+			web.setInfo(contentResource.getInfo());
+		}
 		web.setInsignificance((int)(Math.random()*100));
 		String post = "";
 		String hits = "";
@@ -62,6 +66,7 @@ public class WebResourceService {
 		if(!StringUtil.stringIsEmpty(contentResource.getHit())){
 			hits = " 阅读：" + contentResource.getHit();
 		}
+		web.setImages(contentResource.getImages());
 		web.setMultiinfo(StringUtil.toEnpty(contentResource.getMultiData()) + post + hits);
 		web.setOwnername(contentResource.getOwner());
 		web.setPosts(Integer.parseInt(contentResource.getPost()));

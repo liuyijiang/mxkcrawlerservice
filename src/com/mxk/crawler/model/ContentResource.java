@@ -26,7 +26,7 @@ public class ContentResource extends BaseResource {
 	private String info;//内容
 	private String hit;//阅读次数
 	private String post;//评论数量
-	public List<String> images;
+	private String images;
 	public String simpleImage;
 	public String simpleImageName;
 	public String multiData;//额外的一些有价值的数据;
@@ -79,12 +79,6 @@ public class ContentResource extends BaseResource {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	public List<String> getImages() {
-		return images;
-	}
-	public void setImages(List<String> images) {
-		this.images = images;
-	}
 	public String getLinkurl() {
 		return linkurl;
 	}
@@ -126,6 +120,12 @@ public class ContentResource extends BaseResource {
 	}
 	public void setSimpleImageName(String simpleImageName) {
 		this.simpleImageName = simpleImageName;
+	}
+	public String getImages() {
+		return images;
+	}
+	public void setImages(String images) {
+		this.images = images;
 	}
 	
 }

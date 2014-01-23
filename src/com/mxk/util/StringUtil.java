@@ -52,7 +52,7 @@ public class StringUtil {
      * @return
      */
     public static String regxpForHtml(String html,String replace){
-    	String regxpForJS = "<script ([^>]*)>([^>]*)</script>"; //[\s\S]*
+    	String regxpForJS = "<ignore_js_op>([/s/S]*)</ignore_js_op>"; //[\s\S]* <script ([^>]*)>([^>]*)</script> <ignore_js_op>([/s/S]*)</ignore_js_op>
     	String regxpForHtml = "<([^>]*)>";
     	Pattern pattern = Pattern.compile(regxpForJS);
     	Matcher matcher = pattern.matcher(html);
@@ -76,6 +76,16 @@ public class StringUtil {
     }
     
     
+    public static void main(String[] args) {
+    	String sss = "dsaa<ignore_js_op><div class='mbn'><img class='zoom' onclick='zoom(this, this.src, 0, 0, 0)' width='640' inpost='1' onmouseover='showMenu({'ctrlid':this.id,'pos':'12'})' /></div> <div class='tip tip_4 aimg_tip' id='aimg_157835_menu' style='position: absolute; display: none' disautofocus='true'> <div class='xs0'><p><strong>DSC00367.JPG</strong> <em class='xg1'>(88.87 KB, 下载次数: 2)</em></p><p><a href='http://bbs.xiaot.com/forum.php?mod=attachment&amp;aid=MTU3ODM1fDFiZDBjMjU2fDEzOTAyODM1Mzh8MHwzMTAwNzA%3D&amp;nothumb=yes' target='_blank'>下载附件</a> &nbsp;<a href='javascript:;' onclick='showWindow(this.id, this.getAttribute('url'), 'get', 0);' url='home.php?mod=spacecp&amp;ac=album&amp;op=saveforumphoto&amp;aid=157835&amp;handlekey=savephoto_157835'>保存到相册</a> </p> <p class='xg1 y'>12-8-11 19:55 上传</p></div><div class='tip_horn'></div> </div></ignore_js_op>";
+		String str = "刘一江得到<ignore_js_op><div>ss</div></ignore_js_op>"; //<div>ss</div>dsadads <div>ss</div>dsadads
+		String re = "<ignore_js_op>(.*)</ignore_js_op>";
+//		if(str.indexOf("<ignore_js_op>") != -1){
+			System.out.println(sss.replaceAll(re, ""));
+//		}
+//			System.out.println(sss.matches(re));
+			System.out.println(1);
+	}
     
     /**
      * 用+号分隔

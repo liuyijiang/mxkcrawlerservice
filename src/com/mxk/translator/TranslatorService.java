@@ -30,7 +30,8 @@ public class TranslatorService {
 
     public static final Logger logger = LoggerFactory.getLogger(TranslatorService.class);
 	
-    /** google翻译的http请求地址*/
+    /** google翻译的http请求地址*/ 
+    //http://translate.google.cn/#sv/zh-CN/M%C3%B6teskalendarium
 	private static final String URL = "http://translate.google.cn/?tl=zh-CN&hl=";
 	/** 编码集*/
 	private static final String ENCODER = "UTF-8";

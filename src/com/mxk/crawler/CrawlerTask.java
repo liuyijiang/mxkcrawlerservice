@@ -1,9 +1,11 @@
 package com.mxk.crawler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -13,12 +15,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
+import com.mxk.crawler.annotation.CrawlerDescription;
 import com.mxk.crawler.base.Crawler;
 import com.mxk.crawler.base.CrawlerStateInfo;
+import com.mxk.crawler.model.CrawlerState;
 import com.mxk.dao.BaseLinkMapper;
-import com.mxk.model.BaseLink;
-import com.mxk.model.BaseLinkCriteria;
 import com.mxk.system.SystemService;
+import com.mxk.util.StringUtil;
 /**
  * 
  * @author Administrator
@@ -37,6 +40,9 @@ public class CrawlerTask implements ApplicationContextAware {
 	@Resource
 	private SystemService systemService;
 	
+	@Resource
+	private CrawlerService crawlerService; 
+	
 	/** 所有爬取器 */
 	private List<Crawler> crawlers = new ArrayList<Crawler>();
 	
@@ -45,7 +51,7 @@ public class CrawlerTask implements ApplicationContextAware {
 	 */
 	@PostConstruct 
     public void startCrawlerTask(){
-		systemService.loadBaseUrl();
+		systemService.loadBaseUrl();//加载基础的链接地址
     	for ( Crawler crawler : crawlers ) {
     		synchronized(crawler){
     		   crawler.execute();
@@ -53,6 +59,26 @@ public class CrawlerTask implements ApplicationContextAware {
     	}
     }
     
+	/**
+	 * 容器关闭时执行记录爬取器状态的
+	 */
+	@PreDestroy
+	public void shutdownCrawlerTask(){
+		String date = StringUtil.dateToString(new Date());
+		for ( Crawler crawler : crawlers ) {
+			if(crawler.checkExecute()){
+				CrawlerState state = new CrawlerState();
+				state.setCrawlerName(crawler.getClass().getName());
+				CrawlerDescription crawlerDescription = crawler.getClass().getAnnotation(CrawlerDescription.class);
+				state.setCrawlerSiteName(crawlerDescription.crawlerSite());
+				state.setCrawlerSiteUrl(crawlerDescription.crawlerMatchUrl());
+				state.setLastExecuteTime(date);
+				crawlerService.saveOrUpdateCrawlerState(state);
+			}
+		}
+	}
+	
+	
 	/**
 	 * 唤醒挂起的爬取线程
 	 */

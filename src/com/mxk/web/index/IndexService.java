@@ -161,8 +161,8 @@ public class IndexService {
 	        // 获取结果
 	        ScoreDoc[] hits = topDocs.scoreDocs;
 	        total = topDocs.totalHits;//总记录
-	        long start= (currentPage - 1) * pageSize;  
-	        long end= start + pageSize -1;  
+	        int start= (currentPage - 1) * pageSize;  
+	        int end= start + pageSize -1;  
 	        List<SearchRespone> list = getSearchRespone(hits,searcher,highlighter,start,end);
 	        model.setTotal(total);
 	        model.setCurrentPage(currentPage);
@@ -174,9 +174,9 @@ public class IndexService {
 		return model;
 	}
 	
-	private List<SearchRespone> getSearchRespone(ScoreDoc[] hits,IndexSearcher searcher,Highlighter highlighter,long start,long end){
+	private List<SearchRespone> getSearchRespone(ScoreDoc[] hits,IndexSearcher searcher,Highlighter highlighter,int start,int end){
 		List<SearchRespone> list = new ArrayList<SearchRespone>();
-		for (int i = 0; i < hits.length; i++) {
+		for (int i = start; i <= end; i++) {
 			try{
 				Document doc = searcher.doc(hits[i].doc);
 				SearchRespone sr = new SearchRespone();

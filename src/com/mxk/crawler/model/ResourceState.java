@@ -5,7 +5,10 @@ package com.mxk.crawler.model;
  *
  */
 public enum ResourceState {
-   
+	
+	/** 链接没有图片*/
+	LINK_NO_IMAGE(9),
+	
 	/** 链接没有资源*/
 	LINK_NO_RESOURCE(6),
 	
@@ -28,7 +31,13 @@ public enum ResourceState {
 	NO_UPLOAD(7),
 	
 	/** 已上传到资源库  */
-	UPLOADED(8);
+	UPLOADED(8),
+	
+	/** 上传资源库失败  */
+	UPLOADE_FAIL(10),
+	
+	/** 链接读取超时  */
+	LINK_READ_TIMED_OUT(11);
 	
 	private int code;
 	

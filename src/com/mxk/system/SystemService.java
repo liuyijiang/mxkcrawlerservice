@@ -63,23 +63,33 @@ public class SystemService {
 	 */
 	@PostConstruct 
 	public void loadBaseUrl(){
-//		logger.debug(" 加载基础的链接地址 开始");
-//		BaseLinkCriteria criteria = new BaseLinkCriteria();
-//		criteria.createCriteria().andIdGreaterThan(0);
-//		List<BaseLink> list = baseLinkMapper.selectByExample(criteria);
-//		List<Links> llist = new ArrayList<Links>();
-//		for(BaseLink base : list){
-//			Links link = new Links();
-//			link.setCreateTime(new Date());
-//			link.setUrl(base.getUrl());
-//			link.setMatchUrl(base.getMatchurl());
-//			link.setState(ResourceState.NO_CRAWLER.getCode());
-//			llist.add(link);
-//		}
-//		crawlerService.saveLink(llist);
-//		logger.debug(" 加载基础的链接地址 完成");
+		
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				loadBaseLinkData();
+			}
+		}).start();
+		
 	}
 	
+	public void loadBaseLinkData(){
+		logger.debug(" 加载基础的链接地址 开始");
+		BaseLinkCriteria criteria = new BaseLinkCriteria();
+		criteria.createCriteria().andIdGreaterThan(0);
+		List<BaseLink> list = baseLinkMapper.selectByExample(criteria);
+		List<Links> llist = new ArrayList<Links>();
+		for(BaseLink base : list){
+			Links link = new Links();
+			link.setCreateTime(new Date());
+			link.setUrl(base.getUrl());
+			link.setMatchUrl(base.getMatchurl());
+			link.setState(ResourceState.NO_CRAWLER.getCode());
+			llist.add(link);
+		}
+		crawlerService.saveLink(llist);
+		logger.debug(" 加载基础的链接地址 完成");
+	}
 	
 	/**
 	 * 查询标签

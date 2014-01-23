@@ -61,7 +61,7 @@ public abstract class Crawler {
 	
 	public static final int TIME_OUT = 5000;
 	
-	public static final int CRAWLER_IMAGE_COUNT = 3;
+	public static final int CRAWLER_IMAGE_COUNT = 5;
 	
 	/** 模拟浏览器 */
 	public static final String USERAGENT = "Mozilla/4.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)";
@@ -123,9 +123,14 @@ public abstract class Crawler {
 						String fileName = StringUtil.cutOutUrlFileName(content.getSimpleImage());
 						String foldler = StringUtil.dateToString(new Date(), "yyyyMMdd");
 						String simpleImage = baseFileUploadService.saveFile(byteFile, fileName , foldler);
-						resource.setSimpleImage(simpleImage);
+						resource.setSimpleImage(simpleImage);//图片保存成功后
 						if(simpleImage != null){
 							resource.setSimpleImageName( foldler + "/" + fileName);
+							StringBuilder sb = new StringBuilder();
+							for(String img : content.getImages()){
+								sb.append(img+",");
+							}
+							resource.setImages(sb.toString());
 						}
 					}
 					rlist.add(resource);
@@ -229,7 +234,20 @@ public abstract class Crawler {
 	 */
 	public abstract boolean checkExecute();
 	
-	public abstract void setExecute(boolean runable);
+	/**
+	 * 执行或停止爬取器
+	 * @param runable
+	 */
+	public void setExecute(boolean runable){
+		if(!runable){
+			com.mxk.crawler.model.CrawlerState state = new com.mxk.crawler.model.CrawlerState();
+			state.setCrawlerName(this.getClass().getName());
+			state.setCrawlerSiteName(crawlerSite);
+			state.setCrawlerSiteUrl(crawlerMatchUrl);
+			state.setLastExecuteTime(StringUtil.dateToString(new Date()));
+			crawlerService.saveOrUpdateCrawlerState(state);
+		}
+	}
 	
 	/**
 	 * 执行爬取操作
@@ -271,7 +289,7 @@ public abstract class Crawler {
 	    		}
 			}	
 		}catch(Exception e){
-			logger.error("爬取数据出现异常 异常信息：{}",e);
+			logger.error("爬取数据出现异常 异常信息：{} 链接{}",e,crawlerSite+"|"+this.getClass().getName()+"|"+matchUrl);
 			crawlerSheep(5000);
 		}
 	}

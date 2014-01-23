@@ -111,8 +111,11 @@ public class ResourceUploadService {
 				Map<String,Object> value = BeanUtil.transBeanToMap(cr);
 				if(callService(value)){
 					refreshResourceState(cr.getId(),ResourceState.UPLOADED.getCode());
+					logger.error("完成资源上传{}" ,JSON.toJSONString(value));
+				}else{
+					refreshResourceState(cr.getId(),ResourceState.UPLOADE_FAIL.getCode());
 				}
-				logger.error("完成资源上传{}" ,JSON.toJSONString(value));
+				
 			//}
 		}
 	}
@@ -123,7 +126,8 @@ public class ResourceUploadService {
 	 * @return
 	 */
 	private List<ContentResource> loadNoUploadData(){
-		Query q = new Query(Criteria.where("state").is(ResourceState.NO_CATALOGO.getCode()));//
+		Query q = new Query(Criteria.where("state").is(ResourceState.UPLOADE_FAIL.getCode()));
+		//Query q = new Query(Criteria.where("state").is(ResourceState.NO_CATALOGO.getCode()));//
 		q.limit(50);
 		return mog.find(q,ContentResource.class);
 	}
@@ -170,6 +174,7 @@ public class ResourceUploadService {
 				String respone = EntityUtils.toString(entity);
 				Integer code = Integer.parseInt(respone);
 				//当保存成功或者重复的时候
+				logger.info("数据同步返回码：{}", code);
 				if(ServiceResponse.SUCCESS.getCode().equals(code) || ServiceResponse.DATA_REPETITION.getCode().equals(code)){
 					success = true;
 				}
