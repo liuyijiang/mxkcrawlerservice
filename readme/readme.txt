@@ -26,4 +26,18 @@ http://www.dishmodels.ru/{
 }
 
 战斗机
+http://www.modellexpo08-open.se/wp/
+http://www.baecklund.eu/scalemodels/72/fjallback.html
 http://www.arcair.com/
+http://aeroscale.kitmaker.net/modules.php?op=modload&name=features&file=view&artid=4854
+http://www.sffsto.se/SFFvandringsprisutdelatpaModellexpo08Open2012.htm
+
+
+IPMS 需要爬取的练级
+http://www.ipmsstockholm.se/home/wp-content/gallery/ulf-lundberg-bismarck-skala-1350/dsc_0001.jpg02/page/2/
+http://www.ipmsstockholm.se/home/page/30/ 最大
+
+//good
+http://www.ipmsstockholm.se/home/category/byggbloggar/page
+http://modellersinc.blogg.se/
+

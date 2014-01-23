@@ -9,7 +9,8 @@ adduser mxk
 ################################################################################
 2 mysql数据库 版本5.1
 安装: apt-get install mysql-server 
-设置字符集  /etc/mysql/my.cnf  ［client] [mysqld] [mysqld_safe] [mysql]default-character-set=utf8
+查看字符集  show variables like 'charac%';查看mysql中当前编码
+设置字符集  /etc/mysql/my.cnf （win7下是my.ini） ［client] [mysqld] [mysqld_safe] [mysql]default-character-set=utf8
 重启mysql  /etc/init.d/mysql restart 
 允许远程登录   /etc/mysql/my.cnf    bind-address=127.0.0.1 为 bind-address=0.0.0.0
 root创建数据库 mxkdatabase
@@ -18,6 +19,7 @@ root创建数据库 mxkdatabase
 刷新：   flush privileges;
 
 清除表数据 truncate table xxx
+
 ################################################################################
 
 
