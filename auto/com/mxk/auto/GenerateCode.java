@@ -30,7 +30,9 @@ public class GenerateCode {
 	public void generateMain() throws Exception {
 //		SCHEMA = "HLWQKTEST";
 //		generate(GenerateCode.class.getResource("generate_config_test.xml").getPath());
-		SCHEMA = "MXK";
+		//SCHEMA = "MXK";
+		SCHEMA = "root";
+		
 		generate(GenerateCode.class.getResource("generate_config.xml").getPath());
 //		SCHEMA = "HLWQKTYQK";
 //		generate(GenerateCode.class.getResource("generate_config_tyst_tyqk.xml").getPath());
