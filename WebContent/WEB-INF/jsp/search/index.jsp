@@ -18,7 +18,7 @@
      </div>
      <div class="container" >
           <div class="row">
-             <div class="col-md-8">
+             <div class="col-md-7">
 			  <div id="info">
 			    
 <!-- 				<div class='media'> -->
@@ -43,8 +43,8 @@
 				
 			   </div>	
 			</div>
-             <div class="col-md-4">
-               
+             <div class="col-md-5" style="border-left:1px solid #E7E7E7">
+              dawd
              </div>
           </div>
      </div>
@@ -73,7 +73,8 @@
 			for(var i in list)//照片墙第一个位置
 			{
 			  show = show + "<div class='media'><a class='pull-left' href='"+ list[i].url +"'>"
- 			       +  "<img style='width:120px' src='http://localhost/img/"+ list[i].img +"'></a>"
+ 			      // +  "<img style='width:120px' src='http://localhost/img/"+ list[i].img +"'></a>"
+ 			      +  "<img style='width:100px' src='http://www.waileecn.com/mxk/image/52b815210cf24a645fafe72d_mini.png'></a>"
  			       + "<div class='media-body'><span class='media-heading h3'><a href='"+ list[i].url +"'>"+ list[i].title + "</a></span>"
  				   + "<small class='text-primary'>"+ list[i].subtext + "</small><span class='pull-right'><small><a href='#'>有用</a><a href='#'>垃圾</a></small></span><br />"
  				   + "<small class='text-muted'>"+ list[i].info +"</small><br />"
