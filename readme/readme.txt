@@ -4,6 +4,9 @@ http://www.wizzer.cn/?p=2299
 http://blog.csdn.net/tanyouhao/article/details/8666170
 http://grepcode.com/snapshot/repo1.maven.org/maven2/org.apache.lucene/lucene-queries/3.6.1
 
+//spring 工具类
+http://xiaolele.iteye.com/blog/368924
+
 需要爬取的网站
 1中国大陆
 http://www.moxing.net/bbs/
