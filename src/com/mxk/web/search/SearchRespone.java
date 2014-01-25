@@ -7,6 +7,7 @@ public class SearchRespone {
 	private String subtext;
 	private String info;
 	private String url;
+	private String id;
 	
 	public String getTitle() {
 		return title;
@@ -37,6 +38,12 @@ public class SearchRespone {
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.mxk.crawler.annotation.CrawleType;
 import com.mxk.crawler.annotation.CrawlerDescription;
 import com.mxk.crawler.base.Crawler;
+import com.mxk.crawler.base.SiteInfo;
 import com.mxk.crawler.model.BaseResource;
 import com.mxk.crawler.model.Content;
 import com.mxk.translator.TranslatorService;
@@ -96,7 +97,7 @@ public class ModelShipGalleryContentResourceCrawler extends Crawler {
 			}
 			//内容
 			content.setComment(title + sbinfo.toString());
-			content.setMultiData("欧美site");
+			content.setMultiData(SiteInfo.EUROPE.getCode());
 		}catch(Exception e){
 			logger.error("modelshipgallery crawler error url: {} message :{}",url,e);
 		}finally{

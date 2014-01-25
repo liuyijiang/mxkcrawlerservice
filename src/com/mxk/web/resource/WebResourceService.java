@@ -26,6 +26,13 @@ public class WebResourceService {
 	@Resource
 	private WebResourceMapper webResourceMapper;
 	
+	@Resource
+	private WebResourceMapperPlus webResourceMapperPlus;
+	
+	public WebResource selectByWebResourceId(int id){
+		return webResourceMapper.selectByPrimaryKey(id);
+	}
+	
 	/**
 	 * 保存资源
 	 * @param contentResource

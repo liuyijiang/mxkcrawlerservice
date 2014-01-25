@@ -32,7 +32,9 @@ public class TranslatorService {
 	
     /** google翻译的http请求地址*/ 
     //http://translate.google.cn/#sv/zh-CN/M%C3%B6teskalendarium
-	private static final String URL = "http://translate.google.cn/?tl=zh-CN&hl=";
+	//private static final String URL = "http://translate.google.cn/?tl=zh-CN&hl=";
+	private static final String URL = "http://translate.google.cn/";
+	//private static final String RESLAN = "/zh-CN/";
 	/** 编码集*/
 	private static final String ENCODER = "UTF-8";
 	/** html页面中中文位置*/
@@ -84,7 +86,8 @@ public class TranslatorService {
 		String result = "";
 		try{
 		    String translatorStr = URLEncoder.encode(txt,ENCODER);
-		    HttpGet httpget = new HttpGet(URL + targetLan.getCode() + "&q=" + translatorStr);
+		    HttpGet httpget = new HttpGet(URL + targetLan.getCode() + "/zh-CN/" + translatorStr);
+//		    HttpGet httpget = new HttpGet(URL + targetLan.getCode() + "&q=" + translatorStr);
 //		    httpget.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
 //		    httpget.setHeader("Cookie","PREF=ID=9fc3c400c067c38c:U=96892e2b795b4eed:FF=0:NW=1:TM=1379168416:LM=1379168418:S=JkWheIuZQXbH4RIb; NID=67=o80SwOmx6y1ABmA2uPUWMEU4Q0-eXUBkubVeQKw3JHLXzDQ4OM4fJXk51qmqqn7h1TBbPsmNxmYz-YKjzaRQssyXCvNVU_JXogFmQLa8l-1rp1fwoqLINAtYtvln9lcK; _ga=GA1.4.2088469847.1389615985");
 //		    httpget.setHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");

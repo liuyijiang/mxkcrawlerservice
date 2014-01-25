@@ -1,7 +1,5 @@
 package com.mxk.web.search;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.mxk.web.index.IndexService;
+import com.mxk.web.security.SecurityDescription;
 
 /**
  * 查询的web界面
@@ -31,13 +29,14 @@ public class SearchController {
 	 * 文章主页
 	 * @return
 	 */
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public ModelAndView index(){
-		return new ModelAndView("/search/index.jsp");
-	}
+//	@RequestMapping(value = "/index", method = RequestMethod.GET)
+//	public ModelAndView index(){
+//		return new ModelAndView("/search/index.jsp");
+//	}
 	
 	@RequestMapping(value = "/search", method = {RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
+	@SecurityDescription
 	public PageModel search(@RequestParam("keyword") String keyword, @RequestParam("currentPage") int currentPage){
 		return indexService.searchIndex(keyword, "content" ,currentPage);
 	}

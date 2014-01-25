@@ -267,7 +267,7 @@ public abstract class Crawler {
 	    		logger.info("加载匹配：{} 链接数量：{}",matchUrl,list.size());
 	    		for(Links link : list){
 	    			List<? extends BaseResource> resource = crawler(link.getUrl());
-	    			if(resource != null){ //保存资源
+	    			if(resource.size() > 0){ //保存资源
 	    				logger.info("获得 匹配链接 ：{} 下资源数量 ：{}",matchUrl,resource.size());
 	    				//组装数据 对于那些在帖子页面拿不到评论数量和阅读数量的网站
 	    				if(CrawleType.CONTENT.getDescription().equals(crawlerType)){

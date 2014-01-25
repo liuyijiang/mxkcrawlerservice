@@ -21,7 +21,6 @@ import com.mxk.crawler.base.Crawler;
 import com.mxk.crawler.base.SiteInfo;
 import com.mxk.crawler.model.BaseResource;
 import com.mxk.crawler.model.Content;
-import com.mxk.crawler.model.ResourceState;
 import com.mxk.util.StringUtil;
 
 /**
@@ -95,7 +94,6 @@ public class ModelShipContentResourceCrawler  extends Crawler {
 			}
 		}catch(Exception e){
 			logger.error("钢铁浮城 crawler error url: {} message :{}",url,e.getMessage());
-			crawlerService.updateLinkState(url, ResourceState.LINK_READ_TIMED_OUT.getCode());
 		}finally{
 			crawlerSheep(SHEEP_TIME);
 			logger.info("钢铁浮城 完成链接爬取{},爬取link数量：{}",url, list.size());

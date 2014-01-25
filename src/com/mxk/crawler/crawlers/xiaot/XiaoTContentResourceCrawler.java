@@ -94,7 +94,6 @@ public class XiaoTContentResourceCrawler extends Crawler {
 			}
 		}catch(Exception e){
 			logger.error(SITE_NAME +" crawler error url: {} message :{}",url,e.getMessage());
-			crawlerService.updateLinkState(url, ResourceState.LINK_READ_TIMED_OUT.getCode());
 			crawlerSheep(SHEEP_TIME * 3);
 		}finally{
 			crawlerSheep(SHEEP_TIME);

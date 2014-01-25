@@ -24,6 +24,9 @@ import com.mxk.crawler.model.ResourceState;
 import com.mxk.crawler.model.ResourceType;
 import com.mxk.crawler.model.SubTag;
 import com.mxk.crawler.model.Tag;
+import com.mxk.web.http.ServiceResponse;
+import com.mxk.web.index.IndexService;
+import com.mxk.web.security.SecurityDescription;
 
 /**
  * 爬取资源服务器
@@ -43,6 +46,9 @@ public class SystemController {
 	
 	@Autowired
 	private SystemService systemService;
+	
+	@Autowired
+	private IndexService indexService;
 	
 	/**
 	 * 系统主页
@@ -183,5 +189,33 @@ public class SystemController {
 		mv.getModelMap().put("type", type);
 		return mv;
 	}
+	
+	/**
+	 * ok
+	 * 创建索引
+	 * @return
+	 */
+	@RequestMapping(value = "/create/index", method = RequestMethod.GET)
+	@ResponseBody
+	@SecurityDescription(accredit=true) //需要授权
+	public int createIndex(){
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					indexService.createIndex();
+				} catch (Exception e) {
+					logger.error("创建索引异常{}",e);
+				}
+			}
+		}).start();
+		
+		return ServiceResponse.SUCCESS.getCode();
+	}
+	
+	
+	
 	
 }

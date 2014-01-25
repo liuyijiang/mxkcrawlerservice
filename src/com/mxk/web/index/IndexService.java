@@ -106,11 +106,12 @@ public class IndexService {
 		// 创建写索引对象
 		IndexWriter writer = new IndexWriter(dir, iwConfig);
 		for (WebResource res : list) {
+			String id = String.valueOf(res.getId());
 			String url = res.getUrl();
 			String title = res.getTitle();
 			String content = res.getTitle()+" | "+ res.getInfo();
 			String img = res.getImage();
-			String txt = res.getOwnername() + " | " + res.getMultiinfo();
+			String txt = "作者："+res.getOwnername() + " " + res.getMultiinfo();
 			// 创建文档
 			Document doc = new Document();
 			// 加入url域
@@ -127,7 +128,10 @@ public class IndexService {
 					Field.Index.NOT_ANALYZED));
 			
 			doc.add(new Field("subtext", txt, Field.Store.YES,
-					Field.Index.ANALYZED));
+					Field.Index.NOT_ANALYZED));
+			
+			doc.add(new Field("id", id, Field.Store.YES,
+					Field.Index.NOT_ANALYZED));
 			// 写入文档
 			writer.addDocument(doc);
 		}
@@ -157,7 +161,7 @@ public class IndexService {
 			//高亮
 			SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<font color='red'>", "</font>");
 			Highlighter highlighter = new Highlighter(simpleHTMLFormatter,new QueryScorer(query));   
-	        highlighter.setTextFragmenter(new SimpleFragmenter(1024));
+	        highlighter.setTextFragmenter(new SimpleFragmenter(300));
 	        // 获取结果
 	        ScoreDoc[] hits = topDocs.scoreDocs;
 	        total = topDocs.totalHits;//总记录
@@ -201,6 +205,7 @@ public class IndexService {
 				}
 				sr.setSubtext(doc.get("subtext"));
 				sr.setUrl(doc.get("url"));
+				sr.setId(doc.get("id"));
 				list.add(sr);
 			}catch(Exception e){
 				logger.error("获取搜索数据异常{}",e);

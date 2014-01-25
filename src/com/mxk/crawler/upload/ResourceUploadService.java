@@ -126,8 +126,8 @@ public class ResourceUploadService {
 	 * @return
 	 */
 	private List<ContentResource> loadNoUploadData(){
-		Query q = new Query(Criteria.where("state").is(ResourceState.UPLOADE_FAIL.getCode()));
-		//Query q = new Query(Criteria.where("state").is(ResourceState.NO_CATALOGO.getCode()));//
+		//Query q = new Query(Criteria.where("state").is(ResourceState.UPLOADE_FAIL.getCode()));
+		Query q = new Query(Criteria.where("state").is(ResourceState.NO_CATALOGO.getCode()));//
 		q.limit(50);
 		return mog.find(q,ContentResource.class);
 	}
@@ -167,6 +167,7 @@ public class ResourceUploadService {
 			s.setContentEncoding("UTF-8");
 			s.setContentType("application/x-www-form-urlencoded");   
 			HttpPost httppost = new HttpPost(uploadUrl);
+			httppost.setHeader("Cookie", "token=QMnF13uCd/5/gb/a9elecg==;");
 			httppost.setEntity(s);
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();

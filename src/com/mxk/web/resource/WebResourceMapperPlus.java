@@ -1,9 +1,15 @@
 package com.mxk.web.resource;
 
-import com.mxk.dao.WebResourceMapper;
+import java.util.List;
 
-public interface WebResourceMapperPlus extends WebResourceMapper{
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
-	//List<WebResource> selectByExample(WebResourceCriteria example);
+import com.mxk.model.WebResource;
+
+public interface WebResourceMapperPlus {
+
+	@Select("select * from mxkdatabase.tb_web_resource limit ${number}")
+	List<WebResource> selectlimit(@Param("number") int number);
 	
 }

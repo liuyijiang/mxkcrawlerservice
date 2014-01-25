@@ -122,7 +122,6 @@ public class Imx365NetContentResourceCrawler extends Crawler {
 			}
 		}catch(Exception e){
 			logger.error("Imx365 crawler error url: {} message :{}",url,e.getMessage());
-			crawlerService.updateLinkState(url, ResourceState.LINK_READ_TIMED_OUT.getCode());
 		}finally{
 			crawlerSheep(SHEEP_TIME);
 			logger.info("Imx365 完成帖子爬取{},爬取link数量：{}",url, list.size());
