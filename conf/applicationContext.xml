@@ -34,13 +34,16 @@
 		 <property name="ignoreUnresolvablePlaceholders" value="true"></property>
 	</bean>
 
-    <!-- spring mvc 的配置 -->
-    <import resource="applicationContextBase.xml"/>
+
+<!--     spring mvc 的配置 -->
+<!--     <import resource="applicationContextBase.xml"/> -->
    
     <!-- mongodb -->
     <import resource="applicationMongoDBContext.xml"/>
   
     <!-- Mybatis -->
     <import resource="applicationMybatisContext.xml"/>
+    
+    <import resource="applicationInterceptorContext.xml"/>
     
 </beans>
