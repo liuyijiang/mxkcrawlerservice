@@ -22,6 +22,18 @@
     <filter-name>characterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  
+   <filter>
+		<filter-name>PermissionFilter</filter-name>
+		<filter-class>com.mxk.filter.PermissionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>PermissionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+  
+  
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
@@ -38,7 +50,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>spring</servlet-name>
-    <url-pattern>/</url-pattern>
+    <url-pattern>*.do</url-pattern>
   </servlet-mapping>
 
 	<!--  Spring 容器启动监听器 -->
@@ -51,9 +63,9 @@
     <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class>
   </servlet>
 
-   <servlet-mapping>
-    <servlet-name>default</servlet-name>
-    <url-pattern>/assets/*</url-pattern>
-  </servlet-mapping>
+<!--    <servlet-mapping> -->
+<!--     <servlet-name>default</servlet-name> -->
+<!--     <url-pattern>/assets/*</url-pattern> -->
+<!--   </servlet-mapping> -->
 
 </web-app>
