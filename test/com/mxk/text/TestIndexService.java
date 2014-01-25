@@ -9,10 +9,11 @@ import com.mxk.web.index.IndexService;
 public class TestIndexService {
   
   
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		IndexService indexService = context.getBean(IndexService.class);
 		System.out.println(indexService);
+		indexService.createIndex();
 	}
 	
 	@Test 
