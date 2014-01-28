@@ -284,7 +284,7 @@ public abstract class Crawler {
 	    				}
 	    				crawlerService.updateLinkState(link.getUrl(), ResourceState.CRAWLERD.getCode());
 	    			}else{ //练级没有资源
-	    				crawlerService.updateLinkState(link.getUrl(), ResourceState.LINK_NO_RESOURCE.getCode());
+	    				crawlerService.updateLinkState(link.getUrl(), ResourceState.LINK_EXCEPTION.getCode());
 	    			}
 	    		}
 			}	

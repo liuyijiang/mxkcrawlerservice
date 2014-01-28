@@ -45,11 +45,11 @@ public class ModelShipGalleryLinkCrawler extends Crawler {
 	public static final String SITE_NAME = "modelshipgallery";
 	public static final String HEADER_PAGE = "http://www.modelshipgallery.com/gallery/gallery-header.html";
 	
-//	public static void main(String[] args) {
-//		ModelShipGalleryLinkCrawler m = new ModelShipGalleryLinkCrawler();
-//		m.crawler("http://www.modelshipgallery.com/gallery/main-02.html");
-//		//m.initLink();
-//	}
+	public static void main(String[] args) {
+		ModelShipGalleryLinkCrawler m = new ModelShipGalleryLinkCrawler();
+		m.crawler("http://www.modelshipgallery.com/gallery/service/liners/Titanic-400-hw/index.htm");
+		//m.initLink();
+	}
 	
 	/**
 	 * http://www.modelshipgallery.com/gallery/gallery-header.html

@@ -32,8 +32,9 @@ public class TranslatorService {
 	
     /** google翻译的http请求地址*/ 
     //http://translate.google.cn/#sv/zh-CN/M%C3%B6teskalendarium
-	//private static final String URL = "http://translate.google.cn/?tl=zh-CN&hl=";
-	private static final String URL = "http://translate.google.cn/";
+	//private static final String URL = "http://translate.google.cn/?tl=";
+    //http://translate.google.cn/#ru/zh-CN/
+	private static final String URL = "http://translate.google.cn/?sl=";
 	//private static final String RESLAN = "/zh-CN/";
 	/** 编码集*/
 	private static final String ENCODER = "UTF-8";
@@ -86,11 +87,14 @@ public class TranslatorService {
 		String result = "";
 		try{
 		    String translatorStr = URLEncoder.encode(txt,ENCODER);
-		    HttpGet httpget = new HttpGet(URL + targetLan.getCode() + "/zh-CN/" + translatorStr);
-//		    HttpGet httpget = new HttpGet(URL + targetLan.getCode() + "&q=" + translatorStr);
-//		    httpget.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
-//		    httpget.setHeader("Cookie","PREF=ID=9fc3c400c067c38c:U=96892e2b795b4eed:FF=0:NW=1:TM=1379168416:LM=1379168418:S=JkWheIuZQXbH4RIb; NID=67=o80SwOmx6y1ABmA2uPUWMEU4Q0-eXUBkubVeQKw3JHLXzDQ4OM4fJXk51qmqqn7h1TBbPsmNxmYz-YKjzaRQssyXCvNVU_JXogFmQLa8l-1rp1fwoqLINAtYtvln9lcK; _ga=GA1.4.2088469847.1389615985");
-//		    httpget.setHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+		    String url = URL+ targetLan.getCode() + "&tl=zh-CN&q=" + translatorStr;
+		    //String url = "http://translate.google.cn/?sl=ru&tl="+targetLan.getCode()+"&q=" + translatorStr;
+		    HttpGet httpget = new HttpGet(url);
+		   // System.out.println(url);
+		    httpget.setHeader("Content-Type", "application/x-www-form-urlencoded");
+		    httpget.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
+		    httpget.setHeader("Cookie","	PREF=ID=9f1a0469aba5e7e0:U=1fcb2cf3664223f1:NW=1:TM=1378190176:LM=1378190186:S=efvQqjKbT1E9xhjA; NID=67=RROYHx6c5KEWNIp6aPpdlrtinakBmuj2g7t6ThxWXj4wZr-7TpDD1EPr5NllNTCpx-8Ib8RrsUdWoYBNMco0KxgfgNK71zps8p0Xh9Qy11w5CtlxgpbKrKJ4YHgdArGV; _ga=GA1.3.250260745.1389340620");
+		    httpget.setHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 //		    httpget.setHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
 //		    httpget.setHeader("Referer","http://translate.google.com.tw/?hl=zh-CN&tab=wT");
 //		    httpget.setHeader("Host","translate.google.com.tw");
@@ -101,6 +105,7 @@ public class TranslatorService {
 				String str = EntityUtils.toString(entity);
 				Document doc = Jsoup.parse(str, ENCODER);
 				result = regxp(doc.select(RESULT).html(),HTML,"");
+				
 			}
 			httpget.abort();
 		}catch(Exception e){
@@ -139,4 +144,11 @@ public class TranslatorService {
     	matcherHtml.appendTail(sbHtml);
     	return sbHtml.toString();
     }
+	
+	public static void main(String[] args) {
+		TranslatorService s = new TranslatorService();
+		String str = s.simpleTranslator(TranslatorType.CHINIA, "Ракетная установка SAM-2 Guideline Missile w/ Launcher, Trumpeter Models. По-русски ЗРК С-75М Волхов. Всё из коробки, только добавил таблички, сменил маркировку, а то китайцы чёрти-чё написали и заменил поручни на проволочные. Всё.");
+		System.out.println(str);
+	}
+	
 }

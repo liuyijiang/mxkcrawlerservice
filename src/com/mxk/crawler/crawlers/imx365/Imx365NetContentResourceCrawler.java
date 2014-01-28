@@ -22,7 +22,6 @@ import com.mxk.crawler.base.Crawler;
 import com.mxk.crawler.base.SiteInfo;
 import com.mxk.crawler.model.BaseResource;
 import com.mxk.crawler.model.Content;
-import com.mxk.crawler.model.ResourceState;
 import com.mxk.util.StringUtil;
 
 /**

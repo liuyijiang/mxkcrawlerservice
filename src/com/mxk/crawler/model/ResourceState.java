@@ -37,7 +37,10 @@ public enum ResourceState {
 	UPLOADE_FAIL(10),
 	
 	/** 链接读取超时  */
-	LINK_READ_TIMED_OUT(11);
+	LINK_READ_TIMED_OUT(11),
+	
+	/** 链接异常  */
+	LINK_EXCEPTION(12);
 	
 	private int code;
 	

@@ -29,7 +29,7 @@ public class WebResourceController {
 	 */
 	@RequestMapping(value = "/add/webresources", method = {RequestMethod.POST})
 	@ResponseBody
-	@SecurityDescription(accredit=true)
+	@SecurityDescription
 	public int uploadData(ContentResource contentResource){
 		return webResourceService.saveWebResource(contentResource);
 	}

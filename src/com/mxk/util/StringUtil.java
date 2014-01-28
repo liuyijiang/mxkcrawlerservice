@@ -2,11 +2,28 @@ package com.mxk.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtil {
 
+	private static Map<String,String> map = new HashMap<String,String>();
+	
+	static {
+		map.put("&nbsp;", "");
+		map.put("&middot;", ".");
+		map.put("&copy;", "");
+		map.put("&aacute;", "");
+		map.put("&uuml;", "");
+		map.put("&quot;", "");
+		
+	}
+	
+	
 	public static String toEnpty(String str){
 		return str == null ? "" :str;
 	}
@@ -77,14 +94,12 @@ public class StringUtil {
     
     
     public static void main(String[] args) {
-    	String sss = "dsaa<ignore_js_op><div class='mbn'><img class='zoom' onclick='zoom(this, this.src, 0, 0, 0)' width='640' inpost='1' onmouseover='showMenu({'ctrlid':this.id,'pos':'12'})' /></div> <div class='tip tip_4 aimg_tip' id='aimg_157835_menu' style='position: absolute; display: none' disautofocus='true'> <div class='xs0'><p><strong>DSC00367.JPG</strong> <em class='xg1'>(88.87 KB, 下载次数: 2)</em></p><p><a href='http://bbs.xiaot.com/forum.php?mod=attachment&amp;aid=MTU3ODM1fDFiZDBjMjU2fDEzOTAyODM1Mzh8MHwzMTAwNzA%3D&amp;nothumb=yes' target='_blank'>下载附件</a> &nbsp;<a href='javascript:;' onclick='showWindow(this.id, this.getAttribute('url'), 'get', 0);' url='home.php?mod=spacecp&amp;ac=album&amp;op=saveforumphoto&amp;aid=157835&amp;handlekey=savephoto_157835'>保存到相册</a> </p> <p class='xg1 y'>12-8-11 19:55 上传</p></div><div class='tip_horn'></div> </div></ignore_js_op>";
-		String str = "刘一江得到<ignore_js_op><div>ss</div></ignore_js_op>"; //<div>ss</div>dsadads <div>ss</div>dsadads
-		String re = "<ignore_js_op>(.*)</ignore_js_op>";
-//		if(str.indexOf("<ignore_js_op>") != -1){
-			System.out.println(sss.replaceAll(re, ""));
-//		}
-//			System.out.println(sss.matches(re));
-			System.out.println(1);
+    	String str = "在USS鲁本&middot;詹姆斯（DD-245）浅灰&nbsp;肯大全&copy;ModelWarships.com肯大全";
+    	Set<Entry<String,String>> set = map.entrySet();
+    	for(Entry<String,String> entry:set){
+    		str = str.replaceAll(entry.getKey(), entry.getValue());
+    	}
+    	System.out.println(str);
 	}
     
     /**
@@ -101,6 +116,15 @@ public class StringUtil {
         Matcher m = p.matcher(str);
     	return  m.replaceAll("");
     }
+    
+    public static String replaceTag(String str){
+    	Set<Entry<String,String>> set = map.entrySet();
+    	for(Entry<String,String> entry:set){
+    		str = str.replaceAll(entry.getKey(), entry.getValue());
+    	}
+    	return str;
+    }
+    
     
 //    public static void main(String[] args) {
 //    	String str = "量产高手！<img />感觉黑过头了～～做的真心不错了，MS21确实不容易做，其实可以适当夸张点拉大色彩对比<br />已經試著將海軍藍再調淡些,然MS21真的很難抓住精隨~~~";

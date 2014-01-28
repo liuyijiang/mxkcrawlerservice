@@ -37,6 +37,7 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import com.mxk.dao.WebResourceMapper;
 import com.mxk.model.WebResource;
 import com.mxk.model.WebResourceCriteria;
+import com.mxk.web.resource.WebResourceMapperPlus;
 import com.mxk.web.search.PageModel;
 import com.mxk.web.search.SearchRespone;
 /**
@@ -63,6 +64,10 @@ public class IndexService {
 	@Resource
 	private WebResourceMapper webResourceMapper;
 	
+	@Resource
+	private WebResourceMapperPlus webResourceMapperPlus;
+	
+	private IndexSearcher searcher;
 	/** IKAnalyzer中文分词 */
 	private Analyzer analyzer = new IKAnalyzer();
 	/**
@@ -84,7 +89,6 @@ public class IndexService {
 			}).start();
 	    }
 	}	
-	
 		
 	/**
 	 * 创建索引	
@@ -92,7 +96,7 @@ public class IndexService {
 	public void createIndex() throws Exception{
 		WebResourceCriteria criteria = new WebResourceCriteria();
 		criteria.createCriteria().andIdGreaterThan(0);
-		List<WebResource> list = webResourceMapper.selectByExample(criteria);
+//		List<WebResource> list = webResourceMapper.selectByExample(criteria);
 		// 存储索引的目录
 		File indexDir = new File("D:\\index");
 		// 索引目录
@@ -105,39 +109,49 @@ public class IndexService {
 		iwConfig.setOpenMode(OpenMode.CREATE_OR_APPEND);
 		// 创建写索引对象
 		IndexWriter writer = new IndexWriter(dir, iwConfig);
-		for (WebResource res : list) {
-			String id = String.valueOf(res.getId());
-			String url = res.getUrl();
-			String title = res.getTitle();
-			String content = res.getTitle()+" | "+ res.getInfo();
-			String img = res.getImage();
-			String txt = "作者："+res.getOwnername() + " " + res.getMultiinfo();
-			// 创建文档
-			Document doc = new Document();
-			// 加入url域
-			doc.add(new Field("url", url, Field.Store.YES,
-					Field.Index.NOT_ANALYZED));  //Field.Index.NOT_ANALYZED 要分词
-			// 加入标题域
-			doc.add(new Field("title", title, Field.Store.YES,
-					Field.Index.ANALYZED));
-			// 加入内容域
-			doc.add(new Field("content", content, Field.Store.YES,
-					Field.Index.ANALYZED));
-			// 加入内容域
-			doc.add(new Field("img", img, Field.Store.YES,
-					Field.Index.NOT_ANALYZED));
-			
-			doc.add(new Field("subtext", txt, Field.Store.YES,
-					Field.Index.NOT_ANALYZED));
-			
-			doc.add(new Field("id", id, Field.Store.YES,
-					Field.Index.NOT_ANALYZED));
-			// 写入文档
-			writer.addDocument(doc);
+		indexDataLoad(0,writer);
+	}
+	
+	private void indexDataLoad(int startid,IndexWriter writer) throws Exception {
+		List<WebResource> list = webResourceMapperPlus.selectlimit(startid);
+		if(list.size() != 0){
+			int lastid=0;
+			for (WebResource res:list) {
+				lastid = res.getId();
+				String id = String.valueOf(lastid);
+				String url = res.getUrl();
+				String title = res.getTitle();
+				String content = res.getTitle()+" | "+ res.getInfo();
+				String img = res.getImage();
+				String txt = "作者："+res.getOwnername() + " " + res.getMultiinfo();
+				// 创建文档
+				Document doc = new Document();
+				// 加入url域
+				doc.add(new Field("url", url, Field.Store.YES,
+						Field.Index.NOT_ANALYZED));  //Field.Index.NOT_ANALYZED 要分词
+				// 加入标题域
+				doc.add(new Field("title", title, Field.Store.YES,
+						Field.Index.ANALYZED));
+				// 加入内容域
+				doc.add(new Field("content", content, Field.Store.YES,
+						Field.Index.ANALYZED));
+				// 加入内容域
+				doc.add(new Field("img", img, Field.Store.YES,
+						Field.Index.NOT_ANALYZED));
+				
+				doc.add(new Field("subtext", txt, Field.Store.YES,
+						Field.Index.NOT_ANALYZED));
+				
+				doc.add(new Field("id", id, Field.Store.YES,
+						Field.Index.NOT_ANALYZED));
+				// 写入文档
+				writer.addDocument(doc);
+			}
+			indexDataLoad(lastid,writer);
+		}else{
+			writer.close();
+			logger.info("索引创建完成");
 		}
-		// 关闭
-		writer.close();
-		logger.info("索引创建完成");
 	}
 	
 	/**
@@ -220,13 +234,15 @@ public class IndexService {
 	 * @throws Exception
 	 */
 	private IndexSearcher createIndexSearcher() throws Exception{
-		File indexDir = new File("D:\\index");
-		// 索引目录
-		Directory dir = FSDirectory.open(indexDir);
-		// 根据索引目录创建读索引对象
-		IndexReader reader = IndexReader.open(dir); //使用一个
-		// 搜索对象创建
-		IndexSearcher searcher = new IndexSearcher(reader);
+		if(searcher == null){
+			File indexDir = new File("D:\\index");
+			// 索引目录
+			Directory dir = FSDirectory.open(indexDir);
+			// 根据索引目录创建读索引对象
+			IndexReader reader = IndexReader.open(dir); //使用一个
+			// 搜索对象创建
+			searcher = new IndexSearcher(reader);
+		}
 		return searcher;
 	}
 	

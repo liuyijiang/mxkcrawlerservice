@@ -43,11 +43,14 @@ public class DishModelsLinkCrawler extends Crawler {
 	public static final String MATCH_LINK_URL = "http://www.dishmodels.ru/glr_main.htm";
 	public static final String MATCH_CONTENT_URL = "http://www.dishmodels.ru/gshow.htm?p=";
 	public static final String SITE_URL = "http://www.dishmodels.ru";
+	public static final String LINK_URL = "http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=";
 	
-//	public static void main(String[] args) {
-//		DishModelsLinkCrawler d = new DishModelsLinkCrawler();
-//		d.crawler("http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=806"); //494
-//	}
+	public static void main(String[] args) {
+		DishModelsLinkCrawler d = new DishModelsLinkCrawler();
+		//d.crawlerPagings();
+		//error http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=221 3 4
+		d.crawler("http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=622"); //494
+	}
 	
 	/**
 	 * 此网站比较特殊 在服务初始化的时候就将所有的分页link计算出来并保存保存
@@ -76,7 +79,7 @@ public class DishModelsLinkCrawler extends Crawler {
 							link.setFromUrl(MATCH_LINK_URL);
 							link.setMatchUrl(MATCH_LINK_URL);
 							link.setState(ResourceState.NO_CRAWLER.getCode());
-							link.setUrl("http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np="+i);
+							link.setUrl(LINK_URL+i);
 							list.add(link);
 						}
 						logger.info("爬取 DishModels 分页后link总页数：{}", list.size());
@@ -107,8 +110,15 @@ public class DishModelsLinkCrawler extends Crawler {
 			for(Element el : div){
 				String smallimage = el.select("img").attr("src");
 				Elements bs = el.select("b");
-				String comments = bs.get(7).html();
-				String hits = bs.get(6).html();
+				String comments = "";
+				String hits = "";
+				if(bs.size() > 7){ //大于7条
+					comments = bs.get(7).html();
+					hits = bs.get(6).html();
+				}else if(bs.size() <= 7 ){ //等于3条
+					comments = bs.get(bs.size()-1).html();
+					hits = bs.get(bs.size()-2).html();
+				}
 				Links link = new Links();
 				link.setCreateTime(new Date());
 				link.setUrl(SITE_URL + el.select("a").attr("href"));
