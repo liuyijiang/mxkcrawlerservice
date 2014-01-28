@@ -14,7 +14,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 	      <div class="container" >
 			  <div class="navbar-header">
-			    <a class="navbar-brand">模型控</a>
+			    <a class="navbar-brand active">模型控</a>
 			  </div>
 	      </div>
 	</nav>
@@ -35,6 +35,13 @@
      </div>
      </div>
      <!-- end -->
+     <div class="container" >
+<!--        <div class="alert alert-success"> -->
+<!--           <h4>模型控</h4> -->
+<!--           <small>找到你最需要的</small> -->
+<!--        </div> -->
+     </div>
+     
      
       <!--内容 -->
      <div class="container" >
@@ -60,9 +67,13 @@
 <!-- 				      <small class="text-muted">是一位资深全文索引/检索专家，曾经是V-Twin搜索引擎(Apple的Copland操作系统的成就之一)的主要开发者，后在Excite担任高级系统架构设计师，目前从事于一些INTERNET底层架构的研究。他贡献出的Lucene的目标是为各种中小型应用程序加入全文检索功能。</small><br /> -->
 <!-- 				       <small class="text-success">http://www.waileecn.com/vistiorShowSubjectDatail?target=52b814e90cf24a645fafe717</small>               -->
 <!-- 				  </div> -->
-<!-- 				</div> -->
+<!-- 				</div>    -->
 				
 			   </div>	
+			    <div id="loaddivleft" style="display:none" >
+		             <img src="../assets/img/loadingred.gif" >
+		             <span class="muted"><small>正在努力加载...</small></span>
+                </div>
 			   <div id="pagedivs">
 
 			   </div>
@@ -70,6 +81,10 @@
 			
 			<!-- 略读 -->
              <div  class="col-md-5" style="border-left:1px solid #E7E7E7">
+               <div id="loaddivright" style="display:none" >
+		             <img src="../assets/img/loadingred.gif" >
+		             <span class="muted"><small>正在努力加载...</small></span>
+                </div>
                 <div id="simpleread" style="display:none">
                 <div class="form-inline">
 	              <span class="label label-default">网页略读</span>

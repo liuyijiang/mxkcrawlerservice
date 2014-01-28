@@ -1,6 +1,7 @@
 var rootPath = "/mxkcrawlerservice"; 
 
 function getcontent(id){
+	 $("#loaddivright").show();
 	 $.ajax({
     		url : rootPath + "/resource.do",
     		type : "get",
@@ -10,6 +11,7 @@ function getcontent(id){
     		success : function(item) {
     			$("#simpleread").show();
     			setData(item);
+    			$("#loaddivright").hide();
     		}
 	});
 }
@@ -34,6 +36,7 @@ function setData(item){
 
 //查询
 function find(page){
+	$("#loaddivleft").show();
 	 var keyword = $("#keyword").val();
 	 $.ajax({
    		url : rootPath + "/search.do",
@@ -45,6 +48,7 @@ function find(page){
    			$("#infototal").html("为你找到约<span class='text-warning'>"+item.total+"</span>相关记录");
    			createinfo(item.data);
    			createpage(item.page,item.currentPage);
+   			$("#loaddivleft").hide();
    		}
 	});
 }
