@@ -12,8 +12,11 @@ public class TestIndexService {
 	public static void main(String[] args) throws Exception {
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		IndexService indexService = context.getBean(IndexService.class);
+		long startTime=System.currentTimeMillis(); 
 		System.out.println(indexService);
 		indexService.createIndex();
+		long endTime=System.currentTimeMillis(); //获取结束时间  
+		System.out.println("程序运行时间： "+((endTime - startTime) / 1000 )+"s");  
 	}
 	
 	@Test 
