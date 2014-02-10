@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mxk.dao.WebResourceMapper" >
+  <resultMap id="BaseResultMap" type="com.mxk.model.WebResource" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="images" property="images" jdbcType="VARCHAR" />
+    <result column="ownername" property="ownername" jdbcType="VARCHAR" />
+    <result column="sitename" property="sitename" jdbcType="VARCHAR" />
+    <result column="siteurl" property="siteurl" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="multiinfo" property="multiinfo" jdbcType="VARCHAR" />
+    <result column="hits" property="hits" jdbcType="INTEGER" />
+    <result column="posts" property="posts" jdbcType="INTEGER" />
+    <result column="insignificance" property="insignificance" jdbcType="INTEGER" />
+    <result column="significance" property="significance" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, image, images, ownername, sitename, siteurl, url, info, multiinfo, hits, 
+    posts, insignificance, significance
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mxk.model.WebResourceCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_web_resource
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_web_resource
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_web_resource
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mxk.model.WebResourceCriteria" >
+    delete from tb_web_resource
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mxk.model.WebResource" >
+    insert into tb_web_resource (id, title, image, 
+      images, ownername, sitename, 
+      siteurl, url, info, 
+      multiinfo, hits, posts, 
+      insignificance, significance)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
+      #{images,jdbcType=VARCHAR}, #{ownername,jdbcType=VARCHAR}, #{sitename,jdbcType=VARCHAR}, 
+      #{siteurl,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
+      #{multiinfo,jdbcType=VARCHAR}, #{hits,jdbcType=INTEGER}, #{posts,jdbcType=INTEGER}, 
+      #{insignificance,jdbcType=INTEGER}, #{significance,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mxk.model.WebResource" >
+    insert into tb_web_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="images != null" >
+        images,
+      </if>
+      <if test="ownername != null" >
+        ownername,
+      </if>
+      <if test="sitename != null" >
+        sitename,
+      </if>
+      <if test="siteurl != null" >
+        siteurl,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="multiinfo != null" >
+        multiinfo,
+      </if>
+      <if test="hits != null" >
+        hits,
+      </if>
+      <if test="posts != null" >
+        posts,
+      </if>
+      <if test="insignificance != null" >
+        insignificance,
+      </if>
+      <if test="significance != null" >
+        significance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null" >
+        #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="ownername != null" >
+        #{ownername,jdbcType=VARCHAR},
+      </if>
+      <if test="sitename != null" >
+        #{sitename,jdbcType=VARCHAR},
+      </if>
+      <if test="siteurl != null" >
+        #{siteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="multiinfo != null" >
+        #{multiinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="hits != null" >
+        #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="posts != null" >
+        #{posts,jdbcType=INTEGER},
+      </if>
+      <if test="insignificance != null" >
+        #{insignificance,jdbcType=INTEGER},
+      </if>
+      <if test="significance != null" >
+        #{significance,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mxk.model.WebResourceCriteria" resultType="java.lang.Integer" >
+    select count(*) from tb_web_resource
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_web_resource
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null" >
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.images != null" >
+        images = #{record.images,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ownername != null" >
+        ownername = #{record.ownername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sitename != null" >
+        sitename = #{record.sitename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siteurl != null" >
+        siteurl = #{record.siteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.info != null" >
+        info = #{record.info,jdbcType=VARCHAR},
+      </if>
+      <if test="record.multiinfo != null" >
+        multiinfo = #{record.multiinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hits != null" >
+        hits = #{record.hits,jdbcType=INTEGER},
+      </if>
+      <if test="record.posts != null" >
+        posts = #{record.posts,jdbcType=INTEGER},
+      </if>
+      <if test="record.insignificance != null" >
+        insignificance = #{record.insignificance,jdbcType=INTEGER},
+      </if>
+      <if test="record.significance != null" >
+        significance = #{record.significance,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_web_resource
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=VARCHAR},
+      images = #{record.images,jdbcType=VARCHAR},
+      ownername = #{record.ownername,jdbcType=VARCHAR},
+      sitename = #{record.sitename,jdbcType=VARCHAR},
+      siteurl = #{record.siteurl,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      info = #{record.info,jdbcType=VARCHAR},
+      multiinfo = #{record.multiinfo,jdbcType=VARCHAR},
+      hits = #{record.hits,jdbcType=INTEGER},
+      posts = #{record.posts,jdbcType=INTEGER},
+      insignificance = #{record.insignificance,jdbcType=INTEGER},
+      significance = #{record.significance,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mxk.model.WebResource" >
+    update tb_web_resource
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="images != null" >
+        images = #{images,jdbcType=VARCHAR},
+      </if>
+      <if test="ownername != null" >
+        ownername = #{ownername,jdbcType=VARCHAR},
+      </if>
+      <if test="sitename != null" >
+        sitename = #{sitename,jdbcType=VARCHAR},
+      </if>
+      <if test="siteurl != null" >
+        siteurl = #{siteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="multiinfo != null" >
+        multiinfo = #{multiinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="hits != null" >
+        hits = #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="posts != null" >
+        posts = #{posts,jdbcType=INTEGER},
+      </if>
+      <if test="insignificance != null" >
+        insignificance = #{insignificance,jdbcType=INTEGER},
+      </if>
+      <if test="significance != null" >
+        significance = #{significance,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mxk.model.WebResource" >
+    update tb_web_resource
+    set title = #{title,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      images = #{images,jdbcType=VARCHAR},
+      ownername = #{ownername,jdbcType=VARCHAR},
+      sitename = #{sitename,jdbcType=VARCHAR},
+      siteurl = #{siteurl,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      multiinfo = #{multiinfo,jdbcType=VARCHAR},
+      hits = #{hits,jdbcType=INTEGER},
+      posts = #{posts,jdbcType=INTEGER},
+      insignificance = #{insignificance,jdbcType=INTEGER},
+      significance = #{significance,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
