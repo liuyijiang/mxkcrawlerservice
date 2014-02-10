@@ -19,6 +19,7 @@ import com.mxk.crawler.model.ContentResource;
 import com.mxk.crawler.model.CrawlerState;
 import com.mxk.crawler.model.Links;
 import com.mxk.crawler.model.ResourceState;
+import com.mxk.util.StringUtil;
 
 
 @Service
@@ -39,6 +40,10 @@ public class CrawlerService {
 			ContentResource res = (ContentResource)resource;
 			if(res.getSimpleImage() == null){ //没有图片就不保存
 				updateLinkState(res.getLinkurl(),ResourceState.LINK_NO_IMAGE.getCode());//标记链接为没有资源的链接
+				continue;
+			}
+			if(StringUtil.stringIsEmpty(res.getHeadline())){
+				updateLinkState(res.getLinkurl(),ResourceState.LINK_EXCEPTION.getCode());//标记链接为异常链接
 				continue;
 			}
 		    Query q = new Query(Criteria.where("linkurl").is(res.getLinkurl()));

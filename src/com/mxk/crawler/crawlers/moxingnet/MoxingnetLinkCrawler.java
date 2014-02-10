@@ -25,7 +25,9 @@ import com.mxk.crawler.model.ResourceState;
  * 爬取 模型网 http://www.moxing.net/ 链接 
  * 开始页面  http://www.moxing.net/ bbs/forum-6-1.html
  * @author Administrator
- *
+ * 开始页面
+ * http://www.moxing.net/bbs/forum-5-1.html
+ * http://www.moxing.net/bbs/forum-6-1.html
  */
 @Service
 @CrawlerDescription(crawlerSite= MoxingnetLinkCrawler.SITE_NAME , crawlerType=CrawleType.LINK, crawlerMatchUrl = MoxingnetLinkCrawler.MATCH_LINK_URL)
@@ -65,11 +67,16 @@ public class MoxingnetLinkCrawler extends Crawler {
 				link.setMatchUrl(MATCH_CONTENT_URL); //匹配链接
 				link.setFromUrl(url);
 				Element a = tb.select("th[class=subject common]").select("a").first();
-				link.setUrl(SITE_URL + a.attr("href"));
-				String post = tb.select("td[class=nums]").select("strong").html();
-				String hits = tb.select("td[class=nums]").select("em").html();
-				link.setMultiData(post + "," + hits);
-				list.add(link);
+				if(a == null){
+					a = tb.select("th[class=subject new]").select("a").first();
+				}
+				if( a != null){
+					link.setUrl(SITE_URL + a.attr("href"));
+					String post = tb.select("td[class=nums]").select("strong").html();
+					String hits = tb.select("td[class=nums]").select("em").html();
+					link.setMultiData(post + "," + hits);
+					list.add(link);
+				}
 			}
 			Elements pagediv =  doc.select("div[class=pages]").first().select("a");
 			for (Element a : pagediv) {
@@ -82,7 +89,7 @@ public class MoxingnetLinkCrawler extends Crawler {
 				list.add(link);
 			}
 		}catch(Exception e){
-			logger.error("MoXingNet crawler error url: {} message :{}",url,e.getMessage());
+			logger.error("MoXingNet crawler error url: {} message :{}",url,e);
 		}finally{
 			crawlerSheep(SHEEP_TIME);
 			logger.info("MoXingNet 完成链接爬取{},爬取link数量：{}",url, list.size());

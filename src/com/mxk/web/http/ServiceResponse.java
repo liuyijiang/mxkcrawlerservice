@@ -7,22 +7,28 @@ package com.mxk.web.http;
 public enum ServiceResponse {
 	
 	/***/
-	SUCCESS(200),
+	SUCCESS(200,"操作成功"),
 	
 	/***/
-	SERVICE_ERROR(500),
+	SERVICE_ERROR(500,"服务器异常"),
 	
 	/** 数据重复 */
-	DATA_REPETITION(50001);
+	DATA_REPETITION(50001,"数据重复");
 	
 	private Integer code;
+	private String desc;
 	
-	private ServiceResponse(Integer code){
+	private ServiceResponse(Integer code,String desc){
 		this.code = code;
+		this.desc= desc;
 	}
 
 	public Integer getCode() {
 		return code;
+	}
+
+	public String getDesc() {
+		return desc;
 	}
 	
 	

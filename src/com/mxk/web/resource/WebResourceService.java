@@ -69,15 +69,15 @@ public class WebResourceService {
 		String hits = "";
 		if(!StringUtil.stringIsEmpty(contentResource.getPost())){
 			post = " 评论：" + contentResource.getPost();
+			web.setPosts(Integer.parseInt(contentResource.getPost()));
 		}
 		if(!StringUtil.stringIsEmpty(contentResource.getHit())){
 			hits = " 阅读：" + contentResource.getHit();
+			web.setHits(Integer.parseInt(contentResource.getHit()));
 		}
 		web.setImages(contentResource.getImages());
 		web.setMultiinfo(StringUtil.toEnpty(contentResource.getMultiData()) + post + hits);
 		web.setOwnername(contentResource.getOwner());
-		web.setPosts(Integer.parseInt(contentResource.getPost()));
-		web.setHits(Integer.parseInt(contentResource.getHit()));
 		web.setSignificance((int)(Math.random()*100));
 		web.setSitename(contentResource.getSitename());
 		web.setSiteurl(contentResource.getSiteurl());

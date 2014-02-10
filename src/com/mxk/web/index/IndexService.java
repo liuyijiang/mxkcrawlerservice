@@ -162,7 +162,7 @@ public class IndexService {
 	 */
 	public PageModel searchIndex(String words, String field, int currentPage){
 		PageModel model = new PageModel();
-		long total = 0;//总页数
+		int total = 0;//总页数
 		try{
 			IndexSearcher searcher = createIndexSearcher();
 			// 创建查询解析对象
@@ -181,6 +181,9 @@ public class IndexService {
 	        total = topDocs.totalHits;//总记录
 	        int start= (currentPage - 1) * pageSize;  
 	        int end= start + pageSize -1;  
+	        if(end > total){
+	        	end = total - 1;
+	        }
 	        List<SearchRespone> list = getSearchRespone(hits,searcher,highlighter,start,end);
 	        model.setTotal(total);
 	        model.setCurrentPage(currentPage);

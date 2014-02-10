@@ -2,6 +2,8 @@ package com.mxk.crawler.crawlers.moxingnet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.mxk.crawler.annotation.CrawleType;
 import com.mxk.crawler.annotation.CrawlerDescription;
 import com.mxk.crawler.base.Crawler;
+import com.mxk.crawler.base.SiteInfo;
 import com.mxk.crawler.model.BaseResource;
 import com.mxk.crawler.model.Content;
 import com.mxk.crawler.model.Links;
@@ -38,9 +41,11 @@ public class MoxingnetContentResourceCrawler extends Crawler {
 	public static final String SITE_NAME = "MoXingNet";
 	public static final String IMAGE_URL = "http://www.moxing.net/bbs/";
 	
+	private static final String REGXP = "<div class=\"t_attach\" ([^>]*)>(.*)</div>";
+	
 	public static void main(String[] args) {
 		MoxingnetContentResourceCrawler m = new MoxingnetContentResourceCrawler();
-		m.crawler("http://www.moxing.net/bbs/thread-45903-1-5.html");
+		m.crawler("http://www.moxing.net/bbs/thread-46246-1-1.html"); //http://www.moxing.net/bbs/thread-45903-1-5.html
 		
 	}
 	
@@ -55,29 +60,42 @@ public class MoxingnetContentResourceCrawler extends Crawler {
 			conn.userAgent(USERAGENT);
 			Document doc = conn.get(); 
 			Elements imgs = doc.select("div[class=t_msgfontfix]").select("img"); //获得图片
-			if(imgs.size() >= 3){ //至少3张图片
+			if(imgs != null){
 				Content content = new Content();
 				content.setLikurl(url);
 				content.setSitename(SITE_NAME);
 				content.setSiteurl(SITE_URL);
 				content.setLikurl(url);
+				List<String> images = new ArrayList<String>();
+				content.setImages(images);
+				int index= 0;
 				for (Element img : imgs) {
+					if(index >= 5){
+						break;
+					}
 					String file = img.attr("file");
 					String src = img.attr("src");
 					if(!StringUtil.stringIsEmpty(file) && !StringUtil.getFileSuffixName(file).equals("gif")){
-						content.setSimpleImage(IMAGE_URL + file);
-						break;
+						images.add(IMAGE_URL + file);
+					    index++;
+						continue;
 					}
 					if(!StringUtil.stringIsEmpty(src) && !StringUtil.getFileSuffixName(src).equals("gif")){
-						content.setSimpleImage(src);
-						break;
+						images.add(IMAGE_URL + src);
+						index++;
+						continue;
 					}
 				}
 				content.setOwner(doc.select("div[class=postinfo]").first().select("a").html());
 				content.setHeadline(doc.select("div[id=threadtitle]").first().select("h1").html());
-				String info = trimString(doc.select("div[class=t_msgfontfix]").select("tr").html()); 
-				String remove = info.substring(info.indexOf("\n"),info.lastIndexOf("\n"));
-				info = info.replace(remove, "");//替换\n  2013-12-29 05:35:00
+				String info = doc.select("div[class=t_msgfontfix]").select("tr").html();
+				content.setSimpleImage(images.get(0)); 
+				//System.out.println(info);
+				info = htmlInfoManage(info); 
+				//System.out.println(info);
+				//String remove = info.substring(info.indexOf("\n"),info.lastIndexOf("\n"));
+				//info = info.replace(remove, "");//替换\n  2013-12-29 05:35:00
+				content.setMultiData(SiteInfo.CHINIA.getCode());
 				content.setInfo(info);
 				list.add(content);
 			}
@@ -103,15 +121,26 @@ public class MoxingnetContentResourceCrawler extends Crawler {
 	}
 	
 	
-	private String trimString(String str){
-		String[] strs = StringUtil.regxpForHtml(str,",").split(",");
-		StringBuffer sb = new StringBuffer();
-		for (String ss : strs) {
-			if(!StringUtil.stringIsEmpty(ss)){
-				sb.append(ss);
-			}
-		}
-		return sb.toString();
+//	private String trimString(String str){
+//		String[] strs = StringUtil.regxpForHtml(str,",").split(",");
+//		StringBuffer sb = new StringBuffer();
+//		for (String ss : strs) {
+//			if(!StringUtil.stringIsEmpty(ss)){
+//				sb.append(ss);
+//			}
+//		}
+//		return sb.toString();
+//	}
+	
+	/**
+	 * 处理爬取下来的内容
+	 * @param html
+	 * @return
+	 */
+	private String htmlInfoManage(String html){
+		Pattern p = Pattern.compile("\n");//去掉换行
+	    Matcher m = p.matcher(html);
+	    return StringUtil.regxpForHtml(m.replaceAll("").replaceAll(REGXP, ""),"");
 	}
 	
 	

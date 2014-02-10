@@ -254,6 +254,7 @@ public abstract class Crawler {
 	 * 
 	 */
 	public void executeCrawler(String matchUrl){
+		String crawlerurl = null;
 		try{
 			int allpage = crawlerService.findAllLinkPage(matchUrl);//获得总页数
 			if(allpage == 0){
@@ -266,6 +267,7 @@ public abstract class Crawler {
 	    		List<Links> list = crawlerService.findLinkByPage(i,matchUrl);//获得需要爬取的link
 	    		logger.info("加载匹配：{} 链接数量：{}",matchUrl,list.size());
 	    		for(Links link : list){
+	    			crawlerurl = link.getUrl();
 	    			List<? extends BaseResource> resource = crawler(link.getUrl());
 	    			if(resource.size() > 0){ //保存资源
 	    				logger.info("获得 匹配链接 ：{} 下资源数量 ：{}",matchUrl,resource.size());
@@ -289,6 +291,7 @@ public abstract class Crawler {
 	    		}
 			}	
 		}catch(Exception e){
+			crawlerService.updateLinkState(crawlerurl, ResourceState.LINK_EXCEPTION.getCode());
 			logger.error("爬取数据出现异常 异常信息：{} 链接{}",e,crawlerSite+"|"+this.getClass().getName()+"|"+matchUrl);
 			crawlerSheep(5000);
 		}

@@ -25,6 +25,8 @@ public class SearchController {
     @Autowired
     private IndexService indexService;
     
+    @Autowired
+    private SearchLogService searchLogService;
 	/**
 	 * 文章主页
 	 * @return
@@ -38,6 +40,8 @@ public class SearchController {
 	@ResponseBody
 	@SecurityDescription
 	public PageModel search(@RequestParam("keyword") String keyword, @RequestParam("currentPage") int currentPage){
+		//TODO 线程池
+		searchLogService.saveUserSearchInfo(keyword);//保存用户查询的内容
 		return indexService.searchIndex(keyword, "content" ,currentPage);
 	}
 	

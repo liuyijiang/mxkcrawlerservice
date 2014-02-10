@@ -126,6 +126,7 @@ public class ResourceUploadService {
 	 * @return
 	 */
 	private List<ContentResource> loadNoUploadData(){
+		//System.out.println("1");
 		//Query q = new Query(Criteria.where("state").is(ResourceState.UPLOADE_FAIL.getCode()));
 		Query q = new Query(Criteria.where("state").is(ResourceState.NO_CATALOGO.getCode()));//
 		q.limit(50);
