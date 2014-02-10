@@ -48,6 +48,8 @@
 		
 		<table domainObjectName="WebResource" tableName="TB_WEB_RESOURCE" />
 		<table domainObjectName="BaseLink" tableName="TB_BASE_LINK" />
+		<table domainObjectName="User" tableName="TB_USER" />
+		<table domainObjectName="SearchLog" tableName="TB_USER_SEARCH_LOG" />
 	</context>
 
 </generatorConfiguration>

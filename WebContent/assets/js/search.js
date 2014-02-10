@@ -1,5 +1,18 @@
 var rootPath = "/mxkcrawlerservice"; 
 
+$(init());
+
+function init(){
+	$("#search-btn").bind("click",function(){
+		find(1);
+	});
+	showUser();//显示用户信息
+	$("#narbar_loginout").bind("click",function(){
+		loginOut();
+		showUser();
+	});
+}
+
 function getcontent(id){
 	 $("#loaddivright").show();
 	 $.ajax({
@@ -52,10 +65,9 @@ function find(page){
    		}
 	});
 }
-
  
 function createpage(page,currentpage){
-	var pagediv = "<ul class='pagination'>";
+	var pagediv = "<ul class='pagination pagination-sm'>";
 	if(currentpage >= 10){
 		pagediv = pagediv + "<li><a onclick='find(\""+ (currentpage - 10) +"\")' href='javascript:;'>&laquo;</a></li>";
 	}
@@ -88,13 +100,14 @@ function createpage(page,currentpage){
      var show = '';
 		for(var i in list)
 		{
-		  show = show + "<div class='media'><a onclick='getcontent("+ list[i].id +")' class='pull-left' href='javascript:;'>"
-		       +"<img style='width:120px' src='http://www.waileecn.com/mxk/content/img/"+ list[i].img +"'></a>"
-		       //+ "<img style='width:100px' src='http://www.waileecn.com/mxk/image/52b815210cf24a645fafe72d_mini.png'></a>"
-		       + "<div class='media-body'><span class='media-heading h4'><a onclick='getcontent("+ list[i].id +")' style='color:#1E0FBE;' href='javascript:;'>"+ list[i].title + "</a></span><br />"
+		  show = show + "<div class='media'><a href='#read' onclick='getcontent("+ list[i].id +")' class='pull-left' href='javascript:;'>"
+		       +"<img class='img-thumbnail' style='width:120px' src='http://www.waileecn.com/mxk/content/img/"+ list[i].img +"'></a>"
+		       + "<div class='media-body'><span class='media-heading h4'><a href='#read' onclick='getcontent("+ list[i].id +")' style='color:#1E0FBE;' href='javascript:;'>"+ list[i].title + "</a></span><br />"
 			   + "<small class='text-primary'>"+ list[i].subtext + "</small><br />"
 			   + "<small class='text-muted'>"+ list[i].info +"</small><br />"
 			   + "<small class='text-success'>"+ list[i].url +"</small></div></div>";
 		}
 		$("#info").html(show);
 }
+ 
+
