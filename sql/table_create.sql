@@ -33,6 +33,29 @@ ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8
 COMMENT = '基础爬取链接地址';
 
+CREATE  TABLE `mxkdatabase`.`tb_user` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `user_name` VARCHAR(200) NULL ,
+  `user_image` VARCHAR(200) NULL ,
+  `user_email` VARCHAR(200) NULL ,
+  `user_password` VARCHAR(100) NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `user_email_UNIQUE` (`user_email` ASC) ,
+  UNIQUE INDEX `user_name_UNIQUE` (`user_name` ASC) )
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COMMENT = '用户基本信息表';
 
+CREATE  TABLE `mxkdatabase`.`tb_user_search_log` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `keyword` VARCHAR(255) NULL ,
+  `search_form_ip` VARCHAR(15) NULL ,
+  `search_from_user` INT NULL ,
+  `create_time` DATETIME NULL ,
+  `search_from_site` INT NULL COMMENT '是app 还是web1app 2web' ,
+  PRIMARY KEY (`id`) )
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COMMENT = '记录用户搜索的内容';
 
 INSERT INTO `mxkdatabase`.`tb_base_link` (`id`, `matchUrl`, `url`, `describe`, `state`, `ctime`) VALUES ('3', 'http://www.moxing.net/bbs/forum', 'http://www.moxing.net/bbs/forum-6-1.html', '', '1', now());
