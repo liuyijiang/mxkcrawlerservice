@@ -1,4 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>模型控</title>
@@ -11,29 +10,76 @@
 <link rel="stylesheet" type="text/css" href="../assets/css/font-awesome.min.css" /> 
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-	      <div class="container" >
-			  <div class="navbar-header">
-			    <a class="navbar-brand active">模型控</a>
-			  </div>
-	      </div>
-	</nav>
-	<br /><br />
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="container" >
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">模型控</a>
+  </div>
+  <div class="collapse navbar-collapse" id="navbar-collapse">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="javascript:;"><i class="icon-search"></i>搜索</a></li>
+	  <li><a href="#">文章</a></li>
+      <li><a href="#">分享</a></li>
+      <li class="dropdown">
+          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">资源分类<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+          <li><a href="#">军舰类</a></li>
+          <li><a href="#">装甲类</a></li>
+          <li><a href="#">战机类</a></li>
+          <li class="divider"></li>
+          <li><a href="#">人物类</a></li>
+          <li><a href="#">民用</a></li>
+        </ul>
+      </li>
+    </ul>
+    <ul id="loginin_nar" class="nav navbar-nav navbar-right" style="display:none">
+          <li class="dropdown active">
+           <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="icon-user"></i>&nbsp;
+              <span id="narbar_username"></span>
+              <b class="caret"></b>
+           </a>
+        <ul class="dropdown-menu">
+          <li><a href="../web/user/userindex.html"><i class="icon-home"></i>个人中心</a></li>
+          <li><a href="../search.html"><i class="icon-search"></i>搜索资源</a></li>
+          <li class="divider"></li>
+          <li><a id="narbar_loginout" href="javascript:;"><i class="icon-signout"></i>退出</a></li>
+        </ul>
+      </li>
+        </ul>
+        <p id="loginout_nar" class="navbar-text navbar-right">
+           <a href="../web/user/regist.html"><i class="icon-user"></i>注册</a>&nbsp;&nbsp;<a href=""><i class="icon-signin"></i>登录</a>
+        </p>
+    </div>   
+  </div>      
+</nav>
+<br /><br />
 	<!-- 搜索 -->
 	<div class="well">
-   <div class="container " >
-       <div class="form-inline">
-         <div class="input-group">
-           <span class="input-group-addon"><i class="icon-search"></i></span>
-           <input id="keyword" type="text" class="form-control" style="width:500px" />
-           &nbsp;
-           <button class="btn btn-default" type="button" onclick="find(1)">搜索!</button>
-           <button type="button" class="btn btn-link">试试手气</button> 
+      <div class="container" >
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="input-group">
+          <span class="input-group-addon"><i class="icon-search"></i></span>
+            <input id="keyword" type="text" class="form-control" placeholder="输入关键字试试">
+            <span class="input-group-btn">
+              <button id="search-btn" class="btn btn-default" type="button">搜索</button>
+            </span>
+         </div>
         </div>
-      </div> <!--end 搜索 -->
-	  <small class="text-muted" id="infototal"></small>   
+         <div class="col-lg-6">
+           <button class="btn btn-link" type="button"><i class="icon-lightbulb"></i>试试手气</button>
+         </div>
+       </div>
+	   <small class="text-muted" id="infototal"></small>   
      </div>
-     </div>
+     </div><!--end 搜索 -->
      <!-- end -->
      <div class="container" >
 <!--        <div class="alert alert-success"> -->
@@ -80,7 +126,7 @@
 			</div>
 			
 			<!-- 略读 -->
-             <div  class="col-md-5" style="border-left:1px solid #E7E7E7">
+             <div id="read" class="col-md-5" style="border-left:1px solid #E7E7E7">
                <div id="loaddivright" style="display:none" >
 		             <img src="../assets/img/loadingred.gif" >
 		             <span class="muted"><small>正在努力加载...</small></span>
@@ -110,5 +156,7 @@
 </body>
 <script type="text/javascript" src="../assets/js/jquery-1.7.2.js"></script> 
 <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../assets/js/mxk.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="../assets/js/global.js"></script>
+<script type="text/javascript" src="../assets/js/search.js"></script>
 </html>
