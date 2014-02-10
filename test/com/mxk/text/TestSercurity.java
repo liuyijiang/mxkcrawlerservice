@@ -16,10 +16,21 @@ import org.junit.Test;
 import com.alibaba.fastjson.JSON;
 import com.mxk.crawler.model.ContentResource;
 import com.mxk.util.BeanUtil;
+import com.mxk.util.SecurityUtil;
+import com.mxk.util.StringUtil;
 import com.mxk.web.http.ServiceResponse;
 
 public class TestSercurity {
 
+	@Test
+	public void testUUID(){
+		String str = "9d89ce4c-5bec-4f8e-9cfe-b4ab3aa99d98";
+		String b = SecurityUtil.getBASE64("9d89ce4c-5bec-4f8e-9cfe-b4ab3aa99d98");
+		System.out.println(b);
+		System.out.println(str.equals(SecurityUtil.getFromBASE64(b)));
+	}
+	
+	
 	private String encodeParams(Map<String, Object> parms) throws Exception {
 		if (parms == null) {
 			return null;
