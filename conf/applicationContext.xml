@@ -44,6 +44,11 @@
     <!-- Mybatis -->
     <import resource="applicationMybatisContext.xml"/>
     
+    <!-- 权限拦截器 -->
     <import resource="applicationInterceptorContext.xml"/>
+    
+    <!-- 邮件模板 -->
+    <import resource="applicationMailContext.xml"/>
+    
     
 </beans>
