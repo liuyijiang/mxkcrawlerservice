@@ -17,6 +17,7 @@
                      http://www.springframework.org/schema/tx
                      http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
+    <aop:aspectj-autoproxy /> 
     
     <context:component-scan base-package="com">
        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -50,5 +51,7 @@
     <!-- 邮件模板 -->
     <import resource="applicationMailContext.xml"/>
     
+    <!-- redis缓存 -->
+    <import resource="applicationJedisContext.xml"/>
     
 </beans>

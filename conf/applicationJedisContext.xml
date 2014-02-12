@@ -8,12 +8,21 @@
    
    <context:annotation-config />
    
-	<bean id="jedispool" class="com.mxk.org.common.connect.redis.MxkJedisPool">
+	<bean id="jedispool" class="com.mxk.cache.template.RedisCachePool">
 	   <constructor-arg index="0">
 	       <value>${redis.host}</value>
 	   </constructor-arg>
 	   <constructor-arg index="1">
 	       <value>${redis.port}</value>
+	   </constructor-arg>
+	   <constructor-arg index="2">
+	       <value>${redis.pool.maxActive}</value>
+	   </constructor-arg>
+	   <constructor-arg index="3">
+	       <value>${redis.pool.maxIdle}</value>
+	   </constructor-arg>
+	   <constructor-arg index="4">
+	       <value>${redis.pool.maxWait}</value>
 	   </constructor-arg>
 	</bean>
 	
