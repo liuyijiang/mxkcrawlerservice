@@ -58,4 +58,4 @@ ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8
 COMMENT = '记录用户搜索的内容';
 
-INSERT INTO `mxkdatabase`.`tb_base_link` (`id`, `matchUrl`, `url`, `describe`, `state`, `ctime`) VALUES ('3', 'http://www.moxing.net/bbs/forum', 'http://www.moxing.net/bbs/forum-6-1.html', '', '1', now());
+INSERT INTO `mxkdatabase`.`tb_base_link` (`matchUrl`, `url`, `describes`, `state`, `ctime`) VALUES ('http://www.moxing.net/bbs/forum', 'http://www.moxing.net/bbs/forum-5-1.html', '', '1', now());
