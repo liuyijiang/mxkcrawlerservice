@@ -17,7 +17,7 @@ public class CrawlerTest {
 	@Ignore
 	public void testMilitarymodellingLinkCrawler(){
 		MilitarymodellingLinkCrawler m = new MilitarymodellingLinkCrawler();
-		m.crawler("http://www.militarymodelling.com/news/browseModern.asp?at=59&atg=2&p=1");
+		//m.crawler("http://www.militarymodelling.com/news/browseModern.asp?at=59&atg=2&p=1");
 	}
 	
 	@Test
@@ -26,7 +26,7 @@ public class CrawlerTest {
 //		String str = "II";
 //		System.out.println(str.matches("^((l|L)?(x|X){0,3}|(x|X)[lc]|[LC])((v|V)?(i|I){0,3}|(i|I)[vx]|[VX])$"));
 		MilitarymodellingContentResourceCrawler m = new MilitarymodellingContentResourceCrawler();
-		m.crawler("http://www.militarymodelling.com/news/article/busy-bob%27s-1-6-pz-ii-ausf-b/15506");
+		//m.crawler("http://www.militarymodelling.com/news/article/busy-bob%27s-1-6-pz-ii-ausf-b/15506");
 	}
 
 	//xiaot
