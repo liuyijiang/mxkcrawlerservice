@@ -45,13 +45,14 @@ public class MoxingnetContentResourceCrawler extends Crawler {
 	
 	public static void main(String[] args) {
 		MoxingnetContentResourceCrawler m = new MoxingnetContentResourceCrawler();
-		m.crawler("http://www.moxing.net/bbs/thread-46246-1-1.html"); //http://www.moxing.net/bbs/thread-45903-1-5.html
+		//m.crawler("http://www.moxing.net/bbs/thread-46246-1-1.html"); //http://www.moxing.net/bbs/thread-45903-1-5.html
 		
 	}
 	
 	
 	@Override
-	public List<? extends BaseResource> crawler(String url) {
+	public List<? extends BaseResource> crawler(Links flink) {
+		String url = flink.getUrl();
 		List<Content> list = new ArrayList<Content>();
 		try{
 			logger.info("开始爬取 MoXingNet 论坛帖子 来源链接地址：{}",url);
@@ -76,12 +77,20 @@ public class MoxingnetContentResourceCrawler extends Crawler {
 					String file = img.attr("file");
 					String src = img.attr("src");
 					if(!StringUtil.stringIsEmpty(file) && !StringUtil.getFileSuffixName(file).equals("gif")){
-						images.add(IMAGE_URL + file);
+						if(file.startsWith("http")){
+							images.add(file);
+						}else{
+							images.add(IMAGE_URL + file);
+						}
 					    index++;
 						continue;
 					}
 					if(!StringUtil.stringIsEmpty(src) && !StringUtil.getFileSuffixName(src).equals("gif")){
-						images.add(IMAGE_URL + src);
+						if(src.startsWith("http")){
+							images.add(src);
+						}else{
+							images.add(IMAGE_URL + src);
+						}
 						index++;
 						continue;
 					}
@@ -89,14 +98,16 @@ public class MoxingnetContentResourceCrawler extends Crawler {
 				content.setOwner(doc.select("div[class=postinfo]").first().select("a").html());
 				content.setHeadline(doc.select("div[id=threadtitle]").first().select("h1").html());
 				String info = doc.select("div[class=t_msgfontfix]").select("tr").html();
-				content.setSimpleImage(images.get(0)); 
+				if(images.size() > 0){
+					content.setSimpleImage(images.get(0)); 
+				}
 				//System.out.println(info);
 				info = htmlInfoManage(info); 
 				//System.out.println(info);
 				//String remove = info.substring(info.indexOf("\n"),info.lastIndexOf("\n"));
 				//info = info.replace(remove, "");//替换\n  2013-12-29 05:35:00
 				content.setMultiData(SiteInfo.CHINIA.getCode());
-				content.setInfo(info);
+				content.setInfo(info.replaceAll(" ", ""));//去掉所有空格
 				list.add(content);
 			}
 		}catch(Exception e){

@@ -17,6 +17,19 @@ public class UserPlus extends User {
 		this.token = token;
 	}
 	
+	public UserPlus(){
+		
+	}
+	
+    public UserPlus(User user){
+    	if(user != null){
+    		this.setId(user.getId());
+    		this.setUserEmail(user.getUserEmail());
+    		this.setUserImage(user.getUserImage());
+    		this.setUserName(user.getUserName());
+    		this.setUserPassword(user.getUserPassword());	
+    	}
+	}
 	
 	
 }

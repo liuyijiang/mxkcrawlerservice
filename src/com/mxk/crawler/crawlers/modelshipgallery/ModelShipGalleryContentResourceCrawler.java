@@ -19,6 +19,7 @@ import com.mxk.crawler.base.Crawler;
 import com.mxk.crawler.base.SiteInfo;
 import com.mxk.crawler.model.BaseResource;
 import com.mxk.crawler.model.Content;
+import com.mxk.crawler.model.Links;
 import com.mxk.translator.TranslatorService;
 import com.mxk.translator.TranslatorType;
 import com.mxk.util.StringUtil;
@@ -48,11 +49,12 @@ public class ModelShipGalleryContentResourceCrawler extends Crawler {
 		//String ss = "USS Pittsburg CA-72 by Manuel González";
 		//System.out.println(ss.substring(ss.indexOf("by"),ss.length()));
 		//i、null http://www.modelshipgallery.com/gallery/ca/ca-139/350-rw/ca-139-rw-index.html
-		m.crawler("http://www.modelshipgallery.com/gallery/dd/hmas/hobart-350-pc/hobart-index.html");
+		//m.crawler("http://www.modelshipgallery.com/gallery/dd/hmas/hobart-350-pc/hobart-index.html");
 	}
 	
 	@Override
-	public List<? extends BaseResource> crawler(String url) {
+	public List<? extends BaseResource> crawler(Links flink) {
+		String url = flink.getUrl();
 		List<Content> list = new ArrayList<Content>();
 		try{
 			logger.info("开始爬取 modelshipgallery 论坛帖子 来源链接地址：{}",url);
@@ -67,7 +69,7 @@ public class ModelShipGalleryContentResourceCrawler extends Crawler {
 			content.setLikurl(url);
 			content.setSitename(SITE_NAME);
 			content.setSiteurl(MATCH_URL);
-			translator = new TranslatorService(); //测试时候使用
+			//translator = new TranslatorService(); //测试时候使用
 			//System.out.println(font.get(1).html());
 			StringBuilder sb = new StringBuilder();
 			String titleWord[] = null;

@@ -45,11 +45,12 @@ public class MoxingnetLinkCrawler extends Crawler {
 	
 	public static void main(String[] args) {
 		MoxingnetLinkCrawler m = new MoxingnetLinkCrawler();
-		m.crawler("http://www.moxing.net/bbs/forum-6-1.html");
+		//m.crawler("http://www.moxing.net/bbs/forum-6-1.html");
 	}
 	
 	@Override
-	public List<? extends BaseResource> crawler(String url) {
+	public List<? extends BaseResource> crawler(Links flink) {
+		String url = flink.getUrl();
 		List<Links> list = new ArrayList<Links>();
 		try{
 			logger.info("开始爬取 MoXingNet 论坛链接资源 来源链接地址：{}",url);

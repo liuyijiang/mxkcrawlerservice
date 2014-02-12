@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import sun.awt.image.ImageWatched.Link;
+
 import com.mxk.crawler.BaseFileUploadService;
 import com.mxk.crawler.CrawlerService;
 import com.mxk.crawler.GridFSFileUploadService;
@@ -76,7 +78,7 @@ public abstract class Crawler {
 	 * @param url
 	 * @return
 	 */
-	public abstract List<? extends BaseResource> crawler(String url);
+	public abstract List<? extends BaseResource> crawler(Links link);
 	
 	/**
 	 * 抽象出资源保存功能
@@ -120,17 +122,19 @@ public abstract class Crawler {
 					//使用普通方式  ftp上传
 					if(content.getSimpleImage() != null){
 						byte[] byteFile = HttpUtil.getImageByte(content.getSimpleImage());
-						String fileName = StringUtil.cutOutUrlFileName(content.getSimpleImage());
-						String foldler = StringUtil.dateToString(new Date(), "yyyyMMdd");
-						String simpleImage = baseFileUploadService.saveFile(byteFile, fileName , foldler);
-						resource.setSimpleImage(simpleImage);//图片保存成功后
-						if(simpleImage != null){
-							resource.setSimpleImageName( foldler + "/" + fileName);
-							StringBuilder sb = new StringBuilder();
-							for(String img : content.getImages()){
-								sb.append(img+",");
+						if(byteFile != null){
+							String fileName = StringUtil.cutOutUrlFileName(content.getSimpleImage());
+							String foldler = StringUtil.dateToString(new Date(), "yyyyMMdd");
+							String simpleImage = baseFileUploadService.saveFile(byteFile, fileName , foldler);
+							resource.setSimpleImage(simpleImage);//图片保存成功后
+							if(simpleImage != null){
+								resource.setSimpleImageName( foldler + "/" + fileName);
+								StringBuilder sb = new StringBuilder();
+								for(String img : content.getImages()){
+									sb.append(img+",");
+								}
+								resource.setImages(sb.toString());
 							}
-							resource.setImages(sb.toString());
 						}
 					}
 					rlist.add(resource);
@@ -268,7 +272,7 @@ public abstract class Crawler {
 	    		logger.info("加载匹配：{} 链接数量：{}",matchUrl,list.size());
 	    		for(Links link : list){
 	    			crawlerurl = link.getUrl();
-	    			List<? extends BaseResource> resource = crawler(link.getUrl());
+	    			List<? extends BaseResource> resource = crawler(link);
 	    			if(resource.size() > 0){ //保存资源
 	    				logger.info("获得 匹配链接 ：{} 下资源数量 ：{}",matchUrl,resource.size());
 	    				//组装数据 对于那些在帖子页面拿不到评论数量和阅读数量的网站

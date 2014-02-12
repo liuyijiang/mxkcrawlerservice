@@ -42,7 +42,8 @@ public class ModelFleetcnLinkCrawler extends Crawler {
 	public static final String SITE_NAME = "海权无谓";
 	
 	@Override
-	public List<? extends BaseResource> crawler(String url) {
+	public List<? extends BaseResource> crawler(Links flink) {
+		String url = flink.getUrl();
 		List<Links> list = new ArrayList<Links>();
 		try{
 			logger.info("开始爬取 海权无谓 论坛链接 来源链接地址：{}",url);

@@ -47,7 +47,7 @@ public class ModelShipGalleryLinkCrawler extends Crawler {
 	
 	public static void main(String[] args) {
 		ModelShipGalleryLinkCrawler m = new ModelShipGalleryLinkCrawler();
-		m.crawler("http://www.modelshipgallery.com/gallery/service/liners/Titanic-400-hw/index.htm");
+		//m.crawler("http://www.modelshipgallery.com/gallery/service/liners/Titanic-400-hw/index.htm");
 		//m.initLink();
 	}
 	
@@ -99,7 +99,8 @@ public class ModelShipGalleryLinkCrawler extends Crawler {
 	
 	
 	@Override
-	public List<? extends BaseResource> crawler(String url) {
+	public List<? extends BaseResource> crawler(Links flink) {
+		String url = flink.getUrl();
 		List<Links> list = new ArrayList<Links>();
 		try{
 			logger.info("开始爬取 modelshipgallery 论坛链接 来源链接地址：{}",url);

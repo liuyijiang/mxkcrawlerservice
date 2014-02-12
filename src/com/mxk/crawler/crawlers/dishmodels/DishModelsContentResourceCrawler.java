@@ -45,11 +45,12 @@ public class DishModelsContentResourceCrawler extends Crawler {
 	
 	public static void main(String[] args) {
 		DishModelsContentResourceCrawler d = new DishModelsContentResourceCrawler();
-		d.crawler("http://www.dishmodels.ru/gshow.htm?p=2645");//&lng=E
+		//d.crawler("http://www.dishmodels.ru/gshow.htm?p=2645");//&lng=E
 	}
 	
 	@Override
-	public List<? extends BaseResource> crawler(String url) {
+	public List<? extends BaseResource> crawler(Links flink) {
+		String url = flink.getUrl();
 		List<Content> list = new ArrayList<Content>();
 		try{
 			logger.info("开始爬取 DishModels 论坛帖子资源 来源链接地址：{}",url);

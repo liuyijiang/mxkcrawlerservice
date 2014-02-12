@@ -8,14 +8,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.mxk.cache.CacheService;
+import com.mxk.cache.CacheableService;
 import com.mxk.mail.MailService;
+import com.mxk.model.User;
 import com.mxk.util.SecurityUtil;
 import com.mxk.util.StringUtil;
 import com.mxk.util.ValidateUtil;
@@ -42,47 +45,108 @@ public class UserController {
 	@Resource
 	private UserService userService;
 	
-	/**邮件服务 */
-	@Resource
-	private MailService mailService;
-	
-	/**缓存服务 */
-	@Resource
-	private CacheService cacheService;
-	
+	/**
+	 * 用户注册
+	 * @param email
+	 * @param username
+	 * @param password
+	 * @return
+	 */
 	@RequestMapping(value = "/regist",method = {RequestMethod.POST})
 	@ResponseBody
-	@SecurityDescription(loginRequest=false)
+	@SecurityDescription(loginRequest = false)
 	public MessageAndView userRegist(@RequestParam("email") String email,
 			@RequestParam("username") String username,
 			@RequestParam("password") String password) {
-		UserPlus user = createUserPlus(username,password,email);
+		User user = createUserPlus(username,password,email);
 		if (!valiateUserPlus(user)){ //安全验证
 			return MessageAndView.newInstance(ServiceResponse.SERVICE_ERROR,"数据输入有误");
 		}
 		if (!userService.uniqueUserEmailValiate(user.getUserEmail())) { //唯一性验证
 			return MessageAndView.newInstance(ServiceResponse.SERVICE_ERROR,"注册邮箱已被占用");
 		}
-		if (!userService.uniqueUserEmailValiate(user.getUserName())) { //唯一性验证
+		if (!userService.uniqueUserNameValiate(user.getUserName())) { //唯一性验证
 			return MessageAndView.newInstance(ServiceResponse.SERVICE_ERROR,"用户名已被占用");
 		}
-		//TODO 缓存
-		//userService.saveUser(user);
-		//mailService.sendSimpleEmail(user.getUserEmail(), "新用户注册成功", "欢迎你：" + user.getUserName() +" 注册模型控！");
-		//mailService.sendSimpleEmail(mailService.getAdminHost(), "新用户注册", "来自web的用户："+JSON.toJSONString(user));
-		//创建一个uuidtoken 生成一个uuid 在redis key-value 获得  有登录了的 没有就是没有登录
-		user.setToken(SecurityUtil.getBASE64(UUID.randomUUID().toString()));
-		//cacheService.set(user.getToken(), user.getId());
-		cacheService.set(user.getToken(), 1);
+		//TODO 统一的异常处理filter类
+		UserPlus userplus = userService.userRegist(user);
+		return MessageAndView.newInstance().put(userplus);
+	}
+	
+	/**
+	 * 用户登陆
+	 * @param email
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value = "/login",method = {RequestMethod.POST})
+	@ResponseBody
+	@SecurityDescription(loginRequest = false)
+	public MessageAndView userlogin(@RequestParam("email") String email,
+			@RequestParam("password") String password) {
+		if(!valiateLoginParm(email,password)){
+			return MessageAndView.newInstance(ServiceResponse.SERVICE_ERROR,"数据输入有误");
+		}
+		UserPlus user = userService.userLogin(email, password);
+		if(user == null){
+			return MessageAndView.newInstance(ServiceResponse.SERVICE_ERROR,"没有这个用户");
+		}
 		return MessageAndView.newInstance().put(user);
 	}
+	
+	/**
+	 * 用户退出
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/loginout",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	@SecurityDescription(loginRequest = true)
+	public MessageAndView userLoginOut(@RequestParam("id") int id, @CookieValue("token") String token){
+		if(token != null){
+			userService.userLoginOut(token, id);
+		}
+		return MessageAndView.newInstance(ServiceResponse.SUCCESS,"操作成功");	
+	}
+	
+	
+	/**
+	 * 主键查询用户
+	 * @param id
+	 * @return
+	 */ 
+	@RequestMapping(value = "/{id}",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	@SecurityDescription(loginRequest = false)
+	public MessageAndView userInfo(@PathVariable("id") int id){
+		UserPlus user = userService.findUserById(id);
+		return MessageAndView.newInstance().put(user);
+	}
+	
+	
+	/**
+	 * 验证登陆信息
+	 * @param email
+	 * @param password
+	 * @return
+	 */
+	private boolean valiateLoginParm(String email,String password){
+		if ( StringUtil.stringIsEmpty(password) ) {
+			return false;
+		}
+		if ( !ValidateUtil.isEmail(email)) {
+			return false;
+		}
+		return true;
+	}
+	
 	
 	/**
 	 * 验证传入信息
 	 * @param userRegisterRequest
 	 * @return
 	 */
-	private boolean valiateUserPlus(UserPlus plus){
+	private boolean valiateUserPlus(User plus){
 		if ( StringUtil.stringIsEmpty(plus.getUserName()) ) {
 			return false;
 		}
@@ -99,9 +163,9 @@ public class UserController {
 	 * 创建UserPlus
 	 * @return
 	 */
-	private UserPlus createUserPlus(String name,String password,String email){
+	private User createUserPlus(String name,String password,String email){
 		//TODO xss  sql 注入过滤 有xss sql 需要邮件报警
-		UserPlus plus = new UserPlus();
+		User plus = new User();
 		plus.setUserEmail(email);
 		plus.setUserName(name);
 		//plus.setUserImage(defaultImage);

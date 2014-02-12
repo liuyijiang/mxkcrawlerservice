@@ -21,6 +21,7 @@ import com.mxk.crawler.base.Crawler;
 import com.mxk.crawler.base.SiteInfo;
 import com.mxk.crawler.model.BaseResource;
 import com.mxk.crawler.model.Content;
+import com.mxk.crawler.model.Links;
 import com.mxk.util.StringUtil;
 
 /**
@@ -45,12 +46,13 @@ public class XiaoTContentResourceCrawler extends Crawler {
 	
 	public static void main(String[] args) {
 		XiaoTContentResourceCrawler x =new XiaoTContentResourceCrawler();
-		x.crawler("http://bbs.xiaot.com/forum.php?mod=viewthread&tid=906933&extra=page%3D2%26filter%3Dtypeid%26typeid%3D116%26typeid%3D116");
+		//x.crawler("http://bbs.xiaot.com/forum.php?mod=viewthread&tid=906933&extra=page%3D2%26filter%3Dtypeid%26typeid%3D116%26typeid%3D116");
 	}
 	
 	
 	@Override
-	public List<? extends BaseResource> crawler(String url) {
+	public List<? extends BaseResource> crawler(Links flink) {
+		String url = flink.getUrl();
 		List<Content> list = new ArrayList<Content>();
 		try{
 			logger.info("开始爬取 "+ SITE_NAME +"论坛 帖子链接 来源链接地址：{}",url);

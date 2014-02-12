@@ -41,7 +41,8 @@ public class Imx365NetLinkCrawler extends Crawler {
 	 * 实现爬取数据
 	 */
 	@Override
-	public List<Links> crawler(String url) {
+	public List<Links> crawler(Links flink) {
+		String url = flink.getUrl();
 		List<Links> list = new ArrayList<Links>();
 		try{
 			logger.info("开始爬取 Imx365 论坛链接 来源链接地址：{}",url);

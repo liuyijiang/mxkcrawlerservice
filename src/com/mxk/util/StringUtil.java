@@ -92,14 +92,44 @@ public class StringUtil {
     	return sbHtml.toString();
     }
     
+    private static boolean isChinese(char c) {
+        Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B
+                || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
+                || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * 判断字符串里是否有中文
+     * @param strName
+     * @return
+     */
+    public static boolean isChinese(String strName) {
+        char[] ch = strName.toCharArray();
+        for (int i = 0; i < ch.length; i++) {
+            char c = ch[i];
+            if (isChinese(c)) {
+                return true;
+            }
+        }
+        return false;
+    }
     
     public static void main(String[] args) {
-    	String str = "在USS鲁本&middot;詹姆斯（DD-245）浅灰&nbsp;肯大全&copy;ModelWarships.com肯大全";
-    	Set<Entry<String,String>> set = map.entrySet();
-    	for(Entry<String,String> entry:set){
-    		str = str.replaceAll(entry.getKey(), entry.getValue());
-    	}
-    	System.out.println(str);
+    	String str = "123$sssff";
+//    	Pattern pattern=Pattern.compile("[\\u4e00-\\u9fa5]+");  
+//    	Matcher matcher=pattern.matcher(str);  
+//    	System.out.println(matcher.matches());  
+    	System.out.println(isChinese(str));
+//    	Set<Entry<String,String>> set = map.entrySet();
+//    	for(Entry<String,String> entry:set){
+//    		str = str.replaceAll(entry.getKey(), entry.getValue());
+//    	}
+//    	System.out.println(str);
 	}
     
     /**

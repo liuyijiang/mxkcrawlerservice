@@ -22,6 +22,7 @@ import com.mxk.crawler.base.Crawler;
 import com.mxk.crawler.base.SiteInfo;
 import com.mxk.crawler.model.BaseResource;
 import com.mxk.crawler.model.Content;
+import com.mxk.crawler.model.Links;
 import com.mxk.util.StringUtil;
 
 /**
@@ -46,11 +47,12 @@ public class Imx365NetContentResourceCrawler extends Crawler {
 	
 	public static void main(String[] args) {
 		Imx365NetContentResourceCrawler c = new Imx365NetContentResourceCrawler();
-		c.crawler("http://www.imx365.net/bbs/thread-7-165084-1-18.html");
+		//c.crawler("http://www.imx365.net/bbs/thread-7-165084-1-18.html");
 	}
 	
 	@Override
-	public List<? extends BaseResource> crawler(String url) {
+	public List<? extends BaseResource> crawler(Links link) {
+		String url = link.getUrl();
 		List<Content> list = new ArrayList<Content>();
 		try{
 			logger.info("开始爬取 Imx365 论坛帖子内容 来源链接地址：{}",url);

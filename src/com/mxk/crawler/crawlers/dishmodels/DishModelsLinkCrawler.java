@@ -49,7 +49,7 @@ public class DishModelsLinkCrawler extends Crawler {
 		DishModelsLinkCrawler d = new DishModelsLinkCrawler();
 		//d.crawlerPagings();
 		//error http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=221 3 4
-		d.crawler("http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=622"); //494
+		//d.crawler("http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=622"); //494
 	}
 	
 	/**
@@ -98,7 +98,8 @@ public class DishModelsLinkCrawler extends Crawler {
 	 * 爬取数据
 	 */
 	@Override
-	public List<? extends BaseResource> crawler(String url) {
+	public List<? extends BaseResource> crawler(Links flink) {
+		String url = flink.getUrl();
 		List<Links> list = new ArrayList<Links>();
 		try{
 			logger.info("开始爬取 DishModels 论坛链接和帖子资源 来源链接地址：{}",url);

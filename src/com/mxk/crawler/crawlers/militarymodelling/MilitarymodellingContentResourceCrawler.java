@@ -17,6 +17,7 @@ import com.mxk.crawler.base.Crawler;
 import com.mxk.crawler.crawlers.modelshipgallery.ModelShipGalleryContentResourceCrawler;
 import com.mxk.crawler.model.BaseResource;
 import com.mxk.crawler.model.Content;
+import com.mxk.crawler.model.Links;
 import com.mxk.translator.TranslatorService;
 import com.mxk.translator.TranslatorType;
 import com.mxk.util.RegxpEnumUtil;
@@ -39,7 +40,8 @@ public class MilitarymodellingContentResourceCrawler extends Crawler {
 	public static final String SITE_NAME = "MilitaryModelling";
 	
 	@Override
-	public List<? extends BaseResource> crawler(String url) {
+	public List<? extends BaseResource> crawler(Links flink) {
+		String url = flink.getUrl();
 		List<Content> list = new ArrayList<Content>();
 		try{
 			logger.info("开始爬取 MilitaryModelling 论坛帖子内容 来源链接地址：{}",url);
@@ -70,9 +72,9 @@ public class MilitarymodellingContentResourceCrawler extends Crawler {
 					sb.append(str + " ");
 				}
 			}
-			System.out.println(sb.toString());
+			//System.out.println(sb.toString());
 			
-			System.out.println(title.substring(0,title.indexOf("'")));
+			//System.out.println(title.substring(0,title.indexOf("'")));
 			String auther = doc.select("div[class=Author]").html().toLowerCase();
 			if(auther != null){
 				auther = auther1 + "|" +auther.replace("by", "");

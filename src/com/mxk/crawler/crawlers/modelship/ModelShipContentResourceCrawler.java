@@ -21,6 +21,7 @@ import com.mxk.crawler.base.Crawler;
 import com.mxk.crawler.base.SiteInfo;
 import com.mxk.crawler.model.BaseResource;
 import com.mxk.crawler.model.Content;
+import com.mxk.crawler.model.Links;
 import com.mxk.util.StringUtil;
 
 /**
@@ -44,11 +45,12 @@ public class ModelShipContentResourceCrawler  extends Crawler {
 	public static void main(String[] args) {
 		//http://forum.modelship.com.tw/phpBB2/viewtopic.php?t=3360
 		ModelShipContentResourceCrawler m = new ModelShipContentResourceCrawler();
-		m.crawler("http://forum.modelship.com.tw/phpBB2/viewtopic.php?t=3412");
+		//m.crawler("http://forum.modelship.com.tw/phpBB2/viewtopic.php?t=3412");
 	}
 	
 	@Override
-	public List<? extends BaseResource> crawler(String url) {
+	public List<? extends BaseResource> crawler(Links flink) {
+		String url = flink.getUrl();
 		List<Content> list = new ArrayList<Content>();
 		try{
 			logger.info("开始爬取钢铁浮城 论坛帖子内容 来源链接地址：{}",url);

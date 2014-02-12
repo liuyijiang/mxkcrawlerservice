@@ -1,5 +1,6 @@
 package com.mxk.util;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -24,6 +25,7 @@ public class HttpUtil {
 	 */
 	private static final int TIME_OUT = 10000;
 	
+	private static final String FILTED_TYPE = "text/html";
 	/**
 	 * 根据图片链接地址下载图片
 	 * @param uri
@@ -42,14 +44,25 @@ public class HttpUtil {
 					TIME_OUT);
 			HttpResponse resonse = client.execute(get);
 			if (resonse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				HttpEntity entity = resonse.getEntity();
-				if (entity != null) {
-					byte[] bt = EntityUtils.toByteArray(entity);
-					logger.info("下载图片完成图片大小：{}", (bt.length / 1024) + "KB");
-					return bt;
+				Header[] headrs = resonse.getHeaders("Content-Type");
+			    boolean isImage = true;
+				for(Header headr : headrs){
+					//System.out.println(headr.getValue());
+					if(headr.getValue().contains(FILTED_TYPE)){
+						isImage = false;
+						logger.info("链接不是图片信息：{}",url);
+						break;
+					}
+				}
+				if(isImage){
+					HttpEntity entity = resonse.getEntity();
+					if (entity != null && entity.getContentLength() != -1) {
+						byte[] bt = EntityUtils.toByteArray(entity);
+						logger.info("下载图片完成图片大小：{}", (bt.length / 1024) + "KB");
+						return bt;
+					}
 				}
 			}
-			
 		} catch (Exception e) {
 			logger.error("下载图片异常!{} 异常图片链接 {}", e,url);
 		} finally {
