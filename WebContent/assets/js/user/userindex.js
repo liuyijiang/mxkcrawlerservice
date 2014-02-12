@@ -1,4 +1,3 @@
-var rootPath = "/mxkcrawlerservice"; 
 $(init());
 
 function init(){

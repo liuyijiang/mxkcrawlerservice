@@ -1,4 +1,6 @@
- function showUser(){
+var rootPath = "/mxkcrawlerservice"; 
+
+function showUser(){
 	var username = $.cookie('username'); 
 	if (typeof(username) != "undefined") { 
 		$("#loginout_nar").hide();

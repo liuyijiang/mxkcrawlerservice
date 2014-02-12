@@ -1,9 +1,9 @@
-var rootPath = "/mxkcrawlerservice"; 
 $(init());
 
 function init(){
 	$("#registbutton").removeAttr("disabled");
 	$("#registbutton").click(regist);
+	$("#loginbutton").click(userlogin);
 	showUser();//显示用户信息
 	$("#narbar_loginout").bind("click",function(){
 		loginOut();
@@ -18,6 +18,7 @@ function regist(){
 	 var userpassword = $("#userpassword").val();
 	 if(username == "" || useremail == ""|| userpassword == ""){
 		 alert("请完整填写信息！");
+		 $("#loaddivleft").hide();
 		 return;
 	 }
 	 var data = {"email":useremail,"username":username,"password":userpassword};
@@ -29,11 +30,47 @@ function regist(){
     		async : false,
     		data: data,
     		success : function(item) {
-    			cachData(item.data);
-    			$("#registbutton").removeAttr("disabled");
-    			$("#loaddivleft").hide();
-    			window.location.href= rootPath + "/web/user/userindex.html";
+    			if(item.state == '200'){
+    				cachData(item.data);
+        			$("#registbutton").removeAttr("disabled");
+        			$("#loaddivleft").hide();
+        			window.location.href= rootPath + "/web/user/userindex.html";
+    			}else{
+    				$("#registbutton").removeAttr("disabled");
+        			$("#loaddivleft").hide();
+    				alert(item.message);
+    			}
     		},
+	        error : function(XMLHttpRequest, textStatus, errorThrown){
+	        	$("#registbutton").removeAttr("disabled");
+	        	$("#loaddivleft").hide();
+	        }
+	});
+}
+
+function userlogin(){
+	 $("#loaddivleft").show();
+	 var useremail = $("#useremail").val();
+	 var userpassword = $("#userpassword").val();
+	 if(useremail == ""|| userpassword == ""){
+		 alert("请完整填写信息！");
+		 $("#loaddivleft").hide();
+		 return;
+	 }
+	 var data = {"email":useremail,"password":userpassword};
+	 $("#registbutton").attr("disabled","disabled");
+	 $.ajax({
+   		url : rootPath + "/user/login.do",
+   		type : "POST",
+   		cache : false,
+   		async : false,
+   		data: data,
+   		success : function(item) {
+   			cachData(item.data);
+   			$("#registbutton").removeAttr("disabled");
+   			$("#loaddivleft").hide();
+   			window.location.href= rootPath + "/web/user/userindex.html";
+   		},
 	        error : function(XMLHttpRequest, textStatus, errorThrown){
 	        	$("#registbutton").removeAttr("disabled");
 	        	$("#loaddivleft").hide();
