@@ -6,6 +6,7 @@ import org.junit.Test;
 import com.mxk.crawler.crawlers.militarymodelling.MilitarymodellingContentResourceCrawler;
 import com.mxk.crawler.crawlers.militarymodelling.MilitarymodellingLinkCrawler;
 import com.mxk.crawler.crawlers.xiaot.XiaoTLinkCrawler;
+import com.mxk.crawler.model.Links;
 /**
  * 爬取器测试
  * @author Administrator
@@ -13,20 +14,28 @@ import com.mxk.crawler.crawlers.xiaot.XiaoTLinkCrawler;
  */
 public class CrawlerTest {
 
+	
 	@Test
-	@Ignore
 	public void testMilitarymodellingLinkCrawler(){
 		MilitarymodellingLinkCrawler m = new MilitarymodellingLinkCrawler();
+		Links link = new Links();
+		link.setUrl("http://www.militarymodelling.com/forums/threads.asp?t=97");
+		m.crawler(link);
 		//m.crawler("http://www.militarymodelling.com/news/browseModern.asp?at=59&atg=2&p=1");
 	}
 	
 	@Test
-	@Ignore
 	public void testMilitarymodellingContentResourceCrawler(){
-//		String str = "II";
-//		System.out.println(str.matches("^((l|L)?(x|X){0,3}|(x|X)[lc]|[LC])((v|V)?(i|I){0,3}|(i|I)[vx]|[VX])$"));
+		/**
+		 * error url 
+		 * http://www.militarymodelling.com/forums/postings.asp?th=77989
+		 * http://www.militarymodelling.com/forums/postings.asp?th=76413
+		 * http://www.militarymodelling.com/forums/postings.asp?th=77895
+		 */
 		MilitarymodellingContentResourceCrawler m = new MilitarymodellingContentResourceCrawler();
-		//m.crawler("http://www.militarymodelling.com/news/article/busy-bob%27s-1-6-pz-ii-ausf-b/15506");
+		Links link = new Links();
+		link.setUrl("http://www.militarymodelling.com/forums/postings.asp?th=79557");
+		m.crawler(link);
 	}
 
 	//xiaot
