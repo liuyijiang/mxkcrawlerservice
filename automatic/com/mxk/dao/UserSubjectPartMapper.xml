@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mxk.dao.UserSubjectPartMapper" >
+  <resultMap id="BaseResultMap" type="com.mxk.model.UserSubjectPart" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="subject_id" property="subjectId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+    <result column="subject_type" property="subjectType" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="part_info" property="partInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, subject_id, user_id, img_url, subject_name, subject_type, create_time, part_info
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mxk.model.UserSubjectPartCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_part
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_part
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_part
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mxk.model.UserSubjectPartCriteria" >
+    delete from tb_part
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mxk.model.UserSubjectPart" >
+    insert into tb_part (id, subject_id, user_id, 
+      img_url, subject_name, subject_type, 
+      create_time, part_info)
+    values (#{id,jdbcType=INTEGER}, #{subjectId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{imgUrl,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, #{subjectType,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{partInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mxk.model.UserSubjectPart" >
+    insert into tb_part
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subjectId != null" >
+        subject_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="subjectName != null" >
+        subject_name,
+      </if>
+      <if test="subjectType != null" >
+        subject_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="partInfo != null" >
+        part_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="subjectId != null" >
+        #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null" >
+        #{subjectType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="partInfo != null" >
+        #{partInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mxk.model.UserSubjectPartCriteria" resultType="java.lang.Integer" >
+    select count(*) from tb_part
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_part
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.subjectId != null" >
+        subject_id = #{record.subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.imgUrl != null" >
+        img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectName != null" >
+        subject_name = #{record.subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectType != null" >
+        subject_type = #{record.subjectType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.partInfo != null" >
+        part_info = #{record.partInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_part
+    set id = #{record.id,jdbcType=INTEGER},
+      subject_id = #{record.subjectId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      subject_name = #{record.subjectName,jdbcType=VARCHAR},
+      subject_type = #{record.subjectType,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      part_info = #{record.partInfo,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mxk.model.UserSubjectPart" >
+    update tb_part
+    <set >
+      <if test="subjectId != null" >
+        subject_id = #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        subject_name = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null" >
+        subject_type = #{subjectType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="partInfo != null" >
+        part_info = #{partInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mxk.model.UserSubjectPart" >
+    update tb_part
+    set subject_id = #{subjectId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      subject_name = #{subjectName,jdbcType=VARCHAR},
+      subject_type = #{subjectType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      part_info = #{partInfo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

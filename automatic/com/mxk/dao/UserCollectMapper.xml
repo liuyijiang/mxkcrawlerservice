@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mxk.dao.UserCollectMapper" >
+  <resultMap id="BaseResultMap" type="com.mxk.model.UserCollect" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="collet_target" property="colletTarget" jdbcType="INTEGER" />
+    <result column="collet_target_type" property="colletTargetType" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="tag" property="tag" jdbcType="VARCHAR" />
+    <result column="simple_desc" property="simpleDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, collet_target, collet_target_type, create_time, tag, simple_desc
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mxk.model.UserCollectCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_user_collect
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user_collect
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_user_collect
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mxk.model.UserCollectCriteria" >
+    delete from tb_user_collect
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mxk.model.UserCollect" >
+    insert into tb_user_collect (id, user_id, collet_target, 
+      collet_target_type, create_time, tag, 
+      simple_desc)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{colletTarget,jdbcType=INTEGER}, 
+      #{colletTargetType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{tag,jdbcType=VARCHAR}, 
+      #{simpleDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mxk.model.UserCollect" >
+    insert into tb_user_collect
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="colletTarget != null" >
+        collet_target,
+      </if>
+      <if test="colletTargetType != null" >
+        collet_target_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+      <if test="simpleDesc != null" >
+        simple_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="colletTarget != null" >
+        #{colletTarget,jdbcType=INTEGER},
+      </if>
+      <if test="colletTargetType != null" >
+        #{colletTargetType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleDesc != null" >
+        #{simpleDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mxk.model.UserCollectCriteria" resultType="java.lang.Integer" >
+    select count(*) from tb_user_collect
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_user_collect
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.colletTarget != null" >
+        collet_target = #{record.colletTarget,jdbcType=INTEGER},
+      </if>
+      <if test="record.colletTargetType != null" >
+        collet_target_type = #{record.colletTargetType,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.tag != null" >
+        tag = #{record.tag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.simpleDesc != null" >
+        simple_desc = #{record.simpleDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_user_collect
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      collet_target = #{record.colletTarget,jdbcType=INTEGER},
+      collet_target_type = #{record.colletTargetType,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      tag = #{record.tag,jdbcType=VARCHAR},
+      simple_desc = #{record.simpleDesc,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mxk.model.UserCollect" >
+    update tb_user_collect
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="colletTarget != null" >
+        collet_target = #{colletTarget,jdbcType=INTEGER},
+      </if>
+      <if test="colletTargetType != null" >
+        collet_target_type = #{colletTargetType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleDesc != null" >
+        simple_desc = #{simpleDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mxk.model.UserCollect" >
+    update tb_user_collect
+    set user_id = #{userId,jdbcType=INTEGER},
+      collet_target = #{colletTarget,jdbcType=INTEGER},
+      collet_target_type = #{colletTargetType,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      tag = #{tag,jdbcType=VARCHAR},
+      simple_desc = #{simpleDesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

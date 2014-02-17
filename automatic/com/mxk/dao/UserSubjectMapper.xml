@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mxk.dao.UserSubjectMapper" >
+  <resultMap id="BaseResultMap" type="com.mxk.model.UserSubject" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="faceimage" property="faceimage" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="tag" property="tag" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, category, faceimage, title, tag, userid, createTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mxk.model.UserSubjectCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_subject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_subject
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_subject
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mxk.model.UserSubjectCriteria" >
+    delete from tb_subject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mxk.model.UserSubject" >
+    insert into tb_subject (id, category, faceimage, 
+      title, tag, userid, 
+      createTime)
+    values (#{id,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR}, #{faceimage,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mxk.model.UserSubject" >
+    insert into tb_subject
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="faceimage != null" >
+        faceimage,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="faceimage != null" >
+        #{faceimage,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mxk.model.UserSubjectCriteria" resultType="java.lang.Integer" >
+    select count(*) from tb_subject
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_subject
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.category != null" >
+        category = #{record.category,jdbcType=VARCHAR},
+      </if>
+      <if test="record.faceimage != null" >
+        faceimage = #{record.faceimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tag != null" >
+        tag = #{record.tag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_subject
+    set id = #{record.id,jdbcType=INTEGER},
+      category = #{record.category,jdbcType=VARCHAR},
+      faceimage = #{record.faceimage,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      tag = #{record.tag,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=INTEGER},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mxk.model.UserSubject" >
+    update tb_subject
+    <set >
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="faceimage != null" >
+        faceimage = #{faceimage,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mxk.model.UserSubject" >
+    update tb_subject
+    set category = #{category,jdbcType=VARCHAR},
+      faceimage = #{faceimage,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=INTEGER},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
