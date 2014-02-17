@@ -6,6 +6,20 @@ function init(){
 	$("#search-btn").bind("click",function(){
 		find(1);
 	});
+	$("#luck-find-btn").bind("click",function(){
+		luckfind();
+	});
+	$("#significance-btn").bind("click",function(){
+		updateWebResourceSignificance(true);
+	});
+	$("#insignificance-btn").bind("click",function(){
+		updateWebResourceSignificance(false);
+	});
+	$("#user-collect-btn").bind("click",function(){
+		userCollect();
+	});
+	
+	
 	showUser();//显示用户信息
 	$("#narbar_loginout").bind("click",function(){
 		loginOut();
@@ -23,7 +37,7 @@ function getcontent(id){
     		data: {"id":id},
     		success : function(item) {
     			$("#simpleread").show();
-    			setData(item);
+    			setData(item.data);
     			$("#loaddivright").hide();
     		}
 	});
@@ -42,6 +56,7 @@ function setData(item){
           imgshtml = imgshtml + "<img class='img-thumbnail' style='width:400px' src='"+ imgs[i] +"'/><br /><br />";
         }
     }
+    $("#contentid").html(item.id);
     $("#contentimages").html(imgshtml);
     $("#contentinfo").html(item.info);
     $("#contentshow").attr("href",item.url);
@@ -57,12 +72,30 @@ function find(page){
    		cache : false,
    		async : false,
    		data: {"keyword":keyword,"currentPage":page},
-   		success : function(item) {
+   		success : function(model) {
+   			var item = model.data;
    			$("#infototal").html("为你找到约<span class='text-warning'>"+item.total+"</span>相关记录");
    			createinfo(item.data);
    			createpage(item.page,item.currentPage);
    			$("#loaddivleft").hide();
    		}
+	});
+}
+
+function luckfind(){
+	 $("#loaddivleft").show();
+	 $.ajax({
+  		url : rootPath + "/luck/search.do",
+  		type : "POST",
+  		cache : false,
+  		async : false,
+  		success : function(model) {
+  			var item = model.data;
+  			$("#infototal").html("为你找到约<span class='text-warning'>"+item.total+"</span>相关记录");
+  			createinfo(item.data);
+  			createpage(item.page,item.currentPage);
+  			$("#loaddivleft").hide();
+  		}
 	});
 }
  
@@ -110,4 +143,37 @@ function createpage(page,currentpage){
 		$("#info").html(show);
 }
  
+ function updateWebResourceSignificance(significance){
+	 var id = $("#contentid").html();
+	 $.ajax({
+  		url : rootPath + "/webresources/significance.do",
+  		type : "POST",
+  		cache : false,
+  		async : false,
+  		data: {"id":id,"significance":significance},
+  		success : function(model) {
+  			alert(model.state);
+  		}
+	});
+ }
+ 
+ function userCollect(){
+	 var userId = $.cookie('id'); 
+	 if(typeof(userId) == "undefined"){
+		 alert("请先登录");
+		 return;
+	 }
+     var colletTarget = $("#contentid").html();
+     var simpleDesc = $("#contenttitle").html();
+	 $.ajax({
+	  		url : rootPath + "/user/collect.do",
+	  		type : "POST",
+	  		cache : false,
+	  		async : false,
+	  		data: {"userId":userId,"colletTarget":colletTarget,"colletTargetType":1,"simpleDesc":simpleDesc},
+	  		success : function(model) {
+	  			alert(model.state);
+	  		}
+		});
+ }
 

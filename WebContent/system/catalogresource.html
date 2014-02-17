@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>编目资源</title>
+</head>
+<body>
+<fieldset>
+  <legend>创建编目资源</legend>
+  <form method="post" enctype="multipart/form-data">  
+  <table>
+     <tr>
+       <td>类型</td>
+       <td>
+          <select id="type">
+		      <option value="1">战舰模型</option>
+		      <option value="2">装甲模型</option>
+		      <option value="3">战机模型</option>
+		      <option value="4">兵人模型</option>
+		      <option value="5">场景模型</option>
+          </select>
+       </td>
+     </tr>
+     <tr>
+       <td>名字</td>
+       <td><input id="name" type="text" /></td>
+     </tr>
+     <tr>
+       <td>标签</td>
+       <td><textarea id="tag" rows="2" cols="16"></textarea></td>
+     </tr>
+     <tr>
+       <td>描述</td>
+       <td><textarea id="describes" rows="2" cols="16"></textarea></td>
+     </tr>
+     <tr>
+       <td>图片</td>
+       <td><input name="imgFile" id="fileToUpload" type="file" /></td>
+     </tr>
+  </table>
+</form> 
+</fieldset>
+
+<input type="button" onclick="ajaxFileUpload()" value="上传"/> 
+<script type="text/javascript"> 
+   var rootPath = "/mxkcrawlerservice"; 
+   
+   function validateImage() {
+  	  return true;
+   }
+	function ajaxFileUpload()
+	{   
+		var describes = $("#describes").val();
+		   var tag = $("#tag").val();
+		   var name = $("#name").val();
+		   var type = $("#type").val();
+		
+		if(validateImage()){
+			var datas = {"name":name,"tag":tag,"describes":describes,"type":type};
+			$.ajaxFileUpload
+			(
+				{
+					url:rootPath + "/catalog/resource.do",
+					secureuri:false,
+					fileElementId:'fileToUpload',
+					dataType: 'json',
+					data:datas,
+					success: function (data, status)
+					{  
+						alert(data);
+					},
+					error: function (data, status, e)
+					{
+						alert(2);
+					}
+				}
+			);
+		}
+	}
+	</script>
+
+</body>
+<script type="text/javascript" src="../assets/js/jquery-1.7.2.js"></script> 
+<script type="text/javascript" src="../assets/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.cookie.min.js"></script>
+</html>

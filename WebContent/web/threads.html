@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="description" content="模型控  军事模型 模型 模型玩家 军舰 坦克 爬虫 飞机">
 <meta name="keyword" content="模型控  军事模型 模型 模型玩家 军舰 坦克 爬虫 飞机">
-<link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="../../assets/css/mxk.css" />
-<link rel="stylesheet" type="text/css" href="../../assets/css/font-awesome.min.css" /> 
+<link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="../assets/css/mxk.css" />
+<link rel="stylesheet" type="text/css" href="../assets/css/font-awesome.min.css" /> 
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -46,7 +46,7 @@
               <b class="caret"></b>
            </a>
         <ul class="dropdown-menu">
-          <li><a href="javascript:;"><i class="icon-home"></i>个人中心</a></li>
+          <li><a href="../web/user/userindex.html"><i class="icon-home"></i>个人中心</a></li>
           <li><a href="../search.html"><i class="icon-search"></i>搜索资源</a></li>
           <li class="divider"></li>
           <li><a id="narbar_loginout" href="javascript:;"><i class="icon-signout"></i>退出</a></li>
@@ -60,57 +60,35 @@
   </div>      
 </nav>
 <br /><br />
-<div class="well">
-  <div class="container" >
-    <span class="text-info h4"><strong>用户注册</strong></span><br />
-	<span class="text-muted">注册后你可以创建自己的模型专题，分享收藏其他模型玩家的part</span><br /><br />
-  </div>
-  
-   <div class="container" >
+	<div class="well">
+      <div class="container" >
       <div class="row">
-         <div class="col-md-4" style="border-right:1px solid #E7E7E7">
-            <span>用户昵称</span>
-            <div class="input-group">
-	           <span class="input-group-addon"><i class="icon-github-alt"></i></span>
-	           <input id="username" type="text" class="form-control"/>
-            </div>
-            <span class="text-muted"><small>用户名要唯一哟</small></span> <br /><br />
-            <span>用户邮箱</span>
-            <div class="input-group">
-	           <span class="input-group-addon"><i class="icon-envelope-alt"></i></span>
-	           <input id="useremail" type="text" class="form-control"/>
-            </div>
-            <span class="text-muted"><small>邮箱地址也要唯一哟这是你的登陆账号</small></span> <br /><br />
-            <span>用户密码</span>
-            <div class="input-group">
-	           <span class="input-group-addon"><i class="icon-unlock-alt"></i></span>
-	           <input id="userpassword" type="password" class="form-control"/>
-            </div>
-           <br />
-           <button id="registbutton" type="button" class="btn btn-primary">用户注册</button>    
-           <span id="loaddivleft" style="display:none">
-             <img src="../../assets/img/loadingred.gif" >
-             <span class="muted"><small>正在提交数据...</small></span>
-           </span>     
+        <div class="col-lg-6">
+          <div class="input-group">
+          <span class="input-group-addon"><i class="icon-search"></i></span>
+            <input id="keyword" type="text" class="form-control" placeholder="输入关键字试试">
+            <span class="input-group-btn">
+              <button id="search-btn" class="btn btn-default" type="button">搜索</button>
+            </span>
          </div>
-         
-         <div class="col-md-8">
-         
+        </div>
+         <div class="col-lg-6">
+           <button class="btn btn-link" type="button" id="luck-find-btn" ><i class="icon-lightbulb"></i>试试手气</button>
          </div>
-      </div>
-   </div>   
-  
+       </div>
+	   <small class="text-muted" id="infototal"></small>   
+     </div>
+     </div>
+
+<div class="alert alert-warning alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong>Warning!</strong> Best check yo self, you're not looking too good.
 </div>
-<div class="navbar-fixed-bottom">
-	<center>
-	   <small>京ICP证030173号</small>
-	</center>
-	<br />
-</div>
+
 </body>
-<script type="text/javascript" src="../../assets/js/jquery-1.7.2.js"></script> 
-<script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../assets/js/jquery.cookie.min.js"></script>
-<script type="text/javascript" src="../../assets/js/global.js"></script>
-<script type="text/javascript" src="../../assets/js/user/user.js"></script>
+<script type="text/javascript" src="../assets/js/jquery-1.7.2.js"></script> 
+<script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="../assets/js/global.js"></script>
+<script type="text/javascript" src="../assets/js/search.js"></script>
 </html>
