@@ -22,6 +22,7 @@ import com.mxk.resource.dao.ResourceDao;
  *
  */
 @Service
+@Deprecated
 public class ResourceService {
 
     public static final Logger logger = LoggerFactory.getLogger(CrawlerService.class);

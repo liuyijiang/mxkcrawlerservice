@@ -23,6 +23,9 @@ public class StringUtil {
 		
 	}
 	
+	public static String subString(String str,int lenght){
+		return str.length() <= lenght ? str : str.substring(0,lenght) + "...";
+	}
 	
 	public static String toEnpty(String str){
 		return str == null ? "" :str;
@@ -34,6 +37,7 @@ public class StringUtil {
 		}
 		return url.substring(url.lastIndexOf("/")+1,url.length());
 	}
+	
 	
 	public static boolean stringIsEmpty(String str) {
 		if (str == null || str.trim().equals("")) {
@@ -53,6 +57,14 @@ public class StringUtil {
     	}
     	SimpleDateFormat s  = new SimpleDateFormat(formater);
     	return s.format(date);
+	}
+    
+    public static String urlTrim(String url){
+		if(url.indexOf("?") != -1){
+			return url.substring(0,url.indexOf("?")).trim();
+		}else{
+			return url.trim();
+		}
 	}
 	
     public static String getFileSuffixName(String fileName){
@@ -120,17 +132,21 @@ public class StringUtil {
     }
     
     public static void main(String[] args) {
-    	String str = "123$sssff";
+    	System.out.println(formaterRFC2396URI("http://www.militarymodelling.com/sites/1/images/member_albums/48461/rr1 [640x480].jpg"));
 //    	Pattern pattern=Pattern.compile("[\\u4e00-\\u9fa5]+");  
 //    	Matcher matcher=pattern.matcher(str);  
 //    	System.out.println(matcher.matches());  
-    	System.out.println(isChinese(str));
+    	//System.out.println(isChinese(str));
 //    	Set<Entry<String,String>> set = map.entrySet();
 //    	for(Entry<String,String> entry:set){
 //    		str = str.replaceAll(entry.getKey(), entry.getValue());
 //    	}
 //    	System.out.println(str);
 	}
+    
+    public static String formaterRFC2396URI(String url){
+    	return url.replace(" ", "%20").replace("[", "%5B").replace("]", "%5D");
+    }
     
     /**
      * 用+号分隔

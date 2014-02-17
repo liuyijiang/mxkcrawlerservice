@@ -111,7 +111,7 @@ public class ResourceUploadService {
 				Map<String,Object> value = BeanUtil.transBeanToMap(cr);
 				if(callService(value)){
 					refreshResourceState(cr.getId(),ResourceState.UPLOADED.getCode());
-					logger.error("完成资源上传{}" ,JSON.toJSONString(value));
+					logger.info("完成资源上传{}" ,JSON.toJSONString(value));
 				}else{
 					refreshResourceState(cr.getId(),ResourceState.UPLOADE_FAIL.getCode());
 				}

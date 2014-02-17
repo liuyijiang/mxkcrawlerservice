@@ -120,6 +120,8 @@ public class Test {
 	}
 
 	public static void main(String[] args) throws Exception{
+		int num = (int)(100 * Math.random());
+		System.out.println(num);
 //		String keyWord = "胡德号战舰";
 //		// 创建IKAnalyzer中文分词对象
 //		IKAnalyzer analyzer = new IKAnalyzer();
@@ -131,7 +133,7 @@ public class Test {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-		searcher("大和","content");
+		//searcher("大和","content");
 	}
 
 	private static void printAnalysisResult(Analyzer analyzer, String keyWord)

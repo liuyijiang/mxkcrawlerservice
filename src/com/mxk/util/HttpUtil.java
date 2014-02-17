@@ -38,7 +38,7 @@ public class HttpUtil {
 		client.getParams().setParameter(
 				CoreConnectionPNames.CONNECTION_TIMEOUT, TIME_OUT);
 		try {
-			HttpGet get = new HttpGet(urlTrim(url));//java.lang.IllegalArgumentException url前有空格
+			HttpGet get = new HttpGet(StringUtil.formaterRFC2396URI(StringUtil.urlTrim(url)));//java.lang.IllegalArgumentException url前有空格
 			get.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
 			get.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
 					TIME_OUT);
@@ -71,19 +71,19 @@ public class HttpUtil {
 		return null;
 	}
 	
-	/**
-	 * 去除图片链接中的参数
-	 * @return
-	 */
-	private static String urlTrim(String url){
-		if(url.indexOf("?") != -1){
-			return url.substring(0,url.indexOf("?")).trim();
-		}else{
-			return url.trim();
-		}
-	}
-	
-	public static void main(String[] args) {
-		getImageByte(" http://www.xiaot.com/data/attachment/forum/month_1111/11111702213b269b39bc69ba9b.jpg");
+	public static void main(String[] args) throws Exception {
+		String str = "http://www.militarymodelling.com/sites/1/images/member_albums/48461/lan5%20%5Bdesktop%20resolution%5D%20%5B640x480%5D.jpg";
+		str = str.replace(" ", "%20").replace("\\[", "%5B").replace("\\]", "%5D");
+		System.out.println(str);
+//		System.out.println(str);
+//		URLEncoder.encode(s, enc)
+		
+//		URI uri = new URI("http", "//www.someurl.com/has spaces in url fil", null);
+//		URL url = uri.toURL();
+//		String urlString = uri.toASCIIString();
+//		String urlString = uri.toASCIIString();
+//		System.out.println(urlString);
+//		System.out.println(urlString);
+		getImageByte(str);
 	}
 }

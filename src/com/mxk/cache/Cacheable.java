@@ -14,6 +14,7 @@ public @interface Cacheable {
 	boolean usecache() default true;
 	boolean persist() default false;
 	boolean recache() default true;
+	boolean remove() default false;
 	CacheableType cachetype() default CacheableType.CACHE_FOR_DELETE;
 	int exptime() default 3000;
 	

@@ -30,9 +30,6 @@ public class SecurityInterceptorAdapter extends HandlerInterceptorAdapter  {
 	@Value("${mxk.security.password}")
 	private String password;
 	
-	@Value("${mxk.security.token}")
-	private String token;
-	
 	@Autowired
 	private CacheableService cacheableService;
 	
@@ -48,11 +45,8 @@ public class SecurityInterceptorAdapter extends HandlerInterceptorAdapter  {
 		if(cookies != null){
 			for(Cookie cookie : cookies){
 				if(ENCRYPT_KEY.equals(cookie.getName())){
-					String str = cookie.getValue();
-					System.out.println(str);
-					byte[] tokenByte = SecurityUtil.string64ToString(str+"=="); //可以考虑使用ecode cookie中
-					String decryptToken = SecurityUtil.decrypt(tokenByte, password);
-					if(token.equals(decryptToken)){
+					String token = cookie.getValue();
+					if(password.equals(token)){
 						accredit = true;
 						break;
 					}

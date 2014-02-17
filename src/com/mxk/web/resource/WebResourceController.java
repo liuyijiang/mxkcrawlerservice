@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mxk.crawler.model.ContentResource;
 import com.mxk.model.WebResource;
+import com.mxk.web.base.MessageAndView;
 import com.mxk.web.security.SecurityDescription;
 /**
  * 互联网资源数据接口
@@ -41,7 +42,16 @@ public class WebResourceController {
 	@RequestMapping(value = "/resource", method = {RequestMethod.GET} )
 	@ResponseBody
 	@SecurityDescription
-	public WebResource findWebResourceById(@RequestParam("id") int id){
-		return webResourceService.selectByWebResourceId(id);
+	public MessageAndView findWebResourceById(@RequestParam("id") int id){
+		WebResource webResource = webResourceService.selectByWebResourceId(id);
+		return MessageAndView.newInstance().put(webResource);
+	}
+	
+	@RequestMapping(value = "/webresources/significance", method = {RequestMethod.POST,RequestMethod.GET} )
+	@ResponseBody
+	@SecurityDescription
+	public MessageAndView updateWebResourceSignificance(@RequestParam("id") int id,@RequestParam("significance") boolean significance){
+		webResourceService.updateWebResourceSignificance(id, significance);
+		return MessageAndView.newInstance();
 	}
 }

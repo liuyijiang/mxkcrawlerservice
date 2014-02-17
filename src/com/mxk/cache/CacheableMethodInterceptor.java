@@ -38,13 +38,16 @@ public class CacheableMethodInterceptor {
 				obj = pjp.proceed();
 				if(cacheable.persist()){//需要持久化 放入redis
 					persist(obj);
-				}else{ //放入memcach
-					
 				}
-			}else if(cacheable.cachetype().equals(CacheableType.CACHE_FOR_SELECT)){ //查询
+			}else if( cacheable.cachetype().equals(CacheableType.CACHE_FOR_SELECT) ){ //查询
 				Object[] args = pjp.getArgs();//获得参数（key class）
 				MethodSignature methodSignature = (MethodSignature) signature; 
 				obj = get(args[0],methodSignature.getReturnType(),cacheable,pjp);
+			}else if( cacheable.cachetype().equals(CacheableType.CACHE_FOR_UPDATE) ){ //跟新
+				obj = pjp.proceed();
+				if(cacheable.persist()){//需要持久化 放入redis
+					update(obj);
+				}	
 			}
 		}else{
 			obj = pjp.proceed();
@@ -71,14 +74,31 @@ public class CacheableMethodInterceptor {
 		return (T) obj;
 	}
 	
+	//FIXME
     private void persist(Object obj) throws Exception {
     	if( obj != null ){
     		Field fid = obj.getClass().getSuperclass().getDeclaredField("id");//父类
     		fid.setAccessible(true);
     		Integer id = (Integer) fid.get(obj); //获得id
-    		redisCacheTemplate.set(id, obj);
+    		String key = obj.getClass().getName() + id.toString();
+    		redisCacheTemplate.set(key,obj);
     	}
 	}
+    
+    private void update(Object obj) throws Exception {
+    	if( obj != null ){
+    		Field fid = obj.getClass().getSuperclass().getDeclaredField("id");//父类
+    		fid.setAccessible(true);
+    		Integer id = (Integer) fid.get(obj); //获得id
+    		String key = obj.getClass().getName() + id.toString();
+    		removeKey(key);
+    		redisCacheTemplate.set(key,obj);
+    	}
+    }
+    
+    private void removeKey(String key) {
+    	redisCacheTemplate.deleteKey(key);
+    }
     
 //    public static void main(String[] args) throws Exception {
 //		UserPlus plus = new UserPlus();

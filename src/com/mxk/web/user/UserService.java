@@ -1,5 +1,6 @@
 package com.mxk.web.user;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.mxk.cache.Cacheable;
 import com.mxk.cache.CacheableService;
 import com.mxk.cache.CacheableType;
+import com.mxk.dao.UserCollectMapper;
 import com.mxk.dao.UserMapper;
 import com.mxk.exception.MxkException;
 import com.mxk.mail.MailService;
@@ -34,6 +36,9 @@ public class UserService {
 	
 	@Resource
 	private UserMapper userMapper;
+	
+	@Resource
+	private UserCollectMapper userCollectMapper;
 	
 	@Resource
 	private UserMapperPlus userMapperPlus;
@@ -141,6 +146,24 @@ public class UserService {
 		return success;
 	}
 	
+	/**
+	 * 用户收藏
+	 * @param userCollectPlus
+	 * @return
+	 */
+	//TODO 加缓存
+	public boolean userCollect(UserCollectPlus userCollectPlus){
+		boolean success = true;
+		try{
+			userCollectPlus.setCreateTime(new Date());
+			userCollectMapper.insert(userCollectPlus);
+			logger.error("保存用户收藏成功{}",JSON.toJSONString(userCollectPlus));
+		}catch(Exception e){
+			logger.error("保存用户收藏失败{} error message{}",JSON.toJSONString(userCollectPlus),e);
+			success = false;
+		}
+		return success;
+	}
 	
 	/**
 	 * 唯一性用户名验证

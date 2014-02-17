@@ -4,18 +4,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.mxk.crawler.BaseFileUploadService;
 import com.mxk.crawler.CrawlerService;
 import com.mxk.crawler.CrawlerTask;
 import com.mxk.crawler.base.CrawlerStateInfo;
@@ -24,7 +32,9 @@ import com.mxk.crawler.model.ResourceState;
 import com.mxk.crawler.model.ResourceType;
 import com.mxk.crawler.model.SubTag;
 import com.mxk.crawler.model.Tag;
-import com.mxk.web.http.ServiceResponse;
+import com.mxk.system.catalog.CatalogResourcePlus;
+import com.mxk.system.catalog.CatalogResourceService;
+import com.mxk.web.base.MessageAndView;
 import com.mxk.web.index.IndexService;
 import com.mxk.web.security.SecurityDescription;
 
@@ -42,6 +52,9 @@ public class SystemController {
 	private CrawlerService crawlerService;
 	
 	@Autowired
+	private CatalogResourceService catalogResourceService;
+	
+	@Autowired
 	private CrawlerTask crawlertask;
 	
 	@Autowired
@@ -50,10 +63,17 @@ public class SystemController {
 	@Autowired
 	private IndexService indexService;
 	
+	@Autowired
+	private BaseFileUploadService baseFileUploadService;
+	
+	/** 文件保存的根路径 */
+	@Value("${file.catalog.path}")
+	private String path;
 	/**
 	 * 系统主页
 	 * @return
 	 */
+	//TODO 权限过滤
 	@RequestMapping(value = "/sindex", method = RequestMethod.GET)
 	public ModelAndView index(){
 		List<String> type = new ArrayList<String>();
@@ -82,6 +102,7 @@ public class SystemController {
 	 * @param crawler
 	 * @return
 	 */
+	//TODO 权限过滤
 	@RequestMapping(value = "/crawle", method = RequestMethod.POST)
 	public ModelAndView startOrStopCrawler(@RequestParam("crawlerName") String crawlerName,@RequestParam("runable") boolean runable){
 		ModelAndView mv = new ModelAndView("index.jsp");
@@ -190,6 +211,8 @@ public class SystemController {
 		return mv;
 	}
 	
+	
+	
 	/**
 	 * ok
 	 * 创建索引
@@ -197,11 +220,10 @@ public class SystemController {
 	 */
 	@RequestMapping(value = "/create/index", method = RequestMethod.GET)
 	@ResponseBody
-	@SecurityDescription(accredit=true) //需要授权
-	public int createIndex(){
+	@SecurityDescription(accredit = true)
+	public MessageAndView createIndex(){
 		
 		new Thread(new Runnable() {
-			
 			@Override
 			public void run() {
 				try {
@@ -211,11 +233,41 @@ public class SystemController {
 				}
 			}
 		}).start();
-		
-		return ServiceResponse.SUCCESS.getCode();
+		return MessageAndView.newInstance();
 	}
 	
-	
+//	/**
+//	 * 创建编目资源
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/catalog/resource", method = {RequestMethod.POST})
+//	@ResponseBody
+//	@SecurityDescription(accredit = true, loginRequest = true) //需要授权
+//	public MessageAndView createCatalogResource(){
+//		return MessageAndView.newInstance();
+//	}
+    
+	//FIXME 上传文件特殊
+	@RequestMapping(value = "/catalog/resource", method = RequestMethod.POST)
+	public void uploadFileAjax(HttpServletRequest request,HttpServletResponse response,CatalogResourcePlus plus) throws Exception{
+		//转型为MultipartHttpRequest(重点的所在)  
+        MultipartHttpServletRequest multipartRequest  =  (MultipartHttpServletRequest) request;  
+        //  获得第1张图片（根据前台的name名称得到上传的文件）   
+        MultipartFile imgFile =  multipartRequest.getFile("imgFile"); 
+        String imgurl = baseFileUploadService.saveFile(imgFile.getInputStream(), imgFile.getOriginalFilename(), path);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("message", "error");  
+        if(imgurl != null){
+        	  plus.setCreateTime(new Date());
+              plus.setHot(100 + (int)(Math.random()* 1000));
+              plus.setImageUrl(imgFile.getOriginalFilename());
+              if(catalogResourceService.saveCatalogResource(plus)){
+            	  jsonObject.put("message", "ok");  
+              }
+        }
+        response.setContentType("text/html");  
+        response.getWriter().println(jsonObject.toString()); 
+	}
 	
 	
 }

@@ -13,6 +13,7 @@ import com.mxk.crawler.model.ContentResource;
 import com.mxk.crawler.model.ResourceState;
 import com.mxk.crawler.model.WebResource;
 
+@Deprecated
 @Component
 public class ResourceDao {
 

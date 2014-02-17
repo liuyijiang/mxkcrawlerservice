@@ -34,6 +34,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
+import com.mxk.cache.Cacheable;
 import com.mxk.dao.WebResourceMapper;
 import com.mxk.model.WebResource;
 import com.mxk.model.WebResourceCriteria;
@@ -153,6 +154,10 @@ public class IndexService {
 			logger.info("索引创建完成");
 		}
 	}
+	
+	//public PageModel luck
+	
+	
 	
 	/**
 	 * 索引查询

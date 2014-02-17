@@ -124,6 +124,7 @@ public abstract class Crawler {
 						byte[] byteFile = HttpUtil.getImageByte(content.getSimpleImage());
 						if(byteFile != null){
 							String fileName = StringUtil.cutOutUrlFileName(content.getSimpleImage());
+							fileName = StringUtil.urlTrim(fileName.replace(" ", ""));
 							String foldler = StringUtil.dateToString(new Date(), "yyyyMMdd");
 							String simpleImage = baseFileUploadService.saveFile(byteFile, fileName , foldler);
 							resource.setSimpleImage(simpleImage);//图片保存成功后

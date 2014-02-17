@@ -1,5 +1,5 @@
 package com.mxk.resource.web;
-
+@Deprecated
 public class ResourceVO {
   
 	private String name;

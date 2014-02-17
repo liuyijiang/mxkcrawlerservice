@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mxk.web.base.MessageAndView;
 import com.mxk.web.index.IndexService;
 import com.mxk.web.security.SecurityDescription;
 
@@ -26,7 +27,7 @@ public class SearchController {
     private IndexService indexService;
     
     @Autowired
-    private SearchLogService searchLogService;
+    private SearchService searchService;
 	/**
 	 * 文章主页
 	 * @return
@@ -36,13 +37,31 @@ public class SearchController {
 //		return new ModelAndView("/search/index.jsp");
 //	}
 	
+    /**
+     * 搜索资源
+     * @param keyword
+     * @param currentPage
+     * @return
+     */
 	@RequestMapping(value = "/search", method = {RequestMethod.GET,RequestMethod.POST})
 	@ResponseBody
 	@SecurityDescription
-	public PageModel search(@RequestParam("keyword") String keyword, @RequestParam("currentPage") int currentPage){
-		//TODO 线程池
-		searchLogService.saveUserSearchInfo(keyword);//保存用户查询的内容
-		return indexService.searchIndex(keyword, "content" ,currentPage);
+	public MessageAndView search(@RequestParam("keyword") String keyword, @RequestParam("currentPage") int currentPage){
+		PageModel model = indexService.searchIndex(keyword, "content" ,currentPage);
+		//searchService.saveUserSearchInfo(keyword);//保存用户查询的内容
+		return MessageAndView.newInstance().put(model);
+	}
+	
+	/**
+	 * 试试手气
+	 * @return
+	 */
+	@RequestMapping(value = "/luck/search", method = {RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	@SecurityDescription
+	public MessageAndView luckSearch(){
+		PageModel model = searchService.luckSearch();
+		return MessageAndView.newInstance().put(model);
 	}
 	
 }

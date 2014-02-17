@@ -56,18 +56,14 @@ public class MessageConverter implements HttpMessageConverter<Object> {
 	@Override
 	public void write(Object t, MediaType contentType, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
 		logger.debug("#out_write {}", t);
-		outputMessage.getHeaders().setContentType(MediaType.parseMediaType("application/json; charset=UTF-8"));
-		String s = JSON.toJSONString(t);
-//		if (t instanceof ViewResult) {
-//			s = ((ViewResult) t).json();
-//		}
-//		else if (t != null ) {
-//			s = t.toString();
-//		}
-//		else {
-//			s = "";
-//		}
-		FileCopyUtils.copy(s, new OutputStreamWriter(outputMessage.getBody(), charset));
+		String json = "";
+		if(t instanceof MessageAndView){
+			MessageAndView view = (MessageAndView) t;
+			//logger.debug("#out_write {}", view.getType().getType());
+			outputMessage.getHeaders().setContentType(MediaType.parseMediaType(view.getType().getType()));
+			json  = JSON.toJSONString(t);
+		}
+		FileCopyUtils.copy(json, new OutputStreamWriter(outputMessage.getBody(), charset));
 	}
 
 }

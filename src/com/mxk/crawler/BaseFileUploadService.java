@@ -2,8 +2,11 @@ package com.mxk.crawler;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -21,6 +24,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
  * @author liuyijiang
  * 每隔一个天新建一个文件夹 保存下载的图片 
  */
+//TODO 换成分布式文件系统
 @Service
 public class BaseFileUploadService {
     
@@ -42,7 +46,7 @@ public class BaseFileUploadService {
 	 * @return
 	 */
      public String saveFile(byte[] byteFile, String fileName , String foldler){
-    	 String filepath = null;
+    	String filepath = null;
     	if(byteFile == null){
  			return filepath;
  		}
@@ -58,6 +62,42 @@ public class BaseFileUploadService {
         }
 		return filepath;	
      }	
+     
+     /**
+      * 将上传文件保存到文件夹
+      * @param inputStream
+      * @param fileName
+      * @param foldler
+      * @return
+      */
+     public String saveFile(InputStream inputStream, String fileName , String foldler){
+    	String filepath = null;
+     	filepath = rootpath + File.separator + foldler + File.separator + fileName;
+     	logger.debug("开始保存文件{}",fileName);
+     	BufferedOutputStream out = null;
+		try{
+			File uploadFile = new File(filepath);
+			byte[] bit = new byte[1024] ;
+			int len = -1;
+			out = new BufferedOutputStream(new FileOutputStream(uploadFile));
+			while((len = inputStream.read(bit)) != -1){
+				out.write(bit,0,len);
+			}
+			out.flush();
+		} catch (Exception e) {
+			filepath = null;
+			logger.error("保存文件失败{} 文件名路径：{}",e, filepath);
+		} finally {
+			try {
+				out.close();
+				inputStream.close();
+			} catch (IOException e) {
+				filepath = null;
+				logger.error("保存文件失败{} 文件名路径：{}",e, filepath);
+			}
+		}
+ 		return filepath; 
+     }
 	
      /**
       * 生成文件路径

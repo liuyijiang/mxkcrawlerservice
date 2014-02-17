@@ -1,7 +1,5 @@
 package com.mxk.web.user;
 
-import java.util.UUID;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -15,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
-import com.mxk.cache.CacheableService;
-import com.mxk.mail.MailService;
 import com.mxk.model.User;
 import com.mxk.util.SecurityUtil;
 import com.mxk.util.StringUtil;
@@ -123,6 +118,38 @@ public class UserController {
 		return MessageAndView.newInstance().put(user);
 	}
 	
+	/**
+	 * 保存用户收藏信息
+	 * @param userCollectPlus
+	 * @return
+	 */
+	@RequestMapping(value = "/collect",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	@SecurityDescription(loginRequest = false)
+	public MessageAndView userCollect(UserCollectPlus userCollectPlus){
+		if(!validateCollect(userCollectPlus)){
+			return MessageAndView.newInstance(ServiceResponse.SERVICE_ERROR,"数据输入有误");
+		}
+		userService.userCollect(userCollectPlus);
+		return MessageAndView.newInstance();
+	}
+	
+	
+	private boolean validateCollect(UserCollectPlus userCollectPlus){
+		if(userCollectPlus.getUserId() == null){
+			return false;
+		}
+		if(userCollectPlus.getColletTarget() == null){
+			return false;
+		}
+		if(userCollectPlus.getColletTargetType() == null){
+			return false;
+		}
+		if(userCollectPlus.getSimpleDesc() == null){
+			return false;
+		}
+		return true;
+	}
 	
 	/**
 	 * 验证登陆信息
@@ -173,5 +200,5 @@ public class UserController {
 		plus.setUserPassword(SecurityUtil.digestByMd5(password));
 		return plus;
 	}
-
+	
 }

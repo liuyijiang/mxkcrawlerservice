@@ -29,6 +29,7 @@ import com.mxk.util.StringUtil;
  * @author Administrator
  *
  */
+@Deprecated
 @Controller
 public class ResourceController {
  

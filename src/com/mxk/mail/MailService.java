@@ -61,6 +61,8 @@ public class MailService {
 		return adminhostmail;
 	}
 	
+	//FIXME
+	//TODO 改用线程池
 	/**
 	 * 启动一个新线程去发送邮件一段文字邮件
 	 * @param context
