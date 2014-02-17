@@ -46,10 +46,16 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 		
+		<table domainObjectName="CatalogResource" tableName="tb_catalog_resource" />
 		<table domainObjectName="WebResource" tableName="TB_WEB_RESOURCE" />
 		<table domainObjectName="BaseLink" tableName="TB_BASE_LINK" />
 		<table domainObjectName="User" tableName="TB_USER" />
 		<table domainObjectName="SearchLog" tableName="TB_USER_SEARCH_LOG" />
+		<table domainObjectName="UserCollect" tableName="TB_USER_COLLECT" />
+		
+		<table domainObjectName="UserSubject" tableName="TB_SUBJECT" />
+		<table domainObjectName="UserSubjectPart" tableName="TB_PART" />
+		
 	</context>
 
 </generatorConfiguration>
