@@ -1,4 +1,10 @@
-﻿http://blog.csdn.net/yahuvi/article/details/5826823
+﻿//数据备份地址
+G:\mxk-data
+//测试账号
+t@t.com
+1
+
+http://blog.csdn.net/yahuvi/article/details/5826823
 http://www.open-open.com/lib/view/open1347432540553.html
 http://www.wizzer.cn/?p=2299
 http://blog.csdn.net/tanyouhao/article/details/8666170
@@ -43,4 +49,8 @@ http://www.ipmsstockholm.se/home/page/30/ 最大
 //good
 http://www.ipmsstockholm.se/home/category/byggbloggar/page
 http://modellersinc.blogg.se/
+
+
+//可能被墙的
+http://www.sprucemtsurplus.com
 
