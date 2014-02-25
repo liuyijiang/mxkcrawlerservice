@@ -35,6 +35,7 @@
 		 <property name="ignoreUnresolvablePlaceholders" value="true"></property>
 	</bean>
 
+   <!-- 文件上传 -->
    <bean id="multipartResolver"  
         class="org.springframework.web.multipart.commons.CommonsMultipartResolver" p:defaultEncoding="utf-8">  
         <property name="maxUploadSize">  
@@ -44,6 +45,9 @@
             <value>4096</value>  
         </property>  
     </bean>  
+
+   <!-- spring 管理filter -->
+   <bean name="UserActionLogFilter" class="com.mxk.filter.UserActionLogFilter"></bean>
 
 <!--     spring mvc 的配置 -->
 <!--     <import resource="applicationContextBase.xml"/> -->
