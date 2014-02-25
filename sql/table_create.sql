@@ -80,6 +80,7 @@ CREATE  TABLE `mxkdatabase`.`tb_subject` (
   `tag` VARCHAR(45) NOT NULL COMMENT '类型 舰船 航空' ,
   `userid` INT NOT NULL ,
   `createTime` DATETIME NOT NULL ,
+  `show` INT NOT NULL COMMENT '是否在文章首页显示',
   PRIMARY KEY (`id`) )
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8
