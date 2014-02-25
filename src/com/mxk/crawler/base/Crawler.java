@@ -126,6 +126,9 @@ public abstract class Crawler {
 							String fileName = StringUtil.cutOutUrlFileName(content.getSimpleImage());
 							fileName = StringUtil.urlTrim(fileName.replace(" ", ""));
 							String foldler = StringUtil.dateToString(new Date(), "yyyyMMdd");
+							if(content.getMultiImageName() != null){ //同一个网站 图片名字相同的加前缀
+								fileName = content.getMultiImageName() + fileName;
+							}
 							String simpleImage = baseFileUploadService.saveFile(byteFile, fileName , foldler);
 							resource.setSimpleImage(simpleImage);//图片保存成功后
 							if(simpleImage != null){
@@ -267,7 +270,7 @@ public abstract class Crawler {
 				crawlerSheep(1000 * 60);
 			}
 			/** 计数器 超过5次失败就睡眠 */
-			int count = 0;
+			//int count = 0;
 			for(int i=1; i<=allpage; i++){
 	    		List<Links> list = crawlerService.findLinkByPage(i,matchUrl);//获得需要爬取的link
 	    		logger.info("加载匹配：{} 链接数量：{}",matchUrl,list.size());
@@ -283,11 +286,11 @@ public abstract class Crawler {
 		    				}
 	    				}
 	    				if(saveResource(resource)){ //被爬取的链接
-	    					count++;
-	    					if(count > 5){
-	    						count = 0;
-	    						crawlerSheep(3000 * 10); //持续出现没有保存资源说明没有可以爬取的了 就睡眠一段时间
-	    					}
+//	    					count++;
+//	    					if(count > 5){
+//	    						count = 0;
+//	    						crawlerSheep(3000 * 10); //持续出现没有保存资源说明没有可以爬取的了 就睡眠一段时间
+//	    					}
 	    				}
 	    				crawlerService.updateLinkState(link.getUrl(), ResourceState.CRAWLERD.getCode());
 	    			}else{ //练级没有资源

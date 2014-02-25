@@ -1,7 +1,6 @@
 package com.mxk.system;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -12,18 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Order;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.mxk.crawler.CrawlerService;
-import com.mxk.crawler.CrawlerTask;
+import com.mxk.crawler.model.LinkType;
 import com.mxk.crawler.model.Links;
 import com.mxk.crawler.model.ResourceState;
-import com.mxk.crawler.model.ResourceType;
-import com.mxk.crawler.model.SortableComparator;
-import com.mxk.crawler.model.Tag;
+import com.mxk.crawler.model.UserActionLog;
 import com.mxk.dao.BaseLinkMapper;
 import com.mxk.model.BaseLink;
 import com.mxk.model.BaseLinkCriteria;
@@ -45,18 +39,6 @@ public class SystemService {
 	
 	@Autowired
 	private CrawlerService crawlerService;
-	
-	/**
-	 * 保存标签
-	 * @param tag
-	 */
-	public void saveTag(Tag tag){
-		mog.save(tag);
-	}
-	
-	public void saveSubTag(){
-		
-	}
 	
 	/**
 	 * 加载基础的链接地址 
@@ -85,35 +67,20 @@ public class SystemService {
 			link.setUrl(base.getUrl());
 			link.setMatchUrl(base.getMatchurl());
 			link.setState(ResourceState.NO_CRAWLER.getCode());
+			link.setLinkType(LinkType.ROOT_LINK.getCode());//是根路径
 			llist.add(link);
 		}
 		crawlerService.saveLink(llist);
-		logger.debug(" 加载基础的链接地址 完成");
+		logger.debug("加载基础的链接地址 完成");
 	}
 	
 	/**
-	 * 查询标签
-	 * @param type
-	 * @return
+	 * 保存用户在网上的各个操作请求日志
+	 * @param userActionLog
 	 */
-	@SuppressWarnings("unchecked")
-	public List<Tag> findTagsByType(ResourceType type){
-		Query q = new Query(Criteria.where("type").is(type.getCode()));
-		q.sort().on("sort", Order.DESCENDING); //
-		List<Tag> list = mog.find(q, Tag.class);
-		if(!list.isEmpty()){
-			for(Tag tag : list){
-				SortableComparator comparator = new SortableComparator(); //排序 内嵌文档不建议使用monogdb排序
-				Collections.sort(tag.getSubtags(), comparator);
-				/**
-				 * 使用  db.xxx.aggregate([{
-                 *    $match: {'game.gid': 02569}
-                 *    },{
-                 *    $sort: {$date: -1}
-                 *    }])
-				 */
-			}
-		}
-		return list;
+	public void saveUserActionLog(UserActionLog userActionLog){
+		mog.save(userActionLog);
 	}
+	
+	
 }

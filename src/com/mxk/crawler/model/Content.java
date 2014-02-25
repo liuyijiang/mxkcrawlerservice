@@ -24,6 +24,8 @@ public class Content extends BaseResource{
 	public List<String> images;
 	private String simpleImage;
 	private String multiData;//额外的一些有价值的数据;
+	private String multiImageName;
+//	private String untranslateInfo;
 	
 	public String getHeadline() {
 		return headline;
@@ -108,6 +110,12 @@ public class Content extends BaseResource{
 	}
 	public void setMultiData(String multiData) {
 		this.multiData = multiData;
+	}
+	public String getMultiImageName() {
+		return multiImageName;
+	}
+	public void setMultiImageName(String multiImageName) {
+		this.multiImageName = multiImageName;
 	}
 	
     	

@@ -95,8 +95,8 @@ public class IndexService {
 	 * 创建索引	
 	 */
 	public void createIndex() throws Exception{
-		WebResourceCriteria criteria = new WebResourceCriteria();
-		criteria.createCriteria().andIdGreaterThan(0);
+//		WebResourceCriteria criteria = new WebResourceCriteria();
+//		criteria.createCriteria().andIdGreaterThan(0);
 //		List<WebResource> list = webResourceMapper.selectByExample(criteria);
 		// 存储索引的目录
 		File indexDir = new File("D:\\index");

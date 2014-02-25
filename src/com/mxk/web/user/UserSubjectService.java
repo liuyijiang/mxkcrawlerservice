@@ -1,20 +1,22 @@
 package com.mxk.web.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.mxk.cache.Cacheable;
-import com.mxk.cache.CacheableService;
 import com.mxk.cache.CacheableType;
 import com.mxk.dao.UserSubjectMapper;
 import com.mxk.dao.UserSubjectPartMapper;
 import com.mxk.exception.MxkException;
 import com.mxk.model.UserSubject;
+import com.mxk.model.UserSubjectCriteria;
 
 /**
  * 用户发布专题信息服务
@@ -91,6 +93,18 @@ public class UserSubjectService {
 		}
 		return plus;
 	}
+	
+	//加缓存 
+	public List<UserSubjectPlus> findUserAllSubject(int id){
+		List<UserSubjectPlus> list = new ArrayList<UserSubjectPlus>();
+		UserSubjectCriteria criteria = new UserSubjectCriteria();
+		criteria.createCriteria().andUseridEqualTo(id);
+		for(UserSubject sub : userSubjectMapper.selectByExample(criteria)){
+			list.add(new UserSubjectPlus().copy(sub));
+		}
+		return list;
+	}
+	
 	
 	public boolean checkSubjectOwner(int id,int userid){
 		logger.debug("id:"+id + "userid:" + userid);

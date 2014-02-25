@@ -20,7 +20,7 @@ public class StringUtil {
 		map.put("&aacute;", "");
 		map.put("&uuml;", "");
 		map.put("&quot;", "");
-		
+		map.put("-", "");
 	}
 	
 	public static String subString(String str,int lenght){

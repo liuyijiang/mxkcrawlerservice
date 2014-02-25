@@ -21,6 +21,7 @@ public class Links extends BaseResource{
 	private int state;
 	private String matchUrl;//配的的url
 	private String multiData;//多样性 数据 用于保存评论 图片链接地址等等
+	private int linkType;
 	
 	public String getId() {
 		return id;
@@ -64,7 +65,11 @@ public class Links extends BaseResource{
 	public void setMultiData(String multiData) {
 		this.multiData = multiData;
 	}
-	
-	
+	public int getLinkType() {
+		return linkType;
+	}
+	public void setLinkType(int linkType) {
+		this.linkType = linkType;
+	}
 	
 }

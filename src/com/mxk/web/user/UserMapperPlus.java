@@ -24,4 +24,5 @@ public interface UserMapperPlus {
 	@Insert("insert into mxkdatabase.tb_user (user_name, user_image, user_email, user_password) values (#{userName,jdbcType=VARCHAR}, #{userImage,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR})")
 	@Options(useGeneratedKeys = true, keyProperty = "id")  
 	int insert(User record);
+	
 }

@@ -9,7 +9,6 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mxk.crawler.model.ContentResource;
 import com.mxk.crawler.model.ResourceType;
-import com.mxk.crawler.model.Tag;
 import com.mxk.crawler.model.WebResource;
 import com.mxk.resource.service.ResourceService;
 import com.mxk.resource.web.ResourceVO;
@@ -74,14 +72,14 @@ public class ResourceController {
 	 * @param type
 	 * @return
 	 */
-	@RequestMapping(value = "/type/{type}/resource", method = RequestMethod.GET)
-	public ModelAndView allResource(@PathVariable("type") String type){
-		List<Tag> list = systemService.findTagsByType(ResourceType.valueOf(type.toUpperCase()));
-		ModelAndView mv = new ModelAndView("resource.jsp");
-		mv.getModelMap().put("tags", list);
-		mv.getModelMap().put("type", type);
-		return mv;
-	}
+//	@RequestMapping(value = "/type/{type}/resource", method = RequestMethod.GET)
+//	public ModelAndView allResource(@PathVariable("type") String type){
+//		List<Tag> list = systemService.findTagsByType(ResourceType.valueOf(type.toUpperCase()));
+//		ModelAndView mv = new ModelAndView("resource.jsp");
+//		mv.getModelMap().put("tags", list);
+//		mv.getModelMap().put("type", type);
+//		return mv;
+//	}
 	
 	/**
 	 * 模糊查询

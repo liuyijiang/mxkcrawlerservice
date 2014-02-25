@@ -12,7 +12,7 @@ public interface WebResourceMapperPlus {
     //${} 硬替换有风险sql注入
 	//#{} 参数替换安全
 	
-	@Select("select * from mxkdatabase.tb_web_resource where id > #{startid} and id <= #{startid + 100 } limit 100")
+	@Select("select * from mxkdatabase.tb_web_resource where id > ${startid} and id <= ${startid + 100 } limit 100")
 	List<WebResource> selectlimit(@Param("startid") int startid);
 	
 	@Select("select max(id) from mxkdatabase.tb_web_resource ")

@@ -16,7 +16,7 @@ public class UserSubjectPartPlus extends UserSubjectPart implements PlusAble {
 	}
 
 	@Override
-	public void copy(Object object) {
+	public PlusAble copy(Object object) {
 		if(object != null && object instanceof UserSubjectPart){
 			UserSubjectPart o = (UserSubjectPart) object;
 			this.setCreateTime(o.getCreateTime());
@@ -28,6 +28,7 @@ public class UserSubjectPartPlus extends UserSubjectPart implements PlusAble {
 			this.setSubjectType(o.getSubjectType());
 			this.setUserId(o.getUserId());
 		}
+		return this;
 	}
 	
 }

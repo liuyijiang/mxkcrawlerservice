@@ -72,18 +72,19 @@ public class BaseFileUploadService {
       */
      public String saveFile(InputStream inputStream, String fileName , String foldler){
     	String filepath = null;
-     	filepath = rootpath + File.separator + foldler + File.separator + fileName;
+     	filepath = rootpath + File.separator + foldler;
      	logger.debug("开始保存文件{}",fileName);
      	BufferedOutputStream out = null;
 		try{
-			File uploadFile = new File(filepath);
+			new File(filepath).mkdirs();//不存在文件夹创建文件
 			byte[] bit = new byte[1024] ;
 			int len = -1;
-			out = new BufferedOutputStream(new FileOutputStream(uploadFile));
+			out = new BufferedOutputStream(new FileOutputStream(filepath +  File.separator + fileName));
 			while((len = inputStream.read(bit)) != -1){
 				out.write(bit,0,len);
 			}
 			out.flush();
+			filepath = foldler + File.separator + fileName;
 		} catch (Exception e) {
 			filepath = null;
 			logger.error("保存文件失败{} 文件名路径：{}",e, filepath);
@@ -99,13 +100,10 @@ public class BaseFileUploadService {
  		return filepath; 
      }
 	
-     /**
-      * 生成文件路径
-      * @return
-      */
-//     private String createFilePath(String fileName){
-//    	return File.separator + StringUtil.dateToString(new Date(), "yyyyMMdd") + File.separator + fileName;
-//     }
+//    public static void main(String[] args) {
+//    	new File("D:\\mxk-test\\images\\part\\14\\7\\pin.png").mkdirs();//不存在文件夹创建文件
+//    	System.out.println("\\8ok");
+//	}
      
      /**
  	 * 根据比例来压缩byte

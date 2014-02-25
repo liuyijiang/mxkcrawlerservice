@@ -106,7 +106,9 @@ public class CrawlerTask implements ApplicationContextAware {
 		return list;
 	}
 	
-	
+	/**
+	 * 初始化的时候将所有类加载出来
+	 */
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext)
 			throws BeansException {

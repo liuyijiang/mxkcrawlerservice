@@ -103,6 +103,7 @@ public class CrawlerService {
 			Query q = new Query(Criteria.where("url").is(link.getUrl()));
 		    long count = mog.count(q, Links.class);
 		    if(count == 0){
+		    	//link.setLinkType(LinkType.COMMON_LINK.getCode());//都是从根链接过来的
 		    	mog.save(link);
 		    	allfail = false;
 		    	logger.info("保存 links：{}",link.getUrl());

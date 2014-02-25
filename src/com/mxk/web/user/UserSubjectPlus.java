@@ -5,8 +5,10 @@ import com.mxk.web.base.PlusAble;
 
 public class UserSubjectPlus extends UserSubject implements PlusAble{
 
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public void copy(Object object) {
+	public UserSubjectPlus copy(Object object) {
 		if(object != null && object instanceof UserSubject){
 			UserSubject userSubject = (UserSubject) object;
 			this.setCategory(userSubject.getCategory());
@@ -17,6 +19,7 @@ public class UserSubjectPlus extends UserSubject implements PlusAble{
 			this.setTitle(userSubject.getTitle());
 			this.setUserid(userSubject.getUserid());
 		}
+		return this;
 	}
 	
 }

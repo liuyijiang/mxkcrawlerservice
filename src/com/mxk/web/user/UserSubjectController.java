@@ -1,6 +1,8 @@
 package com.mxk.web.user;
 
+import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,13 +22,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mxk.crawler.BaseFileUploadService;
-import com.mxk.system.catalog.CatalogResourcePlus;
 import com.mxk.web.base.MessageAndView;
-import com.mxk.web.http.ServiceResponse;
 import com.mxk.web.security.SecurityDescription;
 
 /**
- * 
+ * 用户专辑
  * @author Administrator
  * 
  */
@@ -103,8 +103,8 @@ public class UserSubjectController {
        	    if(validateUserSubjectPartPlus(plus)){
        	    	userSubjectService.createUserPart(plus);
        	    	if(plus.getId() != null){
-       	    		String filename = plus.getSubjectId()+ "_" + plus.getId() + "_"+ imgFile.getOriginalFilename();
-       	    		String imgurl = baseFileUploadService.saveFile(imgFile.getInputStream(), filename , path);
+       	    		String filename = imgFile.getOriginalFilename();
+       	    		String imgurl = baseFileUploadService.saveFile(imgFile.getInputStream(), filename , path + File.separator + plus.getSubjectId()+ File.separator + plus.getId());
        	    		if(imgurl != null){
        	    			plus.setImgUrl(path+filename);
        	    			userSubjectService.updateUserSubjectPart(plus);
@@ -135,6 +135,24 @@ public class UserSubjectController {
 	}
 	
     
+	/**
+	 * 查询用户发布的专辑
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value = "/subjects",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	@SecurityDescription(loginRequest = true)
+	public MessageAndView findUserCollect(@CookieValue("id") int userId){
+		List<UserSubjectPlus> list = userSubjectService.findUserAllSubject(userId);
+		return MessageAndView.newInstance().put(list);
+	}
+	
+	
+	
+	
+	
+	
 //	private UserSubjectPlus createUserSubjectPlus(){
 //		
 //	}

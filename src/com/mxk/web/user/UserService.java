@@ -1,5 +1,6 @@
 package com.mxk.web.user;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +21,7 @@ import com.mxk.dao.UserMapper;
 import com.mxk.exception.MxkException;
 import com.mxk.mail.MailService;
 import com.mxk.model.User;
+import com.mxk.model.UserCollect;
 import com.mxk.model.UserCriteria;
 import com.mxk.util.SecurityUtil;
 import com.mxk.util.StringUtil;
@@ -42,6 +44,9 @@ public class UserService {
 	
 	@Resource
 	private UserMapperPlus userMapperPlus;
+	
+	@Resource
+	private UserCollectMapperPlus userCollectMapperPlus;
 	
 	/**邮件服务 */
 	@Resource
@@ -164,6 +169,23 @@ public class UserService {
 		}
 		return success;
 	}
+	
+	/**
+	 * 查询用户收藏
+	 * @return
+	 */
+	public List<UserCollectPlus> findUserCollectPluss(int currentId,int userid){
+		List<UserCollectPlus> rlist = new ArrayList<UserCollectPlus>();
+		if(currentId == 0){
+			currentId = userCollectMapperPlus.minUserCollectId(userid);
+		}
+		List<UserCollect> list = userCollectMapperPlus.getUserCollectByPage(userid, currentId);
+		for (UserCollect collect:list) {
+			rlist.add(new UserCollectPlus().copy(collect));
+		}
+		return rlist;
+	}
+	
 	
 	/**
 	 * 唯一性用户名验证

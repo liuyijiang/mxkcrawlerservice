@@ -45,12 +45,12 @@ public class DishModelsLinkCrawler extends Crawler {
 	public static final String SITE_URL = "http://www.dishmodels.ru";
 	public static final String LINK_URL = "http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=";
 	
-	public static void main(String[] args) {
-		DishModelsLinkCrawler d = new DishModelsLinkCrawler();
-		//d.crawlerPagings();
-		//error http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=221 3 4
-		//d.crawler("http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=622"); //494
-	}
+//	public static void main(String[] args) {
+//		DishModelsLinkCrawler d = new DishModelsLinkCrawler();
+//		//d.crawlerPagings();
+//		//error http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=221 3 4
+//		//d.crawler("http://www.dishmodels.ru/glr_main.htm?p=&lng=E&np=622"); //494
+//	}
 	
 	/**
 	 * 此网站比较特殊 在服务初始化的时候就将所有的分页link计算出来并保存保存

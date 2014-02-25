@@ -96,7 +96,7 @@ public class DbmodelContentResourceCrawler extends Crawler {
 				String translator_title = title.replaceAll("\\[转帖\\]", "");
 				//需要翻译
 				if(!StringUtil.isChinese(translator_title) && flink.getFromUrl().startsWith(NEED_TRANSLATED)){
-					translator = new TranslatorService(); //测试时候使用
+					//translator = new TranslatorService(); //测试时候使用
 					String titleWord[] = translator_title.split(" ");
 					translator = new TranslatorService();
 					StringBuilder sb = new StringBuilder();

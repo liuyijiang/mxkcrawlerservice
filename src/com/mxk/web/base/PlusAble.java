@@ -1,4 +1,6 @@
 package com.mxk.web.base;
+
+
 /**
  * 支持扩展
  * @author Administrator
@@ -6,6 +8,6 @@ package com.mxk.web.base;
  */
 public interface PlusAble {
 
-	public void copy(Object object);
+	public <T extends PlusAble> T copy(Object object);
 	
 }

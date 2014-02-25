@@ -42,13 +42,13 @@ public class DbmodelLinkCrawler extends Crawler {
 	public static final String SITE_NAME = "东北模型论坛";
 	public static final String SITE_URL = "http://bbs.dbmodel.com/";
 	
-	public static void main(String[] args) {
-		DbmodelLinkCrawler d = new DbmodelLinkCrawler();
-		Links l = new Links();
-		l.setUrl("http://bbs.dbmodel.com/forumdisplay.php?fid=5&page=1");
-		d.crawler(l);
-		//d.crawler("http://bbs.dbmodel.com/forumdisplay.php?fid=5&page=1");
-	}
+//	public static void main(String[] args) {
+//		DbmodelLinkCrawler d = new DbmodelLinkCrawler();
+//		Links l = new Links();
+//		l.setUrl("http://bbs.dbmodel.com/forumdisplay.php?fid=5&page=1");
+//		d.crawler(l);
+//		//d.crawler("http://bbs.dbmodel.com/forumdisplay.php?fid=5&page=1");
+//	}
 	
 	@Override
 	public List<? extends BaseResource> crawler(Links flink) {

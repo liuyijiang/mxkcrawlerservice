@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,13 +29,10 @@ import com.mxk.crawler.base.CrawlerStateInfo;
 import com.mxk.crawler.model.Links;
 import com.mxk.crawler.model.ResourceState;
 import com.mxk.crawler.model.ResourceType;
-import com.mxk.crawler.model.SubTag;
-import com.mxk.crawler.model.Tag;
 import com.mxk.system.catalog.CatalogResourcePlus;
 import com.mxk.system.catalog.CatalogResourceService;
 import com.mxk.web.base.MessageAndView;
 import com.mxk.web.index.IndexService;
-import com.mxk.web.security.SecurityDescription;
 
 /**
  * 爬取资源服务器
@@ -155,48 +151,6 @@ public class SystemController {
 	}
 	
 	/**
-	 * 新建标签
-	 * @param name
-	 * @param type
-	 * @param sort
-	 * @return
-	 */
-	@RequestMapping(value = "/add/tag", method = RequestMethod.POST)
-	public ModelAndView addtag(@RequestParam("name") String name,@RequestParam("type") String type,@RequestParam("sort") int sort,@RequestParam("subtags") String subtags){
-		ModelAndView mv = new ModelAndView("redirect:/tags"); //"forward:/hello";
-		Tag tag = new Tag();
-		tag.setType(type);
-		tag.setName(name);
-		tag.setSort(sort);
-		tag.setCreateTime(new Date());
-		String[] subtag = subtags.split(","); //中国#1，日本#2
-		List<SubTag> list = new ArrayList<SubTag>();
-		tag.setSubtags(list);
-		for(String str : subtag){
-			String[] sb = str.split("#");
-			SubTag st = new SubTag();
-			st.setDesc(sb[0]);
-			st.setSort(sb[1]);
-			list.add(st);
-		}
-		systemService.saveTag(tag);
-		return mv;
-	}
-	
-	/**
-	 * 根据类型查询标签
-	 * @param type
-	 * @return
-	 */
-	@RequestMapping(value = "/{type}/tags/", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Tag> findTagsByType(@PathVariable("type") String type){
-		List<Tag> list = new ArrayList<Tag>();
-		list = systemService.findTagsByType(ResourceType.valueOf(type.toUpperCase()));
-		return list;
-	}
-	
-	/**
 	 * 初始化数据
 	 * @return
 	 */
@@ -220,7 +174,7 @@ public class SystemController {
 	 */
 	@RequestMapping(value = "/create/index", method = RequestMethod.GET)
 	@ResponseBody
-	@SecurityDescription(accredit = true)
+	//@SecurityDescription(accredit = true)
 	public MessageAndView createIndex(){
 		
 		new Thread(new Runnable() {

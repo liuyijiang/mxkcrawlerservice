@@ -125,13 +125,25 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/collect",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
-	@SecurityDescription(loginRequest = false)
+	@SecurityDescription(loginRequest = true)
 	public MessageAndView userCollect(UserCollectPlus userCollectPlus){
 		if(!validateCollect(userCollectPlus)){
 			return MessageAndView.newInstance(ServiceResponse.SERVICE_ERROR,"数据输入有误");
 		}
 		userService.userCollect(userCollectPlus);
 		return MessageAndView.newInstance();
+	}
+	
+	/**
+	 * 查询用户收藏信息
+	 * @param page
+	 * @return
+	 */
+	@RequestMapping(value = "/user/collects",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody
+	@SecurityDescription(loginRequest = true)
+	public MessageAndView findUserCollect(@RequestParam("currentId") int currentId,@CookieValue("id") int userid){
+		return MessageAndView.newInstance().put(userService.findUserCollectPluss(currentId, userid));
 	}
 	
 	
